@@ -206,10 +206,10 @@ def main():
       color: #333333;
       background-color: #ffffff;
       margin: 0;
-      padding: 0;
+      padding: 0 20px 20px 20px;
     }}
     .container {{
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
     }}
@@ -311,10 +311,10 @@ def main():
       color: #333333;
       background-color: #ffffff;
       margin: 0;
-      padding: 0;
+      padding: 0 20px 20px 20px;
     }}
     .container {{
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
     }}
@@ -475,10 +475,10 @@ def main():
       color: #333333;
       background-color: #ffffff;
       margin: 0;
-      padding: 0;
+      padding: 0 20px 20px 20px;
     }}
     .container {{
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
     }}
@@ -653,10 +653,10 @@ def main():
       color: #333333;
       background-color: #ffffff;
       margin: 0;
-      padding: 20px;
+      padding: 0 20px 20px 20px;
     }}
     .container {{
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
     }}
