@@ -158,7 +158,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🧠 Domínio do conteúdo apresentado;</li>
+      <li>🎤 Domínio do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
