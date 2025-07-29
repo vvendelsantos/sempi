@@ -14,30 +14,30 @@ LEMBRETE_ENVIO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -45,7 +45,7 @@ LEMBRETE_ENVIO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -92,30 +92,30 @@ LEMBRETE_APRESENTACAO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -123,7 +123,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -158,7 +158,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🎤  do conteúdo apresentado;</li>
+      <li>🧠 Domínio do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -283,7 +283,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
+        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
@@ -293,7 +293,7 @@ def main():
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{i}")
 
         # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
+        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -391,7 +391,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -404,7 +404,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
@@ -447,7 +447,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
@@ -457,7 +457,7 @@ def main():
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{i}")
 
         # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
+        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -557,7 +557,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -570,7 +570,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
@@ -616,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
-            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
+            "🧠 Domínio do conteúdo apresentado",
+            "⏳ Adequação ao tempo de apresentação"
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -625,18 +625,21 @@ def main():
         for i, c in enumerate(criterios_final):
             notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
 
-        media_ponderada_final_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
+        media_ponderada_final_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
 
         st.subheader("Avaliador(a) II - Apresentação")
         notas_final_ii = {}
         for i, c in enumerate(criterios_final):
             notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
 
-        media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
+        media_ponderada_final_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
+        nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        
+        # Cálculo da nota geral ponderada
+        nota_geral_ponderada_valor = (nota_final_escrito * 0.6) + (nota_final_apresentacao * 0.4)
+        st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=round(nota_geral_ponderada_valor, 2), disabled=True, key="nota_geral_ponderada")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -685,26 +688,31 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilo para os "botões" de nota */
-    .nota-button-container {{
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
+    /* Estilos inline para compatibilidade com e-mail */
+    .nota-container {{
+      overflow: hidden; /* Clearfix */
       margin-top: 20px;
+      margin-bottom: 20px;
     }}
-    .nota-button {{
+    .nota-item {{
+      width: 31%; /* Aproximadamente 1/3 para 3 itens com espaçamento */
+      float: left;
+      margin-right: 2%; /* Espaçamento entre os itens */
+      box-sizing: border-box; /* Inclui padding e borda no width */
       background-color: #e6f7ff;
       border: 1px solid #91d5ff;
       padding: 8px 10px;
       border-radius: 6px;
       font-weight: bold;
       text-align: center;
-      flex-grow: 1;
       box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      &.general-note {{
-        background-color: #dff0d8;
-        border: 1px solid #5cb85c;
-      }}
+    }}
+    .nota-item:last-child {{
+      margin-right: 0; /* Remove margem do último item */
+    }}
+    .nota-item-general {{
+      background-color: #dff0d8;
+      border: 1px solid #5cb85c;
     }}
     .nota-label {{
         font-size: 0.85em;
@@ -743,7 +751,7 @@ def main():
         <tr><th>Critério</th><th>Nota</th></tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
     </div>
 
     <div class="box">
@@ -752,25 +760,40 @@ def main():
         <tr><th>Critério</th><th>Nota</th></tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-button-container">
-      <div class="nota-button">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
+    <div class="nota-container">
+      <div style="
+        width: 31%; float: left; margin-right: 2%; box-sizing: border-box;
+        background-color: #e6f7ff; border: 1px solid #91d5ff; padding: 8px 10px;
+        border-radius: 6px; font-weight: bold; text-align: center;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      ">
+        <span style="font-size: 0.85em; color: #555; display: block; margin-bottom: 3px;">TRABALHO ESCRITO</span>
+        <span style="font-size: 1.3em; color: #000;"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
       </div>
-      <div class="nota-button">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
+      <div style="
+        width: 31%; float: left; margin-right: 2%; box-sizing: border-box;
+        background-color: #e6f7ff; border: 1px solid #91d5ff; padding: 8px 10px;
+        border-radius: 6px; font-weight: bold; text-align: center;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      ">
+        <span style="font-size: 0.85em; color: #555; display: block; margin-bottom: 3px;">APRESENTAÇÃO ORAL</span>
+        <span style="font-size: 1.3em; color: #000;"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
       </div>
-      <div class="nota-button general-note">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+      <div style="
+        width: 31%; float: left; box-sizing: border-box;
+        background-color: #dff0d8; border: 1px solid #5cb85c; padding: 8px 10px;
+        border-radius: 6px; font-weight: bold; text-align: center;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      ">
+        <span style="font-size: 0.85em; color: #555; display: block; margin-bottom: 3px;">NOTA GERAL</span>
+        <span style="font-size: 1.3em; color: #000;"><strong>{formatar_nota_br(nota_geral_ponderada_valor)}</strong></span>
       </div>
     </div>
 
-    <p>
+    <p style="clear: both;">
       Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
       Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
