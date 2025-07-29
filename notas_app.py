@@ -714,13 +714,13 @@ def main():
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.9em;
+        font-size: 0.7em;
         color: #555;
         display: block;
         margin-bottom: 5px;
     }}
     .nota-value {{
-        font-size: 1.5em;
+        font-size: 1.2em;
         color: #000;
         line-height: 1; /* Para evitar espaçamento extra */
     }}
