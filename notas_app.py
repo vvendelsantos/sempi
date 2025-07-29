@@ -175,7 +175,7 @@ LEMBRETE_APRESENTACAO_HTML = """
 """
 
 def main():
-    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
+    st.set_page_config(page_title="💻 Gerador de notificação Even3 (HTML)", layout="wide")
 
     st.title("Gerador de HTML SEMPI - 5 abas")
 
