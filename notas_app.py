@@ -8,7 +8,8 @@ def formatar_nota_br(nota):
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
 # HTML base para os lembretes (com placeholders para minutos e textos)
-LEMBRETE_ENVIO_HTML = """
+# ATENÇÃO: Estes são os TEMPLATES. Eles serão formatados APENAS QUANDO USADOS.
+LEMBRETE_ENVIO_HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -86,7 +87,7 @@ LEMBRETE_ENVIO_HTML = """
 </html>
 """
 
-LEMBRETE_APRESENTACAO_HTML = """
+LEMBRETE_APRESENTACAO_HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -184,9 +185,7 @@ def main():
 
     st.title("Gerador de HTML SEMPI - 5 abas")
 
-    # --- Inicialização de variáveis no st.session_state DE FORMA AINDA MAIS DEFENSIVA ---
-    # Isso garante que as chaves existam e tenham um valor padrão antes de qualquer acesso
-    # ou tentativa de renderização que dependa delas.
+    # --- Inicialização de variáveis no st.session_state (aqui continuamos com a abordagem defensiva) ---
     if 'texto_envio_arquivo' not in st.session_state:
         st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
     if 'tempo_apresentacao' not in st.session_state:
@@ -419,7 +418,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td><td></td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -572,7 +571,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td><td></td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -585,7 +584,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td><td></td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -630,12 +629,13 @@ def main():
             key="input_tempo_arguicao"
         )
 
-        # Agora usamos os valores do st.session_state para formatar o HTML
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
+        # --- A GRANDE MUDANÇA ESTÁ AQUI: Formatando o HTML DENTRO da aba, após os inputs! ---
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML_TEMPLATE.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML_TEMPLATE.format(
             tempo_apresentacao=st.session_state.tempo_apresentacao,
             tempo_arguicao=st.session_state.tempo_arguicao
         )
+        # --- FIM DA GRANDE MUDANÇA ---
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
@@ -740,25 +740,29 @@ def main():
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
-        table-layout: fixed;
+        table-layout: fixed; /* Isso ajuda a distribuir as colunas igualmente */
     }}
     .nota-cell {{
-        width: 33.33%;
-        padding: 0 5px;
+        width: 33.33%; /* Divide o espaço igualmente entre as 3 células */
+        padding: 0 5px; /* Adiciona um pequeno espaçamento horizontal */
         vertical-align: top;
     }}
     .nota-card {{
-      background-color: #e6f7ff;
-      border: 1px solid #91d5ff;
+      background-color: #e6f7ff; /* Cor de fundo padrão */
+      border: 1px solid #91d5ff; /* Borda padrão */
       padding: 12px 15px;
       border-radius: 8px;
       font-weight: bold;
       text-align: center;
       box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      height: 100%; /* Garante que todos os cards tenham a mesma altura */
+      display: flex; /* Permite alinhar o conteúdo verticalmente */
+      flex-direction: column;
+      justify-content: center;
     }}
     .nota-card.general-note {{
-      background-color: #dff0d8;
-      border: 1px solid #5cb85c;
+      background-color: #dff0d8; /* Cor de fundo para a nota geral */
+      border: 1px solid #5cb85c; /* Borda para a nota geral */
     }}
     .nota-label {{
         font-size: 0.7em;
