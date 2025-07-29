@@ -1,40 +1,42 @@
 import streamlit as st
 
-st.set_page_config(page_title="Gerador de Email SEMPI", layout="centered")
+st.set_page_config(page_title="Gerador de Emails SEMPI", layout="centered")
+st.title("📩 Gerador de Emails - VII SEMPI")
 
-st.title("📩 Gerador de Email Avaliação VII SEMPI")
+tab1, tab2 = st.tabs(["Avaliação Completa", "Desclassificação"])
 
-# Entradas das notas
-nome = st.text_input("Nome do(a) participante")
+with tab1:
+    st.header("Email Avaliação Completa")
 
-st.markdown("### Notas Avaliador(a) I")
-C1_A1 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A1")
-C2_A1 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A1")
-C3_A1 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A1")
-C4_A1 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A1")
-C5_A1 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A1")
-C6_A1 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A1")
-C7_A1 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A1")
-media_A1 = round((C1_A1 + C2_A1 + C3_A1 + C4_A1 + C5_A1 + C6_A1 + C7_A1) / 7, 2)
+    nome = st.text_input("Nome do(a) participante (Avaliação)", key="nome1")
 
-st.markdown("### Notas Avaliador(a) II")
-C1_A2 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A2")
-C2_A2 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A2")
-C3_A2 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A2")
-C4_A2 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A2")
-C5_A2 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A2")
-C6_A2 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A2")
-C7_A2 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A2")
-media_A2 = round((C1_A2 + C2_A2 + C3_A2 + C4_A2 + C5_A2 + C6_A2 + C7_A2) / 7, 2)
+    st.markdown("### Notas Avaliador(a) I")
+    C1_A1 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A1")
+    C2_A1 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A1")
+    C3_A1 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A1")
+    C4_A1 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A1")
+    C5_A1 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A1")
+    C6_A1 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A1")
+    C7_A1 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A1")
+    media_A1 = round((C1_A1 + C2_A1 + C3_A1 + C4_A1 + C5_A1 + C6_A1 + C7_A1) / 7, 2)
 
-st.markdown("### Notas finais")
-Nota_Final_Escrito = st.number_input("Nota final do trabalho escrito", 0.0, 10.0, step=0.1, format="%.1f")
-Nota_Final_Oral = st.number_input("Nota final da apresentação oral", 0.0, 10.0, step=0.1, format="%.1f")
-Nota_Geral = round((Nota_Final_Escrito + Nota_Final_Oral) / 2, 2)
+    st.markdown("### Notas Avaliador(a) II")
+    C1_A2 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A2")
+    C2_A2 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A2")
+    C3_A2 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A2")
+    C4_A2 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A2")
+    C5_A2 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A2")
+    C6_A2 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A2")
+    C7_A2 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A2")
+    media_A2 = round((C1_A2 + C2_A2 + C3_A2 + C4_A2 + C5_A2 + C6_A2 + C7_A2) / 7, 2)
 
-if st.button("📤 Gerar HTML personalizado"):
+    st.markdown("### Notas finais")
+    Nota_Final_Escrito = st.number_input("Nota final do trabalho escrito", 0.0, 10.0, step=0.1, format="%.1f", key="Nota_Final_Escrito")
+    Nota_Final_Oral = st.number_input("Nota final da apresentação oral", 0.0, 10.0, step=0.1, format="%.1f", key="Nota_Final_Oral")
+    Nota_Geral = round((Nota_Final_Escrito + Nota_Final_Oral) / 2, 2)
 
-    html = f"""<!DOCTYPE html>
+    if st.button("📤 Gerar Email Avaliação Completa"):
+        html = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -150,5 +152,80 @@ if st.button("📤 Gerar HTML personalizado"):
 </body>
 </html>"""
 
-    st.success("✅ HTML gerado com sucesso!")
-    st.code(html, language="html")
+        st.success("✅ Email Avaliação Completa gerado!")
+        st.code(html, language="html")
+
+with tab2:
+    st.header("Email de Desclassificação")
+
+    nome_desc = st.text_input("Nome do(a) participante (Desclassificação)", key="nome2")
+    st.markdown("### Motivos da desclassificação")
+    motivo_x = st.text_input("Motivo X", key="motivo_x")
+    motivo_y = st.text_input("Motivo Y", key="motivo_y")
+    motivo_z = st.text_input("Motivo Z", key="motivo_z")
+    prazo_resubmissao = st.text_input("Prazo para ressubmissão", value="31 de julho de 2025", key="prazo")
+
+    if st.button("📤 Gerar Email Desclassificação"):
+        html_desc = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {{
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+      }}
+      .container {{
+        padding: 20px;
+      }}
+      .box {{
+        background-color: #f0f0f0;
+        border-left: 4px solid #999999;
+        padding: 16px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }}
+      ol {{
+        padding-left: 20px;
+        margin: 0;
+      }}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>Prezado(a) autor(a),</p>
+
+      <p>Esperamos que esta mensagem o(a) encontre bem.</p>
+
+      <p>
+        Agradecemos o envio do seu resumo expandido à
+        <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. Após análise preliminar (<em>desk review</em>), informamos que seu trabalho <strong>não atendeu</strong> integralmente às diretrizes estabelecidas pela Comissão Organizadora para avançar à próxima etapa de avaliação por pares.
+      </p>
+
+      <div class="box">
+        <p><strong>📌 Principais aspectos a serem corrigidos:</strong></p>
+        <ol>
+          <li>{motivo_x}</li>
+          <li>{motivo_y}</li>
+          <li>{motivo_z}</li>
+        </ol>
+      </div>
+
+      <p>
+        Solicitamos, gentilmente, que as correções sejam realizadas e o trabalho corrigido seja ressubmetido no sistema até o dia
+        <strong>{prazo_resubmissao}</strong>.
+      </p>
+
+      <p>
+        Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
+      </p>
+    </div>
+  </body>
+</html>"""
+
+        st.success("✅ Email Desclassificação gerado!")
+        st.code(html_desc, language="html")
