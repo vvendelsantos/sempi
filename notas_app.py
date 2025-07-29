@@ -278,22 +278,46 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
+        # Criando um valor padrão para o text_area com as notas separadas por linha
+        default_notas_i_str = "\n".join([str(8.5) for _ in criterios_avaliacao])
+        notas_i_input = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_i_str,
+            key="notas_aprov_i_input"
+        )
         notas_i = {}
-        for i, c in enumerate(criterios_avaliacao):
-            notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{i}")
+        notas_digitadas_i = [float(n.strip().replace(',', '.')) for n in notas_i_input.split('\n') if n.strip()]
 
-        # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
+        if len(notas_digitadas_i) == len(criterios_avaliacao):
+            for i, c in enumerate(criterios_avaliacao):
+                notas_i[c] = notas_digitadas_i[i]
+            media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador I.")
+            notas_i = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
+            media_ponderada_i = 0.0 # Define a média como 0.0
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
+        default_notas_ii_str = "\n".join([str(8.5) for _ in criterios_avaliacao])
+        notas_ii_input = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_ii_str,
+            key="notas_aprov_ii_input"
+        )
         notas_ii = {}
-        for i, c in enumerate(criterios_avaliacao):
-            notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{i}")
+        notas_digitadas_ii = [float(n.strip().replace(',', '.')) for n in notas_ii_input.split('\n') if n.strip()]
 
-        # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
+        if len(notas_digitadas_ii) == len(criterios_avaliacao):
+            for i, c in enumerate(criterios_avaliacao):
+                notas_ii[c] = notas_digitadas_ii[i]
+            media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador II.")
+            notas_ii = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
+            media_ponderada_ii = 0.0 # Define a média como 0.0
+
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -442,22 +466,45 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
+        default_notas_i_str_reprov = "\n".join([str(6.5) for _ in criterios_avaliacao])
+        notas_i_input_reprov = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_i_str_reprov,
+            key="notas_reprov_i_input"
+        )
         notas_i = {}
-        for i, c in enumerate(criterios_avaliacao):
-            notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
+        notas_digitadas_i_reprov = [float(n.strip().replace(',', '.')) for n in notas_i_input_reprov.split('\n') if n.strip()]
 
-        # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        if len(notas_digitadas_i_reprov) == len(criterios_avaliacao):
+            for i, c in enumerate(criterios_avaliacao):
+                notas_i[c] = notas_digitadas_i_reprov[i]
+            media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador I.")
+            notas_i = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
+            media_ponderada_i = 0.0 # Define a média como 0.0
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
+        default_notas_ii_str_reprov = "\n".join([str(6.5) for _ in criterios_avaliacao])
+        notas_ii_input_reprov = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_ii_str_reprov,
+            key="notas_reprov_ii_input"
+        )
         notas_ii = {}
-        for i, c in enumerate(criterios_avaliacao):
-            notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{i}")
+        notas_digitadas_ii_reprov = [float(n.strip().replace(',', '.')) for n in notas_ii_input_reprov.split('\n') if n.strip()]
 
-        # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
+        if len(notas_digitadas_ii_reprov) == len(criterios_avaliacao):
+            for i, c in enumerate(criterios_avaliacao):
+                notas_ii[c] = notas_digitadas_ii_reprov[i]
+            media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador II.")
+            notas_ii = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
+            media_ponderada_ii = 0.0 # Define a média como 0.0
+
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -621,18 +668,44 @@ def main():
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
+        default_notas_final_i_str = "\n".join([str(8.9) for _ in criterios_final])
+        notas_final_i_input = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_final_i_str,
+            key="notas_final_i_input"
+        )
         notas_final_i = {}
-        for i, c in enumerate(criterios_final):
-            notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
+        notas_digitadas_final_i = [float(n.strip().replace(',', '.')) for n in notas_final_i_input.split('\n') if n.strip()]
 
-        media_ponderada_final_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
+        if len(notas_digitadas_final_i) == len(criterios_final):
+            for i, c in enumerate(criterios_final):
+                notas_final_i[c] = notas_digitadas_final_i[i]
+            media_ponderada_final_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_final)} notas para o Avaliador I.")
+            notas_final_i = {c: 0.0 for c in criterios_final}
+            media_ponderada_final_i = 0.0
+
 
         st.subheader("Avaliador(a) II - Apresentação")
+        default_notas_final_ii_str = "\n".join([str(8.8) for _ in criterios_final])
+        notas_final_ii_input = st.text_area(
+            "Digite as notas para cada critério (uma por linha):",
+            value=default_notas_final_ii_str,
+            key="notas_final_ii_input"
+        )
         notas_final_ii = {}
-        for i, c in enumerate(criterios_final):
-            notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
+        notas_digitadas_final_ii = [float(n.strip().replace(',', '.')) for n in notas_final_ii_input.split('\n') if n.strip()]
 
-        media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
+        if len(notas_digitadas_final_ii) == len(criterios_final):
+            for i, c in enumerate(criterios_final):
+                notas_final_ii[c] = notas_digitadas_final_ii[i]
+            media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
+        else:
+            st.warning(f"Por favor, insira {len(criterios_final)} notas para o Avaliador II.")
+            notas_final_ii = {c: 0.0 for c in criterios_final}
+            media_ponderada_final_ii = 0.0
+
 
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
