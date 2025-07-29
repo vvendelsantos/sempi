@@ -158,7 +158,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🎤 Domínio do conteúdo apresentado;</li>
+      <li>🎤  do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -616,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "🧠 Domínio do conteúdo apresentado", # Emoji adicionado aqui
-            "⏳ Adequação ao tempo de apresentação" # Emoji adicionado aqui
+            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
+            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
