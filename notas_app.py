@@ -436,7 +436,7 @@ def main():
             "Correspondência ao tema e seção temática",
             "Originalidade e contribuição",
             "Clareza do problema, objetivos e justificativa",
-            "Tópico 3: Adequação metodológica",
+            "Adequação metodológica",
             "Clareza e coerência dos resultados"
         ]
 
@@ -447,7 +447,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        media_ponderada_i = st.number_input("Média ponderada", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
@@ -616,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
-            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
+            "Domínio do conteúdo apresentado",
+            "Adequação ao tempo de apresentação"
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -638,9 +638,8 @@ def main():
         nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
-        # Cálculo da nota geral ponderada
-        nota_geral_ponderada_valor = (nota_final_escrito * 0.6) + (nota_final_apresentacao * 0.4)
-        st.number_input("Nota Geral (Média Ponderada)", min_value=0.0, max_value=10.0, step=0.01, value=round(nota_geral_ponderada_valor, 2), disabled=True, key="nota_geral_ponderada_display")
+        # O campo da Nota Geral agora é um input manual, não desabilitado
+        nota_geral_ponderada = st.number_input("Nota Geral", min_value=0.0, max_value=10.0, step=0.01, value=8.8, key="nota_geral_manual")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -776,7 +775,7 @@ def main():
       </div>
       <div class="nota-button general-note">
         <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada_valor)}</strong></span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
       </div>
     </div>
 
