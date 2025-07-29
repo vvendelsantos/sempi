@@ -567,7 +567,7 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Solicitamos o envio do arquivo da apresentação até o dia 29 de agosto de 2025.")
+        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia 29 de agosto de 2025, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
 
         st.markdown("### Tempos para apresentação")
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
