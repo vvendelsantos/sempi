@@ -316,7 +316,7 @@ def main():
         else:
             st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador II.")
             notas_ii = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
-            media_ponderada_ii = 0.0 # Define a média como 0.0
+            media_ponderada_ii = 0.0
 
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
@@ -503,7 +503,7 @@ def main():
         else:
             st.warning(f"Por favor, insira {len(criterios_avaliacao)} notas para o Avaliador II.")
             notas_ii = {c: 0.0 for c in criterios_avaliacao} # Define notas como 0.0 para evitar erro no HTML
-            media_ponderada_ii = 0.0 # Define a média como 0.0
+            media_ponderada_ii = 0.0
 
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
