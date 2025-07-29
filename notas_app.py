@@ -597,7 +597,10 @@ def main():
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
         tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
-        # As linhas abaixo foram movidas para cá para garantir que as variáveis existam
+        # AS LINHAS DE FORMATAÇÃO FORAM MOVIDAS PARA AQUI
+        # Elas precisam estar depois dos inputs do Streamlit
+        # para que as variáveis (texto_envio_arquivo, tempo_apresentacao, tempo_arguicao)
+        # já existam quando o .format() for chamado.
         html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
         html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
