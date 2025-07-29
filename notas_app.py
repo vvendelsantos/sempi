@@ -488,7 +488,7 @@ def main():
     }}
     .box {{
       background-color: #f0f0f0;
-      border-left: 4_px solid #999999;
+      border-left: 4px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
@@ -597,6 +597,7 @@ def main():
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
         tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
+        # As linhas abaixo foram movidas para cá para garantir que as variáveis existam
         html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
         html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
@@ -714,13 +715,13 @@ def main():
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.9em;
+        font-size: 0.7em;
         color: #555;
         display: block;
         margin-bottom: 5px;
     }}
     .nota-value {{
-        font-size: 1.5em;
+        font-size: 1.2em;
         color: #000;
         line-height: 1; /* Para evitar espaçamento extra */
     }}
