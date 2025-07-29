@@ -185,7 +185,9 @@ def main():
 
     st.title("Gerador de HTML SEMPI - 5 abas")
 
-    # --- Inicialização de variáveis no st.session_state (aqui continuamos com a abordagem defensiva) ---
+    # --- INICIALIZAÇÃO DE VARIÁVEIS NO st.session_state (MAIS ROBUSTA) ---
+    # Garante que todas as chaves existam antes de serem acessadas.
+    # É importante que isso aconteça ANTES de qualquer widget ou formatação que dependa delas.
     if 'texto_envio_arquivo' not in st.session_state:
         st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
     if 'tempo_apresentacao' not in st.session_state:
@@ -195,8 +197,8 @@ def main():
     if 'hora_encerramento' not in st.session_state:
         st.session_state.hora_encerramento = "XXh"
     if 'nota_geral_ponderada' not in st.session_state:
-        st.session_state.nota_geral_ponderada = 8.85
-    # --- Fim da Inicialização Defensiva ---
+        st.session_state.nota_geral_ponderada = 8.85 # Valor padrão para a nota geral
+    # --- FIM DA INICIALIZAÇÃO ROBUSTA ---
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -608,34 +610,33 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        # Usando st.session_state para persistência e atualizando-o diretamente
+        # Atualizando st.session_state.texto_envio_arquivo através do widget
         st.session_state.texto_envio_arquivo = st.text_area(
             "Digite o texto para o lembrete de envio do arquivo:",
             value=st.session_state.texto_envio_arquivo,
-            key="input_texto_envio_arquivo"
+            key="input_texto_envio_arquivo" # Boa prática usar chaves para widgets
         )
 
         st.markdown("### Tempos para apresentação")
-        # Usando st.session_state para persistência e atualizando-o diretamente
+        # Atualizando st.session_state.tempo_apresentacao através do widget
         st.session_state.tempo_apresentacao = st.number_input(
             "Tempo para apresentação (minutos)",
             min_value=1, max_value=60, value=st.session_state.tempo_apresentacao,
             key="input_tempo_apresentacao"
         )
-        # Usando st.session_state para persistência e atualizando-o diretamente
+        # Atualizando st.session_state.tempo_arguicao através do widget
         st.session_state.tempo_arguicao = st.number_input(
             "Tempo para arguição (minutos)",
             min_value=1, max_value=30, value=st.session_state.tempo_arguicao,
             key="input_tempo_arguicao"
         )
 
-        # --- A GRANDE MUDANÇA ESTÁ AQUI: Formatando o HTML DENTRO da aba, após os inputs! ---
+        # Formatação dos templates HTML usando os valores atuais do session_state
         html_lembrete_envio = LEMBRETE_ENVIO_HTML_TEMPLATE.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
         html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML_TEMPLATE.format(
             tempo_apresentacao=st.session_state.tempo_apresentacao,
             tempo_arguicao=st.session_state.tempo_arguicao
         )
-        # --- FIM DA GRANDE MUDANÇA ---
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
@@ -675,7 +676,7 @@ def main():
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
 
-        # O campo da Nota Geral agora é um input manual, mas persistido no session_state
+        # O campo da Nota Geral agora é um input manual, com o valor padrão vindo do session_state
         st.session_state.nota_geral_ponderada = st.number_input(
             "NOTA GERAL",
             min_value=0.0, max_value=10.0, step=0.01,
@@ -683,7 +684,7 @@ def main():
             key="input_nota_geral_manual"
         )
 
-        # A hora de encerramento também deve ser persistida
+        # A hora de encerramento também é atualizada via widget e lida do session_state
         st.session_state.hora_encerramento = st.text_input(
             "Hora da cerimônia de encerramento:",
             value=st.session_state.hora_encerramento,
