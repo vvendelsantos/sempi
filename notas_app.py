@@ -158,7 +158,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🧠 Domínio do conteúdo apresentado;</li>
+      <li>🎤 Domínio do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -436,7 +436,7 @@ def main():
             "Correspondência ao tema e seção temática",
             "Originalidade e contribuição",
             "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
+            "Tópico 3: Adequação metodológica",
             "Clareza e coerência dos resultados"
         ]
 
@@ -447,7 +447,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
@@ -616,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado",
-            "Adequação ao tempo de apresentação"
+            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
+            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -634,16 +634,13 @@ def main():
 
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        # Campos de entrada para as notas do trabalho escrito e apresentação oral
-        nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        # Entradas de notas com rótulos mais diretos
+        nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
         # Cálculo da nota geral ponderada
         nota_geral_ponderada_valor = (nota_final_escrito * 0.6) + (nota_final_apresentacao * 0.4)
-        
-        # Exibindo a nota geral ponderada em um campo desabilitado
-        st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=round(nota_geral_ponderada_valor, 2), disabled=True, key="nota_geral_ponderada")
-
+        st.number_input("Nota Geral (Média Ponderada)", min_value=0.0, max_value=10.0, step=0.01, value=round(nota_geral_ponderada_valor, 2), disabled=True, key="nota_geral_ponderada_display")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -692,15 +689,42 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilo para as notas finais - similar ao "nota-final" de Aprovação/Reprovação */
-    .nota-final-resultado {{
-      background-color: #dff0d8; /* Verde claro para aprovação */
-      border-left: 4px solid #5cb85c; /* Borda verde */
-      padding: 16px;
+    /* Estilos para os "botões" de nota */
+    .nota-button-container {{
+      display: flex; /* Usa flexbox para alinhar os itens em uma linha */
+      justify-content: space-between; /* Distribui o espaço entre os itens */
+      gap: 10px; /* Espaço entre os "botões" */
       margin-top: 20px;
-      border-radius: 4px;
+      flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
+    }}
+    .nota-button {{
+      background-color: #e6f7ff;
+      border: 1px solid #91d5ff;
+      padding: 12px 15px; /* Aumentado padding para parecer mais um botão */
+      border-radius: 8px; /* Borda mais arredondada */
       font-weight: bold;
-      text-align: justify;
+      text-align: center;
+      flex: 1; /* Permite que os itens cresçam e ocupem o espaço disponível */
+      min-width: 150px; /* Garante um tamanho mínimo para o "botão" */
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra mais pronunciada */
+      display: flex; /* Flexbox para alinhar label e valor verticalmente */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }}
+    .nota-button.general-note {{
+      background-color: #dff0d8;
+      border: 1px solid #5cb85c;
+    }}
+    .nota-label {{
+        font-size: 0.9em; /* Ajustado tamanho da fonte do label */
+        color: #555;
+        display: block;
+        margin-bottom: 5px; /* Mais espaço entre label e valor */
+    }}
+    .nota-value {{
+        font-size: 1.5em; /* Ajustado tamanho da fonte do valor */
+        color: #000;
     }}
 
     a {{
@@ -741,13 +765,22 @@ def main():
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-final-resultado">
-      <p><strong>Nota final do trabalho escrito: {formatar_nota_br(nota_final_escrito)}</strong></p>
-      <p><strong>Nota final da apresentação oral: {formatar_nota_br(nota_final_apresentacao)}</strong></p>
-      <p><strong>Nota geral (média ponderada): {formatar_nota_br(nota_geral_ponderada_valor)}</strong></p>
+    <div class="nota-button-container">
+      <div class="nota-button">
+        <span class="nota-label">TRABALHO ESCRITO</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
+      </div>
+      <div class="nota-button">
+        <span class="nota-label">APRESENTAÇÃO ORAL</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
+      </div>
+      <div class="nota-button general-note">
+        <span class="nota-label">NOTA GERAL</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada_valor)}</strong></span>
+      </div>
     </div>
 
-    <p>
+    <p style="clear: both; margin-top: 30px;">
       Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
       Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
