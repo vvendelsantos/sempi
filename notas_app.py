@@ -712,7 +712,7 @@ def main():
       font-weight: bold;
     }}
     .nota-geral {{
-      color: #1a5276;
+      color: #000000;
     }}
 
     a {{
