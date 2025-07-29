@@ -205,6 +205,8 @@ def main():
       padding: 0;
     }}
     .container {{
+      max-width: 600px; /* Definindo max-width para Desclassificação */
+      margin: auto;
       padding: 20px;
     }}
     .box {{
@@ -302,6 +304,8 @@ def main():
       padding: 0;
     }}
     .container {{
+      max-width: 600px; /* Adicionado max-width para Aprovação */
+      margin: auto;
       padding: 20px;
     }}
     .box {{
@@ -457,9 +461,10 @@ def main():
       padding: 0;
     }}
     .container {{
+      max-width: 600px; /* Adicionado max-width para Reprovação */
+      margin: auto;
       padding: 20px;
     }}
-    /* Removido o estilo de cor vermelha geral para .box aqui */
     .box {{
       background-color: #f0f0f0; /* Cor de fundo neutra */
       border-left: 4px solid #999999; /* Borda cinza neutra */
@@ -493,7 +498,6 @@ def main():
     .parecer {{
       margin-top: 10px;
       font-style: italic;
-      /* Removido a cor vermelha aqui, será herdada do body ou box */
       color: #444; /* Cor do texto neutra para o parecer */
     }}
     a {{
@@ -628,8 +632,9 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 600px;
+      max-width: 600px; /* max-width para Resultado Final */
       margin: auto;
+      padding: 20px;
     }}
     .box {{
       background-color: #f0f0f0;
