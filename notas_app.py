@@ -691,7 +691,7 @@ def main():
       justify-content: space-between;
       gap: 8px;
       margin-top: 20px;
-      background-color: #f9f9f9;
+      background-color: #dff0d8;
       padding: 12px;
       border-radius: 4px;
       border: 1px solid #ddd;
