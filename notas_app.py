@@ -176,7 +176,6 @@ def main():
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
     if aba == "Desclassificação":
-        # Código simples fixo, pode até fazer editar motivos
         st.header("Desclassificação")
 
         motivos = st.text_area(
@@ -460,11 +459,12 @@ def main():
       padding: 20px;
     }}
     .box {{
-      background-color: #f0f0f0;
-      border-left: 4px solid #999999;
+      background-color: #f8d7da;
+      border-left: 4px solid #d9534f;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
+      color: #721c24;
     }}
     table {{
       width: 100%;
@@ -477,11 +477,11 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #e0e0e0;
+      background-color: #f5c6cb;
     }}
     .nota-final {{
       background-color: #f8d7da;
-      border-left: 4px solid #dc3545;
+      border-left: 4px solid #d9534f;
       padding: 16px;
       margin-top: 20px;
       border-radius: 4px;
@@ -491,10 +491,10 @@ def main():
     .parecer {{
       margin-top: 10px;
       font-style: italic;
-      color: #444;
+      color: #721c24;
     }}
     a {{
-      color: #0645ad;
+      color: #721c24;
       text-decoration: none;
     }}
     a:hover {{
@@ -509,12 +509,12 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Informamos que o seu resumo expandido <strong>não foi aprovado</strong> para apresentação oral na
+      Informamos que o seu resumo expandido foi <strong>reprovado</strong> para apresentação na
       <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
     </p>
 
     <p>
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
+      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico:
     </p>
 
     <div class="box">
@@ -526,7 +526,6 @@ def main():
         </tr>
         {''.join(f'<tr><td>{c}</td><td>{notas_i[c]:.1f}</td></tr>' for c in criterios_i)}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_i:.1f}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -539,17 +538,12 @@ def main():
         </tr>
         {''.join(f'<tr><td>{c}</td><td>{notas_ii[c]:.1f}</td></tr>' for c in criterios_ii)}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ii:.1f}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
       Nota final do trabalho: <strong>{nota_final:.2f}</strong>
     </div>
-
-    <p>
-      Agradecemos seu interesse em participar da VII SEMPI e esperamos contar com sua presença em futuras edições.
-    </p>
 
     <p>
       Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
@@ -563,90 +557,49 @@ def main():
     elif aba == "Lembretes":
         st.header("Lembretes")
 
-        # Texto para envio de arquivo
-        texto_envio_default = (
-            "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia "
-            "<strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. "
-            "Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, "
-            "selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. "
-            "Após o envio, certifique-se de salvar as alterações."
-        )
+        st.markdown("### Texto para envio do arquivo da apresentação")
+        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Solicitamos o envio do arquivo da apresentação até o dia 29 de agosto de 2025.")
 
-        texto_envio_arquivo = st.text_area(
-            "Texto do lembrete para envio de arquivos (HTML permitido):",
-            value=texto_envio_default,
-            height=150
-        )
+        st.markdown("### Tempos para apresentação")
+        tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
+        tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
-        tempo_apresentacao = st.number_input("Tempo para exposição do trabalho (minutos)", min_value=1, max_value=60, value=15)
-        tempo_arguicao = st.number_input("Tempo para arguição/comentários (minutos)", min_value=0, max_value=30, value=5)
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
-        # Renderiza o HTML completo concatenando os dois blocos
-        html_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
-        html_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
-            tempo_apresentacao=tempo_apresentacao,
-            tempo_arguicao=tempo_arguicao
-        )
+        st.subheader("Lembrete para envio do arquivo")
+        st.code(html_lembrete_envio, language="html")
 
-        st.markdown("### Lembrete: Envio de arquivos")
-        st.markdown(html_envio, unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        st.markdown("### Lembrete: Apresentação oral")
-        st.markdown(html_apresentacao, unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        st.subheader("HTML completo combinado dos lembretes")
-        html_completo = html_envio.replace("</body>", "")\
-            .replace("</html>", "") + html_apresentacao.split("<body>")[1]
-        st.code(html_completo, language="html")
+        st.subheader("Lembrete para apresentação")
+        st.code(html_lembrete_apresentacao, language="html")
 
     elif aba == "Resultado final":
         st.header("Resultado final")
 
-        st.text_area("Texto do resultado final (sem parecer):", height=200, value="""
-Prezados(as),
+        resultado = st.text_area("Digite o texto do resultado final:", value="Parabéns! Seu trabalho foi aprovado para apresentação.")
 
-Esperamos que esta mensagem os(as) encontre bem.
-
-Informamos que o trabalho foi avaliado e a decisão final está disponível.
-
-Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-        """.strip())
-
-        # Você pode adicionar aqui mais inputs para editar se quiser
-
-        # Exemplo HTML fixo básico
-        html_resultado_final = """<!DOCTYPE html>
+        html_resultado_final = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {
+    body {{
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 20px;
-    }
+    }}
+    .container {{
+      max-width: 700px;
+      margin: auto;
+    }}
   </style>
 </head>
 <body>
-  <div>
-    <p>Prezados(as),</p>
-
-    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
-
-    <p>
-      Informamos que o trabalho foi avaliado e a decisão final está disponível.
-    </p>
-
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
+  <div class="container">
+    <p>{resultado}</p>
   </div>
 </body>
 </html>"""
