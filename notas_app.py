@@ -14,30 +14,30 @@ LEMBRETE_ENVIO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -45,7 +45,7 @@ LEMBRETE_ENVIO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -92,30 +92,30 @@ LEMBRETE_APRESENTACAO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -123,7 +123,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -158,7 +158,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🎤  do conteúdo apresentado;</li>
+      <li>🧠 Domínio do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -591,7 +591,7 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
+        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
 
         st.markdown("### Tempos para apresentação")
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
@@ -616,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
-            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
+            "Domínio do conteúdo apresentado",
+            "Adequação ao tempo de apresentação"
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -634,9 +634,16 @@ def main():
 
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
+        # Campos de entrada para as notas do trabalho escrito e apresentação oral
+        nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        
+        # Cálculo da nota geral ponderada
+        nota_geral_ponderada_valor = (nota_final_escrito * 0.6) + (nota_final_apresentacao * 0.4)
+        
+        # Exibindo a nota geral ponderada em um campo desabilitado
+        st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=round(nota_geral_ponderada_valor, 2), disabled=True, key="nota_geral_ponderada")
+
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -685,36 +692,15 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilo para os "botões" de nota */
-    .nota-button-container {{
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
+    /* Estilo para as notas finais - similar ao "nota-final" de Aprovação/Reprovação */
+    .nota-final-resultado {{
+      background-color: #dff0d8; /* Verde claro para aprovação */
+      border-left: 4px solid #5cb85c; /* Borda verde */
+      padding: 16px;
       margin-top: 20px;
-    }}
-    .nota-button {{
-      background-color: #e6f7ff;
-      border: 1px solid #91d5ff;
-      padding: 8px 10px;
-      border-radius: 6px;
+      border-radius: 4px;
       font-weight: bold;
-      text-align: center;
-      flex-grow: 1;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      &.general-note {{
-        background-color: #dff0d8;
-        border: 1px solid #5cb85c;
-      }}
-    }}
-    .nota-label {{
-        font-size: 0.85em;
-        color: #555;
-        display: block;
-        margin-bottom: 3px;
-    }}
-    .nota-value {{
-        font-size: 1.3em;
-        color: #000;
+      text-align: justify;
     }}
 
     a {{
@@ -755,19 +741,10 @@ def main():
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-button-container">
-      <div class="nota-button">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
-      </div>
-      <div class="nota-button">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
-      </div>
-      <div class="nota-button general-note">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
-      </div>
+    <div class="nota-final-resultado">
+      <p><strong>Nota final do trabalho escrito: {formatar_nota_br(nota_final_escrito)}</strong></p>
+      <p><strong>Nota final da apresentação oral: {formatar_nota_br(nota_final_apresentacao)}</strong></p>
+      <p><strong>Nota geral (média ponderada): {formatar_nota_br(nota_geral_ponderada_valor)}</strong></p>
     </div>
 
     <p>
