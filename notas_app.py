@@ -188,13 +188,17 @@ def main():
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
     # --- Inicialização de variáveis no st.session_state ---
-    # Garante que as chaves existam antes de serem acessadas
+    # Garante que as chaves existam antes de serem acessadas, com valores padrão
     if 'texto_envio_arquivo' not in st.session_state:
         st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
     if 'tempo_apresentacao' not in st.session_state:
         st.session_state.tempo_apresentacao = 10
     if 'tempo_arguicao' not in st.session_state:
         st.session_state.tempo_arguicao = 5
+    if 'hora_encerramento' not in st.session_state: # Adicionado para garantir a persistência na aba "Resultado final"
+        st.session_state.hora_encerramento = "XXh"
+    if 'nota_geral_ponderada' not in st.session_state: # Adicionado para garantir persistência
+        st.session_state.nota_geral_ponderada = 8.85
     # --- Fim da Inicialização ---
 
     if aba == "Desclassificação":
@@ -603,32 +607,28 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        # AQUI ESTÁ A MUDANÇA: O 'value' agora SEMPRE vem do st.session_state
-        # E a variável local 'texto_envio_arquivo' recebe diretamente do input.
-        texto_envio_arquivo_input = st.text_area(
+        # Usando st.session_state para persistência
+        st.session_state.texto_envio_arquivo = st.text_area(
             "Digite o texto para o lembrete de envio do arquivo:",
             value=st.session_state.texto_envio_arquivo,
-            key="input_texto_envio_arquivo"
+            key="input_texto_envio_arquivo" # Adicionado key para garantir unicidade
         )
-        # Atualiza o session_state com o novo valor do input
-        st.session_state.texto_envio_arquivo = texto_envio_arquivo_input
 
         st.markdown("### Tempos para apresentação")
-        tempo_apresentacao_input = st.number_input(
+        # Usando st.session_state para persistência
+        st.session_state.tempo_apresentacao = st.number_input(
             "Tempo para apresentação (minutos)",
             min_value=1, max_value=60, value=st.session_state.tempo_apresentacao,
-            key="input_tempo_apresentacao"
+            key="input_tempo_apresentacao" # Adicionado key
         )
-        st.session_state.tempo_apresentacao = tempo_apresentacao_input
-
-        tempo_arguicao_input = st.number_input(
+        # Usando st.session_state para persistência
+        st.session_state.tempo_arguicao = st.number_input(
             "Tempo para arguição (minutos)",
             min_value=1, max_value=30, value=st.session_state.tempo_arguicao,
-            key="input_tempo_arguicao"
+            key="input_tempo_arguicao" # Adicionado key
         )
-        st.session_state.tempo_arguicao = tempo_arguicao_input
 
-        # Agora usamos os valores atualizados do st.session_state para formatar o HTML
+        # Agora usamos os valores do st.session_state para formatar o HTML
         html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
         html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
             tempo_apresentacao=st.session_state.tempo_apresentacao,
@@ -673,10 +673,20 @@ def main():
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
-        # O campo da Nota Geral agora é um input manual
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, key="nota_geral_manual")
+        # O campo da Nota Geral agora é um input manual, mas persistido no session_state
+        st.session_state.nota_geral_ponderada = st.number_input(
+            "NOTA GERAL",
+            min_value=0.0, max_value=10.0, step=0.01,
+            value=st.session_state.nota_geral_ponderada, # Usando o valor do session_state
+            key="input_nota_geral_manual" # Key para o input
+        )
 
-        hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
+        # A hora de encerramento também deve ser persistida
+        st.session_state.hora_encerramento = st.text_input(
+            "Hora da cerimônia de encerramento:",
+            value=st.session_state.hora_encerramento, # Usando o valor do session_state
+            key="input_hora_encerramento" # Key para o input
+        )
 
 
         html_resultado_final = f"""
@@ -815,14 +825,14 @@ def main():
         <td class="nota-cell">
           <div class="nota-card general-note">
             <span class="nota-label">NOTA GERAL</span>
-            <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+            <span class="nota-value"><strong>{formatar_nota_br(st.session_state.nota_geral_ponderada)}</strong></span>
           </div>
         </td>
       </tr>
     </table>
 
     <p style="clear: both; margin-top: 30px;">
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
+      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {st.session_state.hora_encerramento}</strong>, no auditório do SergipeTec.
       Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
 
