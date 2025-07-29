@@ -1,43 +1,53 @@
 import streamlit as st
+import base64
 
-# Função auxiliar para formatar notas no padrão brasileiro
+# --- Funções Auxiliares ---
+
+# Função para formatar notas no padrão brasileiro
 def formatar_nota_br(nota):
     if nota == int(nota):
         return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
     else:
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
-# HTML base para os lembretes (com placeholders para minutos e textos)
+# Função para criar o link de download de HTML
+def get_download_link(html_content, filename="index.html"):
+    b64 = base64.b64encode(html_content.encode()).decode()
+    href = f'<a href="data:text/html;base64,{b64}" download="{filename}">Baixar HTML</a>'
+    return href
+
+# --- HTML Bases para Lembretes ---
+
 LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -45,7 +55,7 @@ LEMBRETE_ENVIO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -92,30 +102,30 @@ LEMBRETE_APRESENTACAO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -123,7 +133,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -158,7 +168,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
-      <li>🎤  do conteúdo apresentado;</li>
+      <li>🎤 Domínio do conteúdo apresentado;</li>
       <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -178,6 +188,8 @@ LEMBRETE_APRESENTACAO_HTML = """
 </html>
 """
 
+# --- Função Principal do Aplicativo Streamlit ---
+
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
@@ -185,6 +197,17 @@ def main():
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
+
+    # --- Inicialização de variáveis no st.session_state ---
+    # Isso garante que os valores persistam e estejam sempre disponíveis,
+    # evitando o KeyError.
+    if 'texto_envio_arquivo' not in st.session_state:
+        st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
+    if 'tempo_apresentacao' not in st.session_state:
+        st.session_state.tempo_apresentacao = 10
+    if 'tempo_arguicao' not in st.session_state:
+        st.session_state.tempo_arguicao = 5
+    # --- Fim da Inicialização ---
 
     if aba == "Desclassificação":
         st.header("Desclassificação")
@@ -591,20 +614,53 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
+        # Usamos o `key` para armazenar o valor no st.session_state
+        st.session_state.texto_envio_arquivo = st.text_area(
+            "Digite o texto para o lembrete de envio do arquivo:",
+            value=st.session_state.texto_envio_arquivo,
+            key="input_texto_envio_arquivo"
+        )
 
         st.markdown("### Tempos para apresentação")
-        tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
-        tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
+        st.session_state.tempo_apresentacao = st.number_input(
+            "Tempo para apresentação (minutos)",
+            min_value=1, max_value=60, value=st.session_state.tempo_apresentacao,
+            key="input_tempo_apresentacao"
+        )
+        st.session_state.tempo_arguicao = st.number_input(
+            "Tempo para arguição (minutos)",
+            min_value=1, max_value=30, value=st.session_state.tempo_arguicao,
+            key="input_tempo_arguicao"
+        )
 
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
+        # Agora usamos os valores do st.session_state para formatar o HTML
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
+            tempo_apresentacao=st.session_state.tempo_apresentacao,
+            tempo_arguicao=st.session_state.tempo_arguicao
+        )
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.button("Copiar Código", on_click=lambda: st.write(f"<script>navigator.clipboard.writeText(`{html_lembrete_envio}`)</script>", unsafe_allow_html=True), key="copy_envio")
+        with col2:
+            st.markdown(get_download_link(html_lembrete_envio, "lembrete_envio.html"), unsafe_allow_html=True)
+        with col3:
+            if st.button("Visualizar HTML", key="view_envio"):
+                st.components.v1.html(html_lembrete_envio, height=500, scrolling=True)
 
         st.subheader("Lembrete para apresentação")
         st.code(html_lembrete_apresentacao, language="html")
+        col1_apres, col2_apres, col3_apres = st.columns(3)
+        with col1_apres:
+            st.button("Copiar Código", on_click=lambda: st.write(f"<script>navigator.clipboard.writeText(`{html_lembrete_apresentacao}`)</script>", unsafe_allow_html=True), key="copy_apresentacao")
+        with col2_apres:
+            st.markdown(get_download_link(html_lembrete_apresentacao, "lembrete_apresentacao.html"), unsafe_allow_html=True)
+        with col3_apres:
+            if st.button("Visualizar HTML", key="view_apresentacao"):
+                st.components.v1.html(html_lembrete_apresentacao, height=500, scrolling=True)
 
     elif aba == "Resultado final":
         st.header("Resultado Final")
@@ -616,8 +672,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado", # Emoji adicionado aqui
-            "Adequação ao tempo de apresentação" # Emoji adicionado aqui
+            "Domínio do conteúdo apresentado",
+            "Adequação ao tempo de apresentação"
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -634,9 +690,12 @@ def main():
 
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
+        # Entradas de notas com rótulos mais diretos
+        nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        
+        # O campo da Nota Geral agora é um input manual
+        nota_geral_ponderada = st.number_input("Nota Geral", min_value=0.0, max_value=10.0, step=0.01, value=8.8, key="nota_geral_manual")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -685,36 +744,41 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilo para os "botões" de nota */
-    .nota-button-container {{
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 20px;
+    /* Estilos para o contêiner das notas */
+    .notas-container {{
+        width: 100%;
+        border-collapse: collapse; /* Para garantir que as células não tenham espaçamento */
+        margin-top: 20px;
+        table-layout: fixed; /* Ajuda a distribuir larguras igualmente */
     }}
-    .nota-button {{
+    .nota-cell {{
+        width: 33.33%; /* Divide o espaço igualmente entre as 3 células */
+        padding: 0 5px; /* Espaçamento horizontal entre as "caixas" */
+        vertical-align: top; /* Alinha o conteúdo ao topo da célula */
+    }}
+    .nota-card {{
       background-color: #e6f7ff;
       border: 1px solid #91d5ff;
-      padding: 8px 10px;
-      border-radius: 6px;
+      padding: 12px 15px;
+      border-radius: 8px;
       font-weight: bold;
       text-align: center;
-      flex-grow: 1;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      &.general-note {{
-        background-color: #dff0d8;
-        border: 1px solid #5cb85c;
-      }}
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }}
+    .nota-card.general-note {{
+      background-color: #dff0d8;
+      border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.85em;
+        font-size: 0.7em;
         color: #555;
         display: block;
-        margin-bottom: 3px;
+        margin-bottom: 5px;
     }}
     .nota-value {{
-        font-size: 1.3em;
+        font-size: 1.2em;
         color: #000;
+        line-height: 1; /* Para evitar espaçamento extra */
     }}
 
     a {{
@@ -755,22 +819,30 @@ def main():
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-button-container">
-      <div class="nota-button">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
-      </div>
-      <div class="nota-button">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
-      </div>
-      <div class="nota-button general-note">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
-      </div>
-    </div>
+    <table class="notas-container" role="presentation">
+      <tr>
+        <td class="nota-cell">
+          <div class="nota-card">
+            <span class="nota-label">TRABALHO ESCRITO</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
+          </div>
+        </td>
+        <td class="nota-cell">
+          <div class="nota-card">
+            <span class="nota-label">APRESENTAÇÃO ORAL</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
+          </div>
+        </td>
+        <td class="nota-cell">
+          <div class="nota-card general-note">
+            <span class="nota-label">NOTA GERAL</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-    <p>
+    <p style="clear: both; margin-top: 30px;">
       Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
       Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
