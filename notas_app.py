@@ -634,9 +634,9 @@ def main():
 
         media_ponderada_final_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
+        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
