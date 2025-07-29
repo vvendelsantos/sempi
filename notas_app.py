@@ -626,7 +626,7 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 700px;
+      max-width: 600px; /* Reduz a largura máxima do container */
       margin: auto;
     }}
     .box {{
@@ -653,38 +653,38 @@ def main():
     .nota-button-container {{
       display: flex;
       justify-content: space-between;
-      gap: 10px; /* Espaço entre os botões */
+      gap: 8px; /* Espaço um pouco menor entre os botões */
       margin-top: 20px;
     }}
     .nota-button {{
       background-color: #e6f7ff; /* Cor azul clara */
       border: 1px solid #91d5ff; /* Borda azul */
-      padding: 12px 15px;
-      border-radius: 8px;
+      padding: 8px 10px; /* Reduz o padding */
+      border-radius: 6px; /* Borda um pouco menos arredondada */
       font-weight: bold;
       text-align: center;
-      flex-grow: 1; /* Faz os botões crescerem para preencher o espaço */
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+      flex-grow: 1;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Sombra mais sutil */
     }}
     .nota-button-large {{
       background-color: #dff0d8; /* Cor verde clara */
       border: 1px solid #5cb85c; /* Borda verde */
-      padding: 15px 20px;
-      border-radius: 8px;
+      padding: 10px 15px; /* Reduz o padding */
+      border-radius: 6px;
       font-weight: bold;
       text-align: center;
-      margin-top: 10px;
-      width: 100%; /* Ocupa a largura total */
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+      margin-top: 8px; /* Espaço menor acima do botão grande */
+      width: 100%;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Sombra mais sutil */
     }}
     .nota-label {{
-        font-size: 0.85em;
+        font-size: 0.8em; /* Fonte um pouco menor para o rótulo */
         color: #555;
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 3px; /* Espaço menor entre rótulo e valor */
     }}
     .nota-value {{
-        font-size: 1.6em;
+        font-size: 1.4em; /* Fonte menor para o valor da nota */
         color: #000;
     }}
 
