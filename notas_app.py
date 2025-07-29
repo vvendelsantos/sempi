@@ -1,11 +1,18 @@
 import streamlit as st
 
+# Função auxiliar para formatar notas no padrão brasileiro
+def formatar_nota_br(nota):
+    if nota == int(nota):
+        return str(int(nota))
+    else:
+        return f"{nota:.1f}".replace('.', ',')
+
 # HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-M" />
+  <meta charset="UTF-8" />
   <style>
     body {{
       font-family: Arial, sans-serif;
@@ -361,9 +368,9 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_ponderada_i:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -374,14 +381,14 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ponderada_ii:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final_aprovacao:.2f}</strong>
+      Nota final do trabalho: <strong>{formatar_nota_br(nota_final_aprovacao)}</strong>
     </div>
 
     <p>
@@ -518,9 +525,9 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_ponderada_i:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -531,14 +538,14 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ponderada_ii:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final_reprovacao:.2f}</strong>
+      Nota final do trabalho: <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
     </div>
 
     <p>
@@ -583,19 +590,22 @@ def main():
             "Adequação ao tempo de apresentação"
         ]
 
-        st.subheader("Notas Avaliador(a) I - Apresentação")
+        st.subheader("Avaliador(a) I - Apresentação")
         notas_final_i = {}
         for i, c in enumerate(criterios_final):
             notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
 
-        media_final_i = sum(notas_final_i.values()) / len(notas_final_i) if notas_final_i else 0
+        # NOVO CAMPO: Média ponderada do Avaliador I para Resultado Final
+        media_ponderada_final_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
 
-        st.subheader("Notas Avaliador(a) II - Apresentação")
+        st.subheader("Avaliador(a) II - Apresentação")
         notas_final_ii = {}
         for i, c in enumerate(criterios_final):
             notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
 
-        media_final_ii = sum(notas_final_ii.values()) / len(notas_final_ii) if notas_final_ii else 0
+        # NOVO CAMPO: Média ponderada do Avaliador II para Resultado Final
+        media_ponderada_final_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
+
 
         nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
@@ -674,24 +684,24 @@ def main():
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_final_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_final))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_final_i:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
     </div>
 
     <div class="box">
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_final_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_final))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_final_ii:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho escrito: <strong>{nota_final_escrito:.1f}</strong><br />
-      Nota final da apresentação oral: <strong>{nota_final_apresentacao:.1f}</strong><br />
-      Nota geral (média ponderada): <strong>{nota_geral_ponderada:.2f}</strong>
+      Nota final do trabalho escrito: <strong>{formatar_nota_br(nota_final_escrito)}</strong><br />
+      Nota final da apresentação oral: <strong>{formatar_nota_br(nota_final_apresentacao)}</strong><br />
+      Nota geral (média ponderada): <strong>{formatar_nota_br(nota_geral_ponderada)}</strong>
     </div>
 
     <p>
