@@ -1,3 +1,14 @@
+import streamlit as st
+
+# Função auxiliar (opcional, útil se você quiser usar notas formatadas)
+def formatar_nota_br(nota, casas_decimais=1):
+    if nota == int(nota):
+        return str(int(nota)).replace('.', ',')
+    else:
+        return f"{nota:.{casas_decimais}f}".replace('.', ',')
+
+# HTML do lembrete
+LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -53,7 +64,6 @@
         <table class="content" cellspacing="0" cellpadding="0" role="presentation">
           <tr>
             <td>
-              <!-- Conteúdo do e-mail -->
               <p>Prezados(as) autores(as),</p>
 
               <p>Esperamos que esta mensagem os(as) encontre bem.</p>
@@ -71,10 +81,10 @@
               </p>
 
               <p>
-                O modelo editável está disponível no site do evento: <br />
+                O modelo editável está disponível no site do evento:<br />
                 🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
                   https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
-                </a>.
+                </a>.<br />
                 Embora não haja limite de quantidade de slides, é obrigatório manter integralmente a formatação original (estilo, tamanho da fonte e cores).
               </p>
 
@@ -89,3 +99,15 @@
   </table>
 </body>
 </html>
+"""
+
+# Interface Streamlit
+def main():
+    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
+    st.title("💻 Notificação interna Even3 (VII SEMPI)")
+    
+    st.header("Pré-visualização do lembrete")
+    st.components.v1.html(LEMBRETE_ENVIO_HTML, height=800, scrolling=True)
+
+if __name__ == "__main__":
+    main()
