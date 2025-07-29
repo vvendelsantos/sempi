@@ -179,9 +179,9 @@ LEMBRETE_APRESENTACAO_HTML = """
 """
 
 def main():
-    st.set_page_config(page_title="💻 Notificação Even3 (VII SEMPI)", layout="wide")
+    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
-    st.title("💻 Notificação Even3 (VII SEMPI)")
+    st.title("Gerador de HTML SEMPI - 5 abas")
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -714,13 +714,13 @@ def main():
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.7em;
+        font-size: 0.9em;
         color: #555;
         display: block;
         margin-bottom: 5px;
     }}
     .nota-value {{
-        font-size: 1.2em;
+        font-size: 1.5em;
         color: #000;
         line-height: 1; /* Para evitar espaçamento extra */
     }}
