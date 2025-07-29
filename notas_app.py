@@ -181,7 +181,7 @@ LEMBRETE_APRESENTACAO_HTML = """
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
-    st.title("Gerador de HTML SEMPI - 5 abas")
+    st.title("💻 Notificação interna Even3 (VII SEMPI)")
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -314,9 +314,9 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px; /* Ajustado */
-      margin: auto;    /* Ajustado */
-      padding: 20px;   /* Ajustado */
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
     }}
     p {{
       margin-bottom: 16px;
@@ -478,9 +478,9 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px; /* Ajustado */
-      margin: auto;    /* Ajustado */
-      padding: 20px;   /* Ajustado */
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
     }}
     p {{
       margin-bottom: 16px;
@@ -656,9 +656,9 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 600px; /* Ajustado */
-      margin: auto;    /* Ajustado */
-      padding: 20px;   /* Ajustado */
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
     }}
     p {{
       margin-bottom: 16px;
@@ -689,7 +689,7 @@ def main():
     .notas-container {{
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      align-items: center; /* Alinha os itens verticalmente ao centro */
       margin-top: 20px;
       background-color: #dff0d8;
       padding: 12px;
@@ -699,6 +699,10 @@ def main():
     .nota-item {{
       text-align: center;
       flex-grow: 1;
+      padding: 0 10px; /* Adiciona padding horizontal para a borda não ficar colada no texto */
+    }}
+    .nota-item:not(:last-child) {{ /* Aplica a borda em todos, exceto o último */
+      border-right: 1px solid #ccc; /* Linha vertical */
     }}
     .nota-label {{
       font-size: 0.85em;
