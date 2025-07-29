@@ -179,9 +179,9 @@ LEMBRETE_APRESENTACAO_HTML = """
 """
 
 def main():
-    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
+    st.set_page_config(page_title="💻 Notificação Even3 (VII SEMPI)", layout="wide")
 
-    st.title("Gerador de HTML SEMPI - 5 abas")
+    st.title("💻 Notificação Even3 (VII SEMPI) - 5 abas")
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
