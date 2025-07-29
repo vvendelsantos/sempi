@@ -1,7 +1,5 @@
 import streamlit as st
 
-# --- FUNÇÕES AUXILIARES ---
-
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota):
     if nota == int(nota):
@@ -9,10 +7,8 @@ def formatar_nota_br(nota):
     else:
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
-# --- TEMPLATES HTML ---
-# ATENÇÃO: Estes são os TEMPLATES. Eles serão formatados APENAS QUANDO USADOS.
-
-LEMBRETE_ENVIO_HTML_TEMPLATE = """
+# HTML base para os lembretes (com placeholders para minutos e textos)
+LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,7 +50,7 @@ LEMBRETE_ENVIO_HTML_TEMPLATE = """
 </head>
 <body>
   <div class="container">
-    <p>Prezados(as) autores(as),</p>
+   <p>Prezados(as) autores(as),</p>
 
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
@@ -90,7 +86,7 @@ LEMBRETE_ENVIO_HTML_TEMPLATE = """
 </html>
 """
 
-LEMBRETE_APRESENTACAO_HTML_TEMPLATE = """
+LEMBRETE_APRESENTACAO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -182,46 +178,13 @@ LEMBRETE_APRESENTACAO_HTML_TEMPLATE = """
 </html>
 """
 
-# --- FUNÇÃO DE INICIALIZAÇÃO DO SESSION_STATE ---
-def inicializar_session_state():
-    """
-    Inicializa todas as variáveis do st.session_state com valores padrão
-    se elas ainda não existirem. Isso previne KeyErrors e garante persistência.
-    """
-    if 'texto_envio_arquivo' not in st.session_state:
-        st.session_state.texto_envio_arquivo = (
-            "Para tanto, solicitamos que o arquivo de apresentação seja enviado "
-            "até o dia **29 de agosto de 2025**, em formato PDF, por meio da "
-            "Área do Participante. Para realizar o envio, acesse a plataforma "
-            "com seu login e senha, clique no menu “Submissões”, selecione "
-            "o trabalho correspondente, clique em “Editar” e anexe o arquivo "
-            "no campo indicado. Após o envio, certifique-se de salvar as alterações."
-        )
-    if 'tempo_apresentacao' not in st.session_state:
-        st.session_state.tempo_apresentacao = 10
-    if 'tempo_arguicao' not in st.session_state:
-        st.session_state.tempo_arguicao = 5
-    if 'hora_encerramento' not in st.session_state:
-        st.session_state.hora_encerramento = "XXh"
-    if 'nota_geral_ponderada' not in st.session_state:
-        st.session_state.nota_geral_ponderada = 8.85 # Valor padrão para a nota geral
-    if 'nota_final_escrito' not in st.session_state:
-        st.session_state.nota_final_escrito = 8.7
-    if 'nota_final_apresentacao' not in st.session_state:
-        st.session_state.nota_final_apresentacao = 9.0
-
-# --- FUNÇÃO PRINCIPAL DO APLICATIVO ---
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
     st.title("Gerador de HTML SEMPI - 5 abas")
 
-    # Garante que todas as variáveis de sessão estão inicializadas
-    inicializar_session_state()
-
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
-
 
     if aba == "Desclassificação":
         st.header("Desclassificação")
@@ -411,7 +374,8 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Temos o prazer de informar que o seu resumo expandido foi <strong>aprovado</strong> para apresentação oral na
+      Temos o prazer de informar que o seu resumo expandido foi
+      <strong>aprovado</strong> para apresentação oral na
       <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
     </p>
 
@@ -426,9 +390,9 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {_render_notas_table(notas_i, criterios_avaliacao)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -439,9 +403,9 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {_render_notas_table(notas_ii, criterios_avaliacao)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
@@ -592,9 +556,9 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {_render_notas_table(notas_i, criterios_avaliacao)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -605,14 +569,15 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
+        {_render_notas_table(notas_ii, criterios_avaliacao)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
+      Nota final do trabalho:
+      <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
     </div>
 
     <p>
@@ -628,44 +593,20 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        # Usando st.session_state para valor e atualização
-        st.session_state.texto_envio_arquivo = st.text_area(
-            "Digite o texto para o lembrete de envio do arquivo:",
-            value=st.session_state.texto_envio_arquivo,
-            key="input_texto_envio_arquivo" # Boa prática usar chaves para widgets
-        )
+        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
 
         st.markdown("### Tempos para apresentação")
-        # Usando st.session_state para valor e atualização
-        st.session_state.tempo_apresentacao = st.number_input(
-            "Tempo para apresentação (minutos)",
-            min_value=1, max_value=60, value=st.session_state.tempo_apresentacao,
-            key="input_tempo_apresentacao"
-        )
-        # Usando st.session_state para valor e atualização
-        st.session_state.tempo_arguicao = st.number_input(
-            "Tempo para arguição (minutos)",
-            min_value=1, max_value=30, value=st.session_state.tempo_arguicao,
-            key="input_tempo_arguicao"
-        )
+        tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
+        tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
-        # Formatação dos templates HTML usando os valores ATUAIS do session_state
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML_TEMPLATE.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML_TEMPLATE.format(
-            tempo_apresentacao=st.session_state.tempo_apresentacao,
-            tempo_arguicao=st.session_state.tempo_arguicao
-        )
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
-        st.subheader("Lembrete para envio do arquivo (Código HTML)")
+        st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
-        st.subheader("Pré-visualização do Lembrete de Envio")
-        st.markdown(html_lembrete_envio, unsafe_allow_html=True) # Exibe o HTML renderizado
 
-        st.subheader("Lembrete para apresentação (Código HTML)")
+        st.subheader("Lembrete para apresentação")
         st.code(html_lembrete_apresentacao, language="html")
-        st.subheader("Pré-visualização do Lembrete de Apresentação")
-        st.markdown(html_lembrete_apresentacao, unsafe_allow_html=True) # Exibe o HTML renderizado
-
 
     elif aba == "Resultado final":
         st.header("Resultado Final")
@@ -695,34 +636,23 @@ def main():
 
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
-        # Entradas de notas com rótulos mais diretos, usando st.session_state
-        st.session_state.nota_final_escrito = st.number_input(
-            "TRABALHO ESCRITO",
-            min_value=0.0, max_value=10.0, step=0.1,
-            value=st.session_state.nota_final_escrito,
-            key="input_nota_escrito"
-        )
-        st.session_state.nota_final_apresentacao = st.number_input(
-            "APRESENTAÇÃO ORAL",
-            min_value=0.0, max_value=10.0, step=0.1,
-            value=st.session_state.nota_final_apresentacao,
-            key="input_nota_apresentacao"
-        )
+        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        
+        # O cálculo da nota geral ponderada deve ser feito aqui antes de ser exibido
+        # Supondo que a nota geral seja a média simples das duas notas finais
+        nota_geral_ponderada = (nota_final_escrito + nota_final_apresentacao) / 2
+        st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=nota_geral_ponderada, disabled=True, key="nota_geral_display")
 
-        # AGORA EDITÁVEL: Campo para a nota geral, lendo e escrevendo no session_state
-        st.session_state.nota_geral_ponderada = st.number_input(
-            "NOTA GERAL",
-            min_value=0.0, max_value=10.0, step=0.01,
-            value=st.session_state.nota_geral_ponderada,
-            key="input_nota_geral_manual" # Mantido key diferente para evitar conflito com um possível cálculo futuro
-        )
+        hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
-        # A hora de encerramento também é atualizada via widget e lida do session_state
-        st.session_state.hora_encerramento = st.text_input(
-            "Hora da cerimônia de encerramento:",
-            value=st.session_state.hora_encerramento,
-            key="input_hora_encerramento"
-        )
+        # Função auxiliar para renderizar a tabela de notas (para evitar repetição de código)
+        def _render_notas_table(notas_dict, criterios_list):
+            rows = ""
+            for i, c in enumerate(criterios_list):
+                rows += f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_dict[c])}</td></tr>'
+            return rows
+
 
         html_resultado_final = f"""
 <!DOCTYPE html>
@@ -768,41 +698,34 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilos para o contêiner das notas */
+    /* Estilo simplificado para as notas */
     .notas-container {{
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        table-layout: fixed; /* Isso ajuda a distribuir as colunas igualmente */
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 20px;
+      background-color: #f9f9f9;
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
     }}
-    .nota-cell {{
-        width: 33.33%; /* Divide o espaço igualmente entre as 3 células */
-        padding: 0 5px; /* Adiciona um pequeno espaçamento horizontal */
-        vertical-align: top;
-    }}
-    .nota-card {{
-      background-color: #dff0d8; /* Cor de fundo APROVADO */
-      border: 1px solid #5cb85c; /* Borda APROVADO */
-      padding: 12px 15px;
-      border-radius: 8px;
-      font-weight: bold;
+    .nota-item {{
       text-align: center;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-      height: 100%; /* Garante que todos os cards tenham a mesma altura */
-      display: flex; /* Permite alinhar o conteúdo verticalmente */
-      flex-direction: column;
-      justify-content: center;
+      flex-grow: 1;
     }}
     .nota-label {{
-        font-size: 0.7em;
-        color: #555;
-        display: block;
-        margin-bottom: 5px;
+      font-size: 0.85em;
+      color: #555;
+      display: block;
+      margin-bottom: 3px;
     }}
     .nota-value {{
-        font-size: 1.2em;
-        color: #000;
-        line-height: 1;
+      font-size: 1.3em;
+      color: #000;
+      font-weight: bold;
+    }}
+    .nota-geral {{
+      color: #1a5276;
     }}
 
     a {{
@@ -829,46 +752,38 @@ def main():
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(criterios_final))}
+        {_render_notas_table(notas_final_i, criterios_final)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
     </div>
 
     <div class="box">
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(criterios_final))}
+        {_render_notas_table(notas_final_ii, criterios_final)}
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
+     <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <table class="notas-container" role="presentation">
-      <tr>
-        <td class="nota-cell">
-          <div class="nota-card">
-            <span class="nota-label">TRABALHO ESCRITO</span>
-            <span class="nota-value"><strong>{formatar_nota_br(st.session_state.nota_final_escrito)}</strong></span>
-          </div>
-        </td>
-        <td class="nota-cell">
-          <div class="nota-card">
-            <span class="nota-label">APRESENTAÇÃO ORAL</span>
-            <span class="nota-value"><strong>{formatar_nota_br(st.session_state.nota_final_apresentacao)}</strong></span>
-          </div>
-        </td>
-        <td class="nota-cell">
-          <div class="nota-card">
-            <span class="nota-label">NOTA GERAL</span>
-            <span class="nota-value"><strong>{formatar_nota_br(st.session_state.nota_geral_ponderada)}</strong></span>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <div class="notas-container">
+      <div class="nota-item">
+        <span class="nota-label">TRABALHO ESCRITO</span>
+        <span class="nota-value">{formatar_nota_br(nota_final_escrito)}</span>
+      </div>
+      <div class="nota-item">
+        <span class="nota-label">APRESENTAÇÃO ORAL</span>
+        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao)}</span>
+      </div>
+      <div class="nota-item">
+        <span class="nota-label">NOTA GERAL</span>
+        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada)}</span>
+      </div>
+    </div>
 
-    <p style="clear: both; margin-top: 30px;">
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {st.session_state.hora_encerramento}</strong>, no auditório do SergipeTec.
-      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
+    <p>
+      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
+      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
 
     <p>
@@ -880,10 +795,15 @@ def main():
     </p>
   </div>
 </body>
-</html>
-"""
+</html>"""
         st.code(html_resultado_final, language="html")
 
+# Adição da função auxiliar para renderizar tabelas de notas
+def _render_notas_table(notas_dict, criterios_list):
+    rows = ""
+    for i, c in enumerate(criterios_list):
+        rows += f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_dict[c])}</td></tr>'
+    return rows
 
-if __name__ == "__main_":
+if __name__ == "__main__":
     main()
