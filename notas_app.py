@@ -181,7 +181,7 @@ LEMBRETE_APRESENTACAO_HTML = """
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
-    st.title("💻 Notificação interna Even3 (VII SEMPI)")
+    st.title("Gerador de HTML SEMPI - 5 abas")
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -314,9 +314,9 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
+      max-width: 600px; /* Ajustado */
+      margin: auto;    /* Ajustado */
+      padding: 20px;   /* Ajustado */
     }}
     p {{
       margin-bottom: 16px;
@@ -478,9 +478,9 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
+      max-width: 600px; /* Ajustado */
+      margin: auto;    /* Ajustado */
+      padding: 20px;   /* Ajustado */
     }}
     p {{
       margin-bottom: 16px;
@@ -636,9 +636,7 @@ def main():
 
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        
-        # REMOVIDO: disabled=True para permitir inserção manual
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85) 
+        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85)
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -658,9 +656,9 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
+      max-width: 600px; /* Ajustado */
+      margin: auto;    /* Ajustado */
+      padding: 20px;   /* Ajustado */
     }}
     p {{
       margin-bottom: 16px;
