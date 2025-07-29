@@ -5,7 +5,7 @@ def formatar_nota_br(nota):
     if nota == int(nota):
         return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
     else:
-        return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
+        return f"{nota:.2f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
 # HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
