@@ -757,15 +757,15 @@ def main():
 
     <div class="nota-button-container">
       <div class="nota-button">
-        <span class="nota-label">Nota final do trabalho escrito:</span>
+        <span class="nota-label">TRABALHO ESCRITO</span>
         <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
       </div>
       <div class="nota-button">
-        <span class="nota-label">Nota final da apresentação oral:</span>
+        <span class="nota-label">APRESENTAÇÃO ORAL</span>
         <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
       </div>
       <div class="nota-button general-note">
-        <span class="nota-label">Nota geral (média ponderada):</span>
+        <span class="nota-label">NOTA GERAL</span>
         <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
       </div>
     </div>
