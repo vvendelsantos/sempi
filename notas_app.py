@@ -28,6 +28,7 @@ LEMBRETE_ENVIO_HTML = """
     }}
     p {{
       margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
     }}
     a {{
       color: #0645ad;
@@ -43,6 +44,7 @@ LEMBRETE_ENVIO_HTML = """
       border-radius: 4px;
       margin: 16px 0;
       font-size: 0.95em;
+      text-align: justify; /* Adicionado para justificar o texto no highlight */
     }}
   </style>
 </head>
@@ -104,6 +106,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     }}
     p {{
       margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
     }}
     a {{
       color: #0645ad;
@@ -119,6 +122,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       border-radius: 4px;
       margin: 16px 0;
       font-size: 0.95em;
+      text-align: justify; /* Adicionado para justificar o texto no highlight */
     }}
   </style>
 </head>
@@ -137,11 +141,10 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <div class="highlight">
-      <p><strong>⚠️ Orientações importantes:</strong></p>
-      <ul style="margin-top: 0; padding-left: 20px;">
-        <li>Autores que apresentarão seus trabalhos presencialmente devem comparecer ao local da sessão com, no mínimo, <strong>20 minutos de antecedência</strong>.</li>
-        <li>Essa orientação também se aplica aos participantes com apresentação on-line autorizada, mediante justificativa formal.</li>
-        <li><strong>Não serão permitidas correções ou substituições</strong> do arquivo de apresentação durante o evento.</li>
+      <p style="text-align: left;"><strong>⚠️ Orientações importantes:</strong></p> <ul style="margin-top: 0; padding-left: 20px;">
+        <li style="text-align: left;">Autores que apresentarão seus trabalhos presencialmente devem comparecer ao local da sessão com, no mínimo, <strong>20 minutos de antecedência</strong>.</li>
+        <li style="text-align: left;">Essa orientação também se aplica aos participantes com apresentação on-line autorizada, mediante justificativa formal.</li>
+        <li style="text-align: left;"><strong>Não serão permitidas correções ou substituições</strong> do arquivo de apresentação durante o evento.</li>
       </ul>
     </div>
 
@@ -153,8 +156,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguem os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
     </p>
 
-    <ul style="padding-left: 20px;">
-      <li>Domínio do conteúdo apresentado;</li>
+    <ul style="padding-left: 20px; text-align: justify;"> <li>Domínio do conteúdo apresentado;</li>
       <li>Adequação ao tempo de apresentação.</li>
     </ul>
 
@@ -205,9 +207,13 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px; /* Definindo max-width para Desclassificação */
+      max-width: 600px;
       margin: auto;
       padding: 20px;
+    }}
+    p {{
+      margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
     }}
     .box {{
       background-color: #f0f0f0;
@@ -215,10 +221,12 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
+      text-align: justify; /* Adicionado para justificar o texto no box */
     }}
     ol {{
       padding-left: 20px;
       margin: 0;
+      text-align: justify; /* Adicionado para justificar a lista ordenada */
     }}
   </style>
 </head>
@@ -304,9 +312,13 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px; /* Adicionado max-width para Aprovação */
+      max-width: 600px;
       margin: auto;
       padding: 20px;
+    }}
+    p {{
+      margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
     }}
     .box {{
       background-color: #f0f0f0;
@@ -314,6 +326,7 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
+      text-align: justify; /* Adicionado para justificar o texto no box */
     }}
     table {{
       width: 100%;
@@ -335,11 +348,13 @@ def main():
       margin-top: 20px;
       border-radius: 4px;
       font-weight: bold;
+      text-align: justify; /* Adicionado para justificar o texto na nota final */
     }}
     .parecer {{
       margin-top: 10px;
       font-style: italic;
       color: #444;
+      text-align: justify; /* Adicionado para justificar o texto no parecer */
     }}
     a {{
       color: #0645ad;
@@ -461,17 +476,22 @@ def main():
       padding: 0;
     }}
     .container {{
-      max-width: 600px; /* Adicionado max-width para Reprovação */
+      max-width: 600px;
       margin: auto;
       padding: 20px;
     }}
+    p {{
+      margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
+    }}
     .box {{
-      background-color: #f0f0f0; /* Cor de fundo neutra */
-      border-left: 4px solid #999999; /* Borda cinza neutra */
+      background-color: #f0f0f0;
+      border-left: 4px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-      color: #333333; /* Cor do texto neutra */
+      color: #333333;
+      text-align: justify; /* Adicionado para justificar o texto no box */
     }}
     table {{
       width: 100%;
@@ -484,24 +504,26 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #e0e0e0; /* Cor de fundo do cabeçalho neutra */
+      background-color: #e0e0e0;
     }}
     .nota-final {{
-      background-color: #f8d7da; /* Cor de fundo vermelha clara */
-      border-left: 4px solid #d9534f; /* Borda vermelha escura */
+      background-color: #f8d7da;
+      border-left: 4px solid #d9534f;
       padding: 16px;
       margin-top: 20px;
       border-radius: 4px;
       font-weight: bold;
-      color: #721c24; /* Cor do texto vermelha escura */
+      color: #721c24;
+      text-align: justify; /* Adicionado para justificar o texto na nota final */
     }}
     .parecer {{
       margin-top: 10px;
       font-style: italic;
-      color: #444; /* Cor do texto neutra para o parecer */
+      color: #444;
+      text-align: justify; /* Adicionado para justificar o texto no parecer */
     }}
     a {{
-      color: #0645ad; /* Cor padrão de link para neutro */
+      color: #0645ad;
       text-decoration: none;
     }}
     a:hover {{
@@ -632,9 +654,13 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 600px; /* max-width para Resultado Final */
+      max-width: 600px;
       margin: auto;
       padding: 20px;
+    }}
+    p {{
+      margin-bottom: 16px;
+      text-align: justify; /* Adicionado para justificar o texto */
     }}
     .box {{
       background-color: #f0f0f0;
@@ -642,6 +668,7 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
+      text-align: justify; /* Adicionado para justificar o texto no box */
     }}
     table {{
       width: 100%;
@@ -660,32 +687,31 @@ def main():
     .nota-button-container {{
       display: flex;
       justify-content: space-between;
-      gap: 8px; /* Espaço entre os botões */
+      gap: 8px;
       margin-top: 20px;
     }}
     .nota-button {{
-      background-color: #e6f7ff; /* Cor azul clara */
-      border: 1px solid #91d5ff; /* Borda azul */
+      background-color: #e6f7ff;
+      border: 1px solid #91d5ff;
       padding: 8px 10px;
       border-radius: 6px;
       font-weight: bold;
       text-align: center;
-      flex-grow: 1; /* Faz os botões crescerem para preencher o espaço */
+      flex-grow: 1;
       box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      /* Para o botão da média geral, podemos usar uma cor diferente */
       &.general-note {{
-        background-color: #dff0d8; /* Cor verde clara */
-        border: 1px solid #5cb85c; /* Borda verde */
+        background-color: #dff0d8;
+        border: 1px solid #5cb85c;
       }}
     }}
     .nota-label {{
-        font-size: 0.85em; /* Aumentado para 0.85em */
+        font-size: 0.85em;
         color: #555;
         display: block;
         margin-bottom: 3px;
     }}
     .nota-value {{
-        font-size: 1.3em; /* Aumentado para 1.3em */
+        font-size: 1.3em;
         color: #000;
     }}
 
