@@ -488,7 +488,7 @@ def main():
     }}
     .box {{
       background-color: #f0f0f0;
-      border-left: 4px solid #999999;
+      border-left: 4_px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
@@ -638,7 +638,7 @@ def main():
         nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
-        # O campo da Nota Geral agora é um input manual, não desabilitado
+        # O campo da Nota Geral agora é um input manual
         nota_geral_ponderada = st.number_input("Nota Geral", min_value=0.0, max_value=10.0, step=0.01, value=8.8, key="nota_geral_manual")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
@@ -688,42 +688,41 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilos para os "botões" de nota */
-    .nota-button-container {{
-      display: flex; /* Usa flexbox para alinhar os itens em uma linha */
-      justify-content: space-between; /* Distribui o espaço entre os itens */
-      gap: 10px; /* Espaço entre os "botões" */
-      margin-top: 20px;
-      flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
+    /* Estilos para o contêiner das notas */
+    .notas-container {{
+        width: 100%;
+        border-collapse: collapse; /* Para garantir que as células não tenham espaçamento */
+        margin-top: 20px;
+        table-layout: fixed; /* Ajuda a distribuir larguras igualmente */
     }}
-    .nota-button {{
+    .nota-cell {{
+        width: 33.33%; /* Divide o espaço igualmente entre as 3 células */
+        padding: 0 5px; /* Espaçamento horizontal entre as "caixas" */
+        vertical-align: top; /* Alinha o conteúdo ao topo da célula */
+    }}
+    .nota-card {{
       background-color: #e6f7ff;
       border: 1px solid #91d5ff;
-      padding: 12px 15px; /* Aumentado padding para parecer mais um botão */
-      border-radius: 8px; /* Borda mais arredondada */
+      padding: 12px 15px;
+      border-radius: 8px;
       font-weight: bold;
       text-align: center;
-      flex: 1; /* Permite que os itens cresçam e ocupem o espaço disponível */
-      min-width: 150px; /* Garante um tamanho mínimo para o "botão" */
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra mais pronunciada */
-      display: flex; /* Flexbox para alinhar label e valor verticalmente */
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     }}
-    .nota-button.general-note {{
+    .nota-card.general-note {{
       background-color: #dff0d8;
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.9em; /* Ajustado tamanho da fonte do label */
+        font-size: 0.9em;
         color: #555;
         display: block;
-        margin-bottom: 5px; /* Mais espaço entre label e valor */
+        margin-bottom: 5px;
     }}
     .nota-value {{
-        font-size: 1.5em; /* Ajustado tamanho da fonte do valor */
+        font-size: 1.5em;
         color: #000;
+        line-height: 1; /* Para evitar espaçamento extra */
     }}
 
     a {{
@@ -764,20 +763,28 @@ def main():
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-button-container">
-      <div class="nota-button">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
-      </div>
-      <div class="nota-button">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
-      </div>
-      <div class="nota-button general-note">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
-      </div>
-    </div>
+    <table class="notas-container" role="presentation">
+      <tr>
+        <td class="nota-cell">
+          <div class="nota-card">
+            <span class="nota-label">TRABALHO ESCRITO</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
+          </div>
+        </td>
+        <td class="nota-cell">
+          <div class="nota-card">
+            <span class="nota-label">APRESENTAÇÃO ORAL</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
+          </div>
+        </td>
+        <td class="nota-cell">
+          <div class="nota-card general-note">
+            <span class="nota-label">NOTA GERAL</span>
+            <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+          </div>
+        </td>
+      </tr>
+    </table>
 
     <p style="clear: both; margin-top: 30px;">
       Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
