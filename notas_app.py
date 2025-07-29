@@ -1,11 +1,11 @@
 import streamlit as st
 
 # Função auxiliar para formatar notas no padrão brasileiro
-def formatar_nota_br(nota):
+def formatar_nota_br(nota, casas_decimais=1):
     if nota == int(nota):
-        return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
+        return str(int(nota)).replace('.', ',')
     else:
-        return f"{nota:.2f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
+        return f"{nota:.{casas_decimais}f}".replace('.', ',')
 
 # HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
@@ -768,7 +768,7 @@ def main():
       </div>
       <div class="nota-item">
         <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada)}</span>
+        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
       </div>
     </div>
 
