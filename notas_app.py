@@ -259,11 +259,11 @@ def main():
             "Clareza e coerência dos resultados"
         ]
         for c in criterios_i:
-            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.5)
+            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{c.replace(' ', '_')}")
 
         media_i = sum(notas_i.values()) / len(notas_i)
 
-        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."')
+        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Notas Avaliador(a) II")
@@ -276,11 +276,11 @@ def main():
             "Clareza e coerência dos resultados"
         ]
         for c in criterios_ii:
-            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.5)
+            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{c.replace(' ', '_')}")
 
         media_ii = sum(notas_ii.values()) / len(notas_ii)
 
-        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''')
+        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
         nota_final = (media_i + media_ii) / 2
 
@@ -389,8 +389,8 @@ def main():
 
     <p>
       As orientações para a elaboração e o envio do arquivo da apresentação estão disponíveis no site do evento:<br />
-      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">
-        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
+      <a href="https://www.even3.com.br/vii-semana-academia-da-propriedade-intelectual-594540/" target="_blank">
+        https://www.even3.com.br/vii-semana-academia-da-propriedade-intelectual-594540/
       </a>
     </p>
 
@@ -417,11 +417,11 @@ def main():
             "Clareza e coerência dos resultados"
         ]
         for c in criterios_i:
-            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=6.5)
+            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{c.replace(' ', '_')}")
 
         media_i = sum(notas_i.values()) / len(notas_i)
 
-        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."')
+        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Notas Avaliador(a) II")
@@ -434,11 +434,11 @@ def main():
             "Clareza e coerência dos resultados"
         ]
         for c in criterios_ii:
-            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=6.5)
+            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{c.replace(' ', '_')}")
 
         media_ii = sum(notas_ii.values()) / len(notas_ii)
 
-        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."')
+        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
         nota_final = (media_i + media_ii) / 2
 
@@ -573,58 +573,92 @@ def main():
         st.subheader("Lembrete para apresentação")
         st.code(html_lembrete_apresentacao, language="html")
 
-    <!DOCTYPE html>
+    elif aba == "Resultado final":
+        st.header("Resultado Final")
+
+        st.subheader("Notas Avaliador(a) I - Apresentação")
+        notas_final_i = {}
+        criterios_final = [
+            "Correspondência ao tema e seção temática",
+            "Originalidade e contribuição",
+            "Clareza do problema, objetivos e justificativa",
+            "Adequação metodológica",
+            "Clareza e coerência dos resultados",
+            "Domínio do conteúdo apresentado",
+            "Adequação ao tempo de apresentação"
+        ]
+        for c in criterios_final:
+            notas_final_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{c.replace(' ', '_')}")
+
+        media_final_i = sum(notas_final_i.values()) / len(notas_final_i)
+
+        st.subheader("Notas Avaliador(a) II - Apresentação")
+        notas_final_ii = {}
+        for c in criterios_final:
+            notas_final_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{c.replace(' ', '_')}")
+
+        media_final_ii = sum(notas_final_ii.values()) / len(notas_final_ii)
+
+        nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        nota_geral_ponderada = st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=8.85)
+
+        hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
+
+
+        html_resultado_final = f"""
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {
+    body {{
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 20px;
-    }
-    .container {
+    }}
+    .container {{
       max-width: 700px;
       margin: auto;
-    }
-    .box {
+    }}
+    .box {{
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-    }
-    table {
+    }}
+    table {{
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-    }
-    th, td {
+    }}
+    th, td {{
       text-align: left;
       padding: 8px;
       border-bottom: 1px solid #ccc;
-    }
-    th {
+    }}
+    th {{
       background-color: #e0e0e0;
-    }
-    .nota-final {
+    }}
+    .nota-final {{
       background-color: #dff0d8;
       border-left: 4px solid #5cb85c;
       padding: 16px;
       margin-top: 20px;
       border-radius: 4px;
       font-weight: bold;
-    }
-    a {
+    }}
+    a {{
       color: #0645ad;
       text-decoration: none;
-    }
-    a:hover {
+    }}
+    a:hover {{
       text-decoration: underline;
-    }
+    }}
   </style>
 </head>
 <body>
@@ -642,40 +676,28 @@ def main():
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>8,5</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>9,0</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>8,0</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>9,5</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>8,5</td></tr>
-        <tr><td>6. Domínio do conteúdo apresentado</td><td>9,5</td></tr>
-        <tr><td>7. Adequação ao tempo de apresentação</td><td>9,0</td></tr>
+        {''.join(f'<tr><td>{c}</td><td>{notas_final_i[c]:.1f}</td></tr>' for c in criterios_final)}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: 8,9</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_final_i:.1f}</strong></p>
     </div>
 
     <div class="box">
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>9,0</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>8,5</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>8,5</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>9,0</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>9,0</td></tr>
-        <tr><td>6. Domínio do conteúdo apresentado</td><td>8,5</td></tr>
-        <tr><td>7. Adequação ao tempo de apresentação</td><td>9,5</td></tr>
+        {''.join(f'<tr><td>{c}</td><td>{notas_final_ii[c]:.1f}</td></tr>' for c in criterios_final)}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: 8,8</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_final_ii:.1f}</strong></p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho escrito: <strong>8,7</strong><br />
-      Nota final da apresentação oral: <strong>9,0</strong><br />
-      Nota geral (média ponderada): <strong>8,85</strong>
+      Nota final do trabalho escrito: <strong>{nota_final_escrito:.1f}</strong><br />
+      Nota final da apresentação oral: <strong>{nota_final_apresentacao:.1f}</strong><br />
+      Nota geral (média ponderada): <strong>{nota_geral_ponderada:.2f}</strong>
     </div>
 
     <p>
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às XXh</strong>, no auditório do SergipeTec.
+      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
       Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de “Melhor Trabalho”</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
 
@@ -689,6 +711,8 @@ def main():
   </div>
 </body>
 </html>
+"""
+        st.code(html_resultado_final, language="html")
 
 
 if __name__ == "__main__":
