@@ -1,42 +1,49 @@
 import streamlit as st
 
-st.set_page_config(page_title="Gerador de Emails - VII SEMPI", layout="wide")
+st.set_page_config(page_title="Gerador de Emails SEMPI", layout="wide")
+
 st.title("Gerador de Emails - VII SEMPI")
 
-tab1, tab2, tab3, tab4 = st.tabs(["Avaliação Completa", "Desclassificação", "Resultado Trabalho Escrito", "Reprovação"])
+tabs = st.tabs(["Avaliação Completa", "Desclassificação", "Lembrete da Apresentação"])
 
-# --- Aba Avaliação Completa ---
-with tab1:
-    st.header("Email de Avaliação Completa")
+# --- Aba 1: Avaliação Completa ---
+with tabs[0]:
+    st.header("Avaliação Completa")
 
-    nome = st.text_input("Nome do(a) participante", key="nome")
-
+    nome = st.text_input("Nome do Autor(a)", key="nome")
+    
     st.subheader("Notas Avaliador(a) I")
-    c1_a1 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador I)", key="c1_a1")
-    c2_a1 = st.text_input("2. Originalidade e contribuição (Avaliador I)", key="c2_a1")
-    c3_a1 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador I)", key="c3_a1")
-    c4_a1 = st.text_input("4. Adequação metodológica (Avaliador I)", key="c4_a1")
-    c5_a1 = st.text_input("5. Clareza e coerência dos resultados (Avaliador I)", key="c5_a1")
-    c6_a1 = st.text_input("6. Domínio do conteúdo apresentado (Avaliador I)", key="c6_a1")
-    c7_a1 = st.text_input("7. Adequação ao tempo de apresentação (Avaliador I)", key="c7_a1")
-    media_a1 = st.text_input("Média ponderada Avaliador(a) I", key="media_a1")
+    c1_a1 = st.number_input("1. Correspondência ao tema e seção temática", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c1_a1")
+    c2_a1 = st.number_input("2. Originalidade e contribuição", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c2_a1")
+    c3_a1 = st.number_input("3. Clareza do problema, objetivos e justificativa", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c3_a1")
+    c4_a1 = st.number_input("4. Adequação metodológica", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c4_a1")
+    c5_a1 = st.number_input("5. Clareza e coerência dos resultados", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c5_a1")
+    c6_a1 = st.number_input("6. Domínio do conteúdo apresentado", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c6_a1")
+    c7_a1 = st.number_input("7. Adequação ao tempo de apresentação", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c7_a1")
+
+    media_a1 = round((c1_a1 + c2_a1 + c3_a1 + c4_a1 + c5_a1 + c6_a1 + c7_a1) / 7, 2)
+    st.write(f"Média ponderada do(a) Avaliador(a) I: **{media_a1}**")
 
     st.subheader("Notas Avaliador(a) II")
-    c1_a2 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador II)", key="c1_a2")
-    c2_a2 = st.text_input("2. Originalidade e contribuição (Avaliador II)", key="c2_a2")
-    c3_a2 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador II)", key="c3_a2")
-    c4_a2 = st.text_input("4. Adequação metodológica (Avaliador II)", key="c4_a2")
-    c5_a2 = st.text_input("5. Clareza e coerência dos resultados (Avaliador II)", key="c5_a2")
-    c6_a2 = st.text_input("6. Domínio do conteúdo apresentado (Avaliador II)", key="c6_a2")
-    c7_a2 = st.text_input("7. Adequação ao tempo de apresentação (Avaliador II)", key="c7_a2")
-    media_a2 = st.text_input("Média ponderada Avaliador(a) II", key="media_a2")
+    c1_a2 = st.number_input("1. Correspondência ao tema e seção temática", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c1_a2")
+    c2_a2 = st.number_input("2. Originalidade e contribuição", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c2_a2")
+    c3_a2 = st.number_input("3. Clareza do problema, objetivos e justificativa", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c3_a2")
+    c4_a2 = st.number_input("4. Adequação metodológica", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c4_a2")
+    c5_a2 = st.number_input("5. Clareza e coerência dos resultados", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c5_a2")
+    c6_a2 = st.number_input("6. Domínio do conteúdo apresentado", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c6_a2")
+    c7_a2 = st.number_input("7. Adequação ao tempo de apresentação", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key="c7_a2")
 
-    nota_final_escrito = st.text_input("Nota final do trabalho escrito", key="nota_final_escrito")
-    nota_final_oral = st.text_input("Nota final da apresentação oral", key="nota_final_oral")
-    nota_geral = st.text_input("Nota geral (média ponderada)", key="nota_geral")
+    media_a2 = round((c1_a2 + c2_a2 + c3_a2 + c4_a2 + c5_a2 + c6_a2 + c7_a2) / 7, 2)
+    st.write(f"Média ponderada do(a) Avaliador(a) II: **{media_a2}**")
 
-    if st.button("📤 Gerar Email Avaliação Completa"):
-        html_email = f"""<!DOCTYPE html>
+    nota_final_escrito = st.number_input("Nota final do trabalho escrito", min_value=0.0, max_value=10.0, step=0.1, format="%.2f", key="nota_final_escrito")
+    nota_final_oral = st.number_input("Nota final da apresentação oral", min_value=0.0, max_value=10.0, step=0.1, format="%.2f", key="nota_final_oral")
+
+    nota_geral = round((nota_final_escrito + nota_final_oral) / 2, 2)
+    st.write(f"Nota geral (média ponderada): **{nota_geral}**")
+
+    if st.button("📤 Gerar HTML Avaliação Completa"):
+        html = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -104,13 +111,13 @@ with tab1:
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_a1}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_a1}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_a1}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_a1}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_a1}</td></tr>
-        <tr><td>6. Domínio do conteúdo apresentado</td><td>{c6_a1}</td></tr>
-        <tr><td>7. Adequação ao tempo de apresentação</td><td>{c7_a1}</td></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_a1:.1f}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{c2_a1:.1f}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_a1:.1f}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{c4_a1:.1f}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_a1:.1f}</td></tr>
+        <tr><td>6. Domínio do conteúdo apresentado</td><td>{c6_a1:.1f}</td></tr>
+        <tr><td>7. Adequação ao tempo de apresentação</td><td>{c7_a1:.1f}</td></tr>
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) I: {media_a1}</strong></p>
     </div>
@@ -119,21 +126,21 @@ with tab1:
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_a2}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_a2}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_a2}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_a2}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_a2}</td></tr>
-        <tr><td>6. Domínio do conteúdo apresentado</td><td>{c6_a2}</td></tr>
-        <tr><td>7. Adequação ao tempo de apresentação</td><td>{c7_a2}</td></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_a2:.1f}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{c2_a2:.1f}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_a2:.1f}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{c4_a2:.1f}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_a2:.1f}</td></tr>
+        <tr><td>6. Domínio do conteúdo apresentado</td><td>{c6_a2:.1f}</td></tr>
+        <tr><td>7. Adequação ao tempo de apresentação</td><td>{c7_a2:.1f}</td></tr>
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) II: {media_a2}</strong></p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho escrito: <strong>{nota_final_escrito}</strong><br />
-      Nota final da apresentação oral: <strong>{nota_final_oral}</strong><br />
-      Nota geral (média ponderada): <strong>{nota_geral}</strong>
+      Nota final do trabalho escrito: <strong>{nota_final_escrito:.2f}</strong><br />
+      Nota final da apresentação oral: <strong>{nota_final_oral:.2f}</strong><br />
+      Nota geral (média ponderada): <strong>{nota_geral:.2f}</strong>
     </div>
 
     <p>
@@ -151,37 +158,41 @@ with tab1:
   </div>
 </body>
 </html>"""
+        st.success("✅ HTML gerado com sucesso!")
+        st.code(html, language="html")
 
-        st.success("✅ Email Avaliação Completa gerado!")
-        st.code(html_email, language="html")
 
-# --- Aba Desclassificação ---
-with tab2:
-    st.header("Email de Desclassificação")
+# --- Aba 2: Desclassificação ---
+with tabs[1]:
+    st.header("Desclassificação")
 
-    nome_desc = st.text_input("Nome do(a) participante (Desclassificação)", key="nome2")
+    nome_des = st.text_input("Nome do Autor(a) para Desclassificação", key="nome_des")
+    
+    motivos = st.session_state.get("motivos", [""])  # manter lista em sessão
 
-    if "motivos" not in st.session_state:
-        st.session_state.motivos = ["", "", ""]
+    def add_motivo():
+        motivos.append("")
+        st.session_state["motivos"] = motivos
+
+    def remove_motivo():
+        if motivos:
+            motivos.pop()
+            st.session_state["motivos"] = motivos
+
+    # Controle para editar motivos
+    st.write("### Motivos para desclassificação (edite os textos):")
+    for i in range(len(motivos)):
+        motivos[i] = st.text_input(f"Motivo {i+1}", value=motivos[i], key=f"motivo_{i}")
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("➕ Adicionar motivo"):
-            st.session_state.motivos.append("")
+        st.button("➕ Adicionar motivo", on_click=add_motivo)
     with col2:
-        if st.button("➖ Remover último motivo"):
-            if len(st.session_state.motivos) > 1:
-                st.session_state.motivos.pop()
+        st.button("➖ Remover motivo", on_click=remove_motivo)
 
-    for i in range(len(st.session_state.motivos)):
-        st.session_state.motivos[i] = st.text_input(f"Motivo {i+1}", value=st.session_state.motivos[i], key=f"motivo_{i}")
-
-    prazo_resubmissao = st.text_input("Prazo para ressubmissão", value="31 de julho de 2025", key="prazo")
-
-    if st.button("📤 Gerar Email Desclassificação"):
-        motivos_html = "\n".join(f"<li>{m}</li>" for m in st.session_state.motivos if m.strip() != "")
-
-        html_desc = f"""<!DOCTYPE html>
+    if st.button("📤 Gerar HTML Desclassificação"):
+        motivos_html = "".join(f"<li>{m}</li>" for m in motivos if m.strip() != "")
+        html_des = f"""<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -230,7 +241,7 @@ with tab2:
 
       <p>
         Solicitamos, gentilmente, que as correções sejam realizadas e o trabalho corrigido seja ressubmetido no sistema até o dia
-        <strong>{prazo_resubmissao}</strong>.
+        <strong>31 de julho de 2025</strong>.
       </p>
 
       <p>
@@ -239,44 +250,19 @@ with tab2:
     </div>
   </body>
 </html>"""
+        st.success("✅ HTML gerado com sucesso!")
+        st.code(html_des, language="html")
 
-        st.success("✅ Email Desclassificação gerado!")
-        st.code(html_desc, language="html")
 
-# --- Aba Resultado Trabalho Escrito ---
-with tab3:
-    st.header("Email Resultado do Trabalho Escrito")
+# --- Aba 3: Lembrete da Apresentação ---
+with tabs[2]:
+    st.header("Lembrete da Apresentação")
 
-    nome_res = st.text_input("Nome do(a) participante (Resultado)", key="nome3")
+    tempo_apresentacao = st.text_input("Tempo para exposição do trabalho (minutos)", value="XX", key="tempo_exp")
+    tempo_arguicao = st.text_input("Tempo para arguição/comentários (minutos)", value="X", key="tempo_arg")
 
-    st.subheader("Notas Avaliador(a) I")
-    c1_r_a1 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador I)", key="c1_r_a1")
-    c2_r_a1 = st.text_input("2. Originalidade e contribuição (Avaliador I)", key="c2_r_a1")
-    c3_r_a1 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador I)", key="c3_r_a1")
-    c4_r_a1 = st.text_input("4. Adequação metodológica (Avaliador I)", key="c4_r_a1")
-    c5_r_a1 = st.text_input("5. Clareza e coerência dos resultados (Avaliador I)", key="c5_r_a1")
-    media_r_a1 = st.text_input("Média ponderada Avaliador(a) I", key="media_r_a1")
-    parecer_a1 = st.text_area("Parecer Avaliador(a) I", key="parecer_a1")
-
-    st.subheader("Notas Avaliador(a) II")
-    c1_r_a2 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador II)", key="c1_r_a2")
-    c2_r_a2 = st.text_input("2. Originalidade e contribuição (Avaliador II)", key="c2_r_a2")
-    c3_r_a2 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador II)", key="c3_r_a2")
-    c4_r_a2 = st.text_input("4. Adequação metodológica (Avaliador II)", key="c4_r_a2")
-    c5_r_a2 = st.text_input("5. Clareza e coerência dos resultados (Avaliador II)", key="c5_r_a2")
-    media_r_a2 = st.text_input("Média ponderada Avaliador(a) II", key="media_r_a2")
-    parecer_a2 = st.text_area("Parecer Avaliador(a) II", key="parecer_a2")
-
-    nota_final_res = st.text_input("Nota final do trabalho", key="nota_final_res")
-
-    link_even3 = st.text_input(
-        "Link do evento",
-        value="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/",
-        key="link_even3",
-    )
-
-    if st.button("📤 Gerar Email Resultado Trabalho Escrito"):
-        html_res = f"""<!DOCTYPE html>
+    if st.button("📤 Gerar HTML Lembrete da Apresentação"):
+        html_lembrete = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -287,43 +273,14 @@ with tab3:
       color: #333333;
       background-color: #ffffff;
       margin: 0;
-      padding: 0;
+      padding: 0 20px 20px 20px;
     }}
     .container {{
-      padding: 20px;
+      max-width: 700px;
+      margin: auto;
     }}
-    .box {{
-      background-color: #f0f0f0;
-      border-left: 4px solid #999999;
-      padding: 16px;
-      margin: 20px 0;
-      border-radius: 4px;
-    }}
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }}
-    th, td {{
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }}
-    th {{
-      background-color: #e0e0e0;
-    }}
-    .nota-final {{
-      background-color: #dff0d8;
-      border-left: 4px solid #5cb85c;
-      padding: 16px;
-      margin-top: 20px;
-      border-radius: 4px;
-      font-weight: bold;
-    }}
-    .parecer {{
-      margin-top: 10px;
-      font-style: italic;
-      color: #444;
+    p {{
+      margin-bottom: 16px;
     }}
     a {{
       color: #0645ad;
@@ -332,221 +289,66 @@ with tab3:
     a:hover {{
       text-decoration: underline;
     }}
+    .highlight {{
+      background-color: #f0f0f0;
+      border-left: 4px solid #999999;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 16px 0;
+      font-size: 0.95em;
+    }}
   </style>
 </head>
 <body>
   <div class="container">
     <p>Prezados(as),</p>
 
-    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
-
     <p>
-      Temos o prazer de informar que o seu resumo expandido foi <strong>aprovado</strong> para apresentação oral na
-      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
+      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> relembra que as apresentações dos resumos aprovados acontecerão <strong>amanhã</strong>. A programação completa, contendo datas, horários, locais e a ordem das apresentações, já se encontra disponível no site oficial do evento:
     </p>
 
     <p>
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
-    </p>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong></p>
-      <table>
-        <tr>
-          <th>Critério</th>
-          <th>Nota</th>
-        </tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_r_a1}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_r_a1}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_r_a1}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_r_a1}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_r_a1}</td></tr>
-      </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_r_a1}</strong></p>
-      <p class="parecer">"{parecer_a1}"</p>
-    </div>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong></p>
-      <table>
-        <tr>
-          <th>Critério</th>
-          <th>Nota</th>
-        </tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_r_a2}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_r_a2}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_r_a2}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_r_a2}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_r_a2}</td></tr>
-      </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_r_a2}</strong></p>
-      <p class="parecer">"{parecer_a2}"</p>
-    </div>
-
-    <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final_res}</strong>
-    </div>
-
-    <p>
-      As orientações para a elaboração e o envio do arquivo da apresentação estão disponíveis no site do evento:<br />
-      <a href="{link_even3}" target="_blank">
-        {link_even3}
+      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
+        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
       </a>
     </p>
 
+    <div class="highlight">
+      <p><strong>⚠️ Orientações importantes:</strong></p>
+      <ul style="margin-top: 0; padding-left: 20px;">
+        <li>Autores que apresentarão seus trabalhos presencialmente devem comparecer ao local da sessão com, no mínimo, <strong>20 minutos de antecedência</strong>.</li>
+        <li>Essa orientação também se aplica aos participantes com apresentação on-line autorizada, mediante justificativa formal.</li>
+        <li><strong>Não serão permitidas correções ou substituições</strong> do arquivo de apresentação durante o evento.</li>
+      </ul>
+    </div>
+
     <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
+      Cada apresentador(a) disporá de até <strong>{tempo_apresentacao} minutos</strong> para a exposição do trabalho, seguidos de até <strong>{tempo_arguicao} minutos</strong> para arguição e/ou comentários dos(as) avaliadores(as).
+    </p>
+
+    <p>
+      Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguem os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
+    </p>
+
+    <ul style="padding-left: 20px;">
+      <li>Domínio do conteúdo apresentado;</li>
+      <li>Adequação ao tempo de apresentação.</li>
+    </ul>
+
+    <p>
+      Cada critério será avaliado em uma escala de 0 a 10, e a nota final de cada avaliador será calculada com base na média ponderada das notas atribuídas. A nota final da apresentação corresponderá à média aritmética das avaliações dos dois pareceristas.
+    </p>
+
+    <p>
+      Para fins de premiação, será considerada a média ponderada entre a nota do resumo e a nota da apresentação.
+    </p>
+
+    <p>
+      Desejamos uma excelente apresentação!
     </p>
   </div>
 </body>
 </html>"""
 
-        st.success("✅ Email Resultado Trabalho Escrito gerado!")
-        st.code(html_res, language="html")
-
-# --- Aba Reprovação ---
-with tab4:
-    st.header("Email de Reprovação")
-
-    nome_rep = st.text_input("Nome do(a) participante (Reprovação)", key="nome4")
-
-    st.subheader("Notas Avaliador(a) I")
-    c1_rep_a1 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador I)", key="c1_rep_a1")
-    c2_rep_a1 = st.text_input("2. Originalidade e contribuição (Avaliador I)", key="c2_rep_a1")
-    c3_rep_a1 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador I)", key="c3_rep_a1")
-    c4_rep_a1 = st.text_input("4. Adequação metodológica (Avaliador I)", key="c4_rep_a1")
-    c5_rep_a1 = st.text_input("5. Clareza e coerência dos resultados (Avaliador I)", key="c5_rep_a1")
-    media_rep_a1 = st.text_input("Média ponderada Avaliador(a) I", key="media_rep_a1")
-    parecer_rep_a1 = st.text_area("Parecer Avaliador(a) I", key="parecer_rep_a1")
-
-    st.subheader("Notas Avaliador(a) II")
-    c1_rep_a2 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador II)", key="c1_rep_a2")
-    c2_rep_a2 = st.text_input("2. Originalidade e contribuição (Avaliador II)", key="c2_rep_a2")
-    c3_rep_a2 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador II)", key="c3_rep_a2")
-    c4_rep_a2 = st.text_input("4. Adequação metodológica (Avaliador II)", key="c4_rep_a2")
-    c5_rep_a2 = st.text_input("5. Clareza e coerência dos resultados (Avaliador II)", key="c5_rep_a2")
-    media_rep_a2 = st.text_input("Média ponderada Avaliador(a) II", key="media_rep_a2")
-    parecer_rep_a2 = st.text_area("Parecer Avaliador(a) II", key="parecer_rep_a2")
-
-    nota_final_rep = st.text_input("Nota final do trabalho", key="nota_final_rep")
-
-    if st.button("📤 Gerar Email Reprovação"):
-        html_rep = f"""<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <style>
-    body {{
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333333;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }}
-    .container {{
-      padding: 20px;
-    }}
-    .box {{
-      background-color: #f0f0f0;
-      border-left: 4px solid #999999;
-      padding: 16px;
-      margin: 20px 0;
-      border-radius: 4px;
-    }}
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }}
-    th, td {{
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }}
-    th {{
-      background-color: #e0e0e0;
-    }}
-    .nota-final {{
-      background-color: #f8d7da;
-      border-left: 4px solid #dc3545;
-      padding: 16px;
-      margin-top: 20px;
-      border-radius: 4px;
-      font-weight: bold;
-      color: #721c24;
-    }}
-    .parecer {{
-      margin-top: 10px;
-      font-style: italic;
-      color: #444;
-    }}
-    a {{
-      color: #0645ad;
-      text-decoration: none;
-    }}
-    a:hover {{
-      text-decoration: underline;
-    }}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <p>Prezados(as),</p>
-
-    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
-
-    <p>
-      Informamos que o seu resumo expandido <strong>não foi aprovado</strong> para apresentação oral na
-      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
-    </p>
-
-    <p>
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
-    </p>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_rep_a1}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_rep_a1}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_rep_a1}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_rep_a1}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_rep_a1}</td></tr>
-      </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_rep_a1}</strong></p>
-      <p class="parecer">"{parecer_rep_a1}"</p>
-    </div>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_rep_a2}</td></tr>
-        <tr><td>2. Originalidade e contribuição</td><td>{c2_rep_a2}</td></tr>
-        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_rep_a2}</td></tr>
-        <tr><td>4. Adequação metodológica</td><td>{c4_rep_a2}</td></tr>
-        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_rep_a2}</td></tr>
-      </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_rep_a2}</strong></p>
-      <p class="parecer">"{parecer_rep_a2}"</p>
-    </div>
-
-    <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final_rep}</strong>
-    </div>
-
-    <p>
-      Agradecemos seu interesse em participar da VII SEMPI e esperamos contar com sua presença em futuras edições.
-    </p>
-
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
-  </div>
-</body>
-</html>"""
-
-        st.success("✅ Email Reprovação gerado!")
-        st.code(html_rep, language="html")
+        st.success("✅ HTML do Lembrete da Apresentação gerado!")
+        st.code(html_lembrete, language="html")
