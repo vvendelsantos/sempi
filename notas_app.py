@@ -1,17 +1,13 @@
 import streamlit as st
-# Removido 'import base64' pois os botões de download não serão usados.
 
-# --- Funções Auxiliares ---
-
-# Função para formatar notas no padrão brasileiro
+# Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota):
     if nota == int(nota):
         return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
     else:
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
-# --- HTML Bases para Lembretes ---
-
+# HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -182,8 +178,6 @@ LEMBRETE_APRESENTACAO_HTML = """
 </html>
 """
 
-# --- Função Principal do Aplicativo Streamlit ---
-
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
@@ -192,16 +186,14 @@ def main():
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
-    # --- Inicialização de variáveis no st.session_state (se ainda precisar delas na aba lembretes) ---
-    # Removi a inicialização condicional para os botões que você não quer mais.
-    # As variáveis de texto e tempo nos Lembretes continuam usando st.session_state para persistência.
-    if 'texto_envio_arquivo' not in st.session_state:
-        st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
-    if 'tempo_apresentacao' not in st.session_state:
-        st.session_state.tempo_apresentacao = 10
-    if 'tempo_arguicao' not in st.session_state:
-        st.session_state.tempo_arguicao = 5
+    # --- Inicialização das variáveis para 'Lembretes' ---
+    # Isso garante que elas sempre existam, mesmo antes da aba ser selecionada.
+    # Se a aba for selecionada, os widgets do Streamlit sobrescreverão esses valores padrão.
+    texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
+    tempo_apresentacao = 10
+    tempo_arguicao = 5
     # --- Fim da Inicialização ---
+
 
     if aba == "Desclassificação":
         st.header("Desclassificação")
@@ -592,8 +584,7 @@ def main():
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho:
-      <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
+      Nota final do trabalho: <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
     </div>
 
     <p>
@@ -609,31 +600,16 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        # Usamos o `key` para armazenar o valor no st.session_state
-        st.session_state.texto_envio_arquivo = st.text_area(
-            "Digite o texto para o lembrete de envio do arquivo:",
-            value=st.session_state.texto_envio_arquivo,
-            key="input_texto_envio_arquivo"
-        )
+        # Os inputs do Streamlit agora sobrescreverão os valores padrão se a aba for carregada.
+        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value=texto_envio_arquivo)
 
         st.markdown("### Tempos para apresentação")
-        st.session_state.tempo_apresentacao = st.number_input(
-            "Tempo para apresentação (minutos)",
-            min_value=1, max_value=60, value=st.session_state.tempo_apresentacao,
-            key="input_tempo_apresentacao"
-        )
-        st.session_state.tempo_arguicao = st.number_input(
-            "Tempo para arguição (minutos)",
-            min_value=1, max_value=30, value=st.session_state.tempo_arguicao,
-            key="input_tempo_arguicao"
-        )
+        tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=tempo_apresentacao)
+        tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=tempo_arguicao)
 
-        # Agora usamos os valores do st.session_state para formatar o HTML
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=st.session_state.texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
-            tempo_apresentacao=st.session_state.tempo_apresentacao,
-            tempo_arguicao=st.session_state.tempo_arguicao
-        )
+        # As linhas de formatação agora usarão os valores mais recentes (do input ou padrão).
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
@@ -670,11 +646,11 @@ def main():
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
         # Entradas de notas com rótulos mais diretos
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
         # O campo da Nota Geral agora é um input manual
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, key="nota_geral_manual")
+        nota_geral_ponderada = st.number_input("Nota Geral", min_value=0.0, max_value=10.0, step=0.01, value=8.8, key="nota_geral_manual")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -736,7 +712,7 @@ def main():
         vertical-align: top; /* Alinha o conteúdo ao topo da célula */
     }}
     .nota-card {{
-      background-color: #e6f7ff; /* Cor para Trabalho Escrito e Apresentação Oral */
+      background-color: #e6f7ff;
       border: 1px solid #91d5ff;
       padding: 12px 15px;
       border-radius: 8px;
@@ -745,7 +721,7 @@ def main():
       box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     }}
     .nota-card.general-note {{
-      background-color: #dff0d8; /* Cor diferenciada para Nota Geral (verde claro) */
+      background-color: #dff0d8;
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
