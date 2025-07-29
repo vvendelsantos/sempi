@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Gerador de Emails - VII SEMPI", layout="wide")
 st.title("Gerador de Emails - VII SEMPI")
 
-tab1, tab2, tab3 = st.tabs(["Avaliação Completa", "Desclassificação", "Resultado Trabalho Escrito"])
+tab1, tab2, tab3, tab4 = st.tabs(["Avaliação Completa", "Desclassificação", "Resultado Trabalho Escrito", "Reprovação"])
 
 # --- Aba Avaliação Completa ---
 with tab1:
@@ -269,9 +269,11 @@ with tab3:
 
     nota_final_res = st.text_input("Nota final do trabalho", key="nota_final_res")
 
-    link_even3 = st.text_input("Link do evento", 
-                               value="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/",
-                               key="link_even3")
+    link_even3 = st.text_input(
+        "Link do evento",
+        value="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/",
+        key="link_even3",
+    )
 
     if st.button("📤 Gerar Email Resultado Trabalho Escrito"):
         html_res = f"""<!DOCTYPE html>
@@ -401,3 +403,150 @@ with tab3:
 
         st.success("✅ Email Resultado Trabalho Escrito gerado!")
         st.code(html_res, language="html")
+
+# --- Aba Reprovação ---
+with tab4:
+    st.header("Email de Reprovação")
+
+    nome_rep = st.text_input("Nome do(a) participante (Reprovação)", key="nome4")
+
+    st.subheader("Notas Avaliador(a) I")
+    c1_rep_a1 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador I)", key="c1_rep_a1")
+    c2_rep_a1 = st.text_input("2. Originalidade e contribuição (Avaliador I)", key="c2_rep_a1")
+    c3_rep_a1 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador I)", key="c3_rep_a1")
+    c4_rep_a1 = st.text_input("4. Adequação metodológica (Avaliador I)", key="c4_rep_a1")
+    c5_rep_a1 = st.text_input("5. Clareza e coerência dos resultados (Avaliador I)", key="c5_rep_a1")
+    media_rep_a1 = st.text_input("Média ponderada Avaliador(a) I", key="media_rep_a1")
+    parecer_rep_a1 = st.text_area("Parecer Avaliador(a) I", key="parecer_rep_a1")
+
+    st.subheader("Notas Avaliador(a) II")
+    c1_rep_a2 = st.text_input("1. Correspondência ao tema e seção temática (Avaliador II)", key="c1_rep_a2")
+    c2_rep_a2 = st.text_input("2. Originalidade e contribuição (Avaliador II)", key="c2_rep_a2")
+    c3_rep_a2 = st.text_input("3. Clareza do problema, objetivos e justificativa (Avaliador II)", key="c3_rep_a2")
+    c4_rep_a2 = st.text_input("4. Adequação metodológica (Avaliador II)", key="c4_rep_a2")
+    c5_rep_a2 = st.text_input("5. Clareza e coerência dos resultados (Avaliador II)", key="c5_rep_a2")
+    media_rep_a2 = st.text_input("Média ponderada Avaliador(a) II", key="media_rep_a2")
+    parecer_rep_a2 = st.text_area("Parecer Avaliador(a) II", key="parecer_rep_a2")
+
+    nota_final_rep = st.text_input("Nota final do trabalho", key="nota_final_rep")
+
+    if st.button("📤 Gerar Email Reprovação"):
+        html_rep = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {{
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }}
+    .container {{
+      padding: 20px;
+    }}
+    .box {{
+      background-color: #f0f0f0;
+      border-left: 4px solid #999999;
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }}
+    th, td {{
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }}
+    th {{
+      background-color: #e0e0e0;
+    }}
+    .nota-final {{
+      background-color: #f8d7da;
+      border-left: 4px solid #dc3545;
+      padding: 16px;
+      margin-top: 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      color: #721c24;
+    }}
+    .parecer {{
+      margin-top: 10px;
+      font-style: italic;
+      color: #444;
+    }}
+    a {{
+      color: #0645ad;
+      text-decoration: none;
+    }}
+    a:hover {{
+      text-decoration: underline;
+    }}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>Prezados(as),</p>
+
+    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
+
+    <p>
+      Informamos que o seu resumo expandido <strong>não foi aprovado</strong> para apresentação oral na
+      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
+    </p>
+
+    <p>
+      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
+    </p>
+
+    <div class="box">
+      <p><strong>👤 Avaliador(a) I</strong></p>
+      <table>
+        <tr><th>Critério</th><th>Nota</th></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_rep_a1}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{c2_rep_a1}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_rep_a1}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{c4_rep_a1}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_rep_a1}</td></tr>
+      </table>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_rep_a1}</strong></p>
+      <p class="parecer">"{parecer_rep_a1}"</p>
+    </div>
+
+    <div class="box">
+      <p><strong>👤 Avaliador(a) II</strong></p>
+      <table>
+        <tr><th>Critério</th><th>Nota</th></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{c1_rep_a2}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{c2_rep_a2}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{c3_rep_a2}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{c4_rep_a2}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{c5_rep_a2}</td></tr>
+      </table>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_rep_a2}</strong></p>
+      <p class="parecer">"{parecer_rep_a2}"</p>
+    </div>
+
+    <div class="nota-final">
+      Nota final do trabalho: <strong>{nota_final_rep}</strong>
+    </div>
+
+    <p>
+      Agradecemos seu interesse em participar da VII SEMPI e esperamos contar com sua presença em futuras edições.
+    </p>
+
+    <p>
+      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
+    </p>
+  </div>
+</body>
+</html>"""
+
+        st.success("✅ Email Reprovação gerado!")
+        st.code(html_rep, language="html")
