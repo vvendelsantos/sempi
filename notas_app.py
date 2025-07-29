@@ -626,7 +626,7 @@ def main():
       padding: 20px;
     }}
     .container {{
-      max-width: 600px; /* Reduz a largura máxima do container */
+      max-width: 600px;
       margin: auto;
     }}
     .box {{
@@ -653,38 +653,32 @@ def main():
     .nota-button-container {{
       display: flex;
       justify-content: space-between;
-      gap: 8px; /* Espaço um pouco menor entre os botões */
+      gap: 8px; /* Espaço entre os botões */
       margin-top: 20px;
     }}
     .nota-button {{
       background-color: #e6f7ff; /* Cor azul clara */
       border: 1px solid #91d5ff; /* Borda azul */
-      padding: 8px 10px; /* Reduz o padding */
-      border-radius: 6px; /* Borda um pouco menos arredondada */
-      font-weight: bold;
-      text-align: center;
-      flex-grow: 1;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Sombra mais sutil */
-    }}
-    .nota-button-large {{
-      background-color: #dff0d8; /* Cor verde clara */
-      border: 1px solid #5cb85c; /* Borda verde */
-      padding: 10px 15px; /* Reduz o padding */
+      padding: 8px 10px;
       border-radius: 6px;
       font-weight: bold;
       text-align: center;
-      margin-top: 8px; /* Espaço menor acima do botão grande */
-      width: 100%;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Sombra mais sutil */
+      flex-grow: 1; /* Faz os botões crescerem para preencher o espaço */
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      /* Para o botão da média geral, podemos usar uma cor diferente */
+      &.general-note {{
+        background-color: #dff0d8; /* Cor verde clara */
+        border: 1px solid #5cb85c; /* Borda verde */
+      }}
     }}
     .nota-label {{
-        font-size: 0.8em; /* Fonte um pouco menor para o rótulo */
+        font-size: 0.7em; /* Reduzindo um pouco mais o tamanho do rótulo */
         color: #555;
         display: block;
-        margin-bottom: 3px; /* Espaço menor entre rótulo e valor */
+        margin-bottom: 3px;
     }}
     .nota-value {{
-        font-size: 1.4em; /* Fonte menor para o valor da nota */
+        font-size: 1.2em; /* Reduzindo um pouco mais o tamanho do valor */
         color: #000;
     }}
 
@@ -735,10 +729,10 @@ def main():
         <span class="nota-label">Nota final da apresentação oral:</span>
         <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
       </div>
-    </div>
-    <div class="nota-button-large">
-      <span class="nota-label">Nota geral (média ponderada):</span>
-      <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+      <div class="nota-button general-note">
+        <span class="nota-label">Nota geral (média ponderada):</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
+      </div>
     </div>
 
     <p>
