@@ -232,7 +232,7 @@ def main():
     </div>
 
     <p>
-      Solicitamos, gentilmente, que as correções sejam realizadas e o trabalho corrigido seja ressubmetido no sistema até o dia
+      Solicitamos, gentilmente, que as correções sejam realizadas e o trabalho corrigido seja ressubmitted no sistema até o dia
       <strong>31 de julho de 2025</strong>.
     </p>
 
@@ -248,41 +248,34 @@ def main():
     elif aba == "Aprovação":
         st.header("Aprovação")
 
-        # Notas Avaliador I
-        st.subheader("Notas Avaliador(a) I")
-        notas_i = {}
-        criterios_i = [
+        # Critérios de avaliação
+        criterios_avaliacao = [
             "Correspondência ao tema e seção temática",
             "Originalidade e contribuição",
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados"
         ]
-        for c in criterios_i:
-            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{c.replace(' ', '_')}")
 
-        media_i = sum(notas_i.values()) / len(notas_i)
+        # Notas Avaliador I
+        st.subheader("Notas Avaliador(a) I")
+        notas_i = {}
+        for i, c in enumerate(criterios_avaliacao):
+            notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{i}")
 
+        media_i = sum(notas_i.values()) / len(notas_i) if notas_i else 0
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Notas Avaliador(a) II")
         notas_ii = {}
-        criterios_ii = [
-            "Correspondência ao tema e seção temática",
-            "Originalidade e contribuição",
-            "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
-            "Clareza e coerência dos resultados"
-        ]
-        for c in criterios_ii:
-            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{c.replace(' ', '_')}")
+        for i, c in enumerate(criterios_avaliacao):
+            notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{i}")
 
-        media_ii = sum(notas_ii.values()) / len(notas_ii)
-
+        media_ii = sum(notas_ii.values()) / len(notas_ii) if notas_ii else 0
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
-        nota_final = (media_i + media_ii) / 2
+        nota_final = (media_i + media_ii) / 2 if media_i or media_ii else 0
 
         html_aprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -364,7 +357,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_i[c]:.1f}</td></tr>' for c in criterios_i)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) I: {media_i:.1f}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -377,7 +370,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_ii[c]:.1f}</td></tr>' for c in criterios_ii)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ii:.1f}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -389,8 +382,8 @@ def main():
 
     <p>
       As orientações para a elaboração e o envio do arquivo da apresentação estão disponíveis no site do evento:<br />
-      <a href="https://www.even3.com.br/vii-semana-academia-da-propriedade-intelectual-594540/" target="_blank">
-        https://www.even3.com.br/vii-semana-academia-da-propriedade-intelectual-594540/
+      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">
+        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
       </a>
     </p>
 
@@ -406,41 +399,34 @@ def main():
     elif aba == "Reprovação":
         st.header("Reprovação")
 
-        # Notas Avaliador I
-        st.subheader("Notas Avaliador(a) I")
-        notas_i = {}
-        criterios_i = [
+        # Critérios de avaliação
+        criterios_avaliacao = [
             "Correspondência ao tema e seção temática",
             "Originalidade e contribuição",
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados"
         ]
-        for c in criterios_i:
-            notas_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{c.replace(' ', '_')}")
 
-        media_i = sum(notas_i.values()) / len(notas_i)
+        # Notas Avaliador I
+        st.subheader("Notas Avaliador(a) I")
+        notas_i = {}
+        for i, c in enumerate(criterios_avaliacao):
+            notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
+        media_i = sum(notas_i.values()) / len(notas_i) if notas_i else 0
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Notas Avaliador(a) II")
         notas_ii = {}
-        criterios_ii = [
-            "Correspondência ao tema e seção temática",
-            "Originalidade e contribuição",
-            "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
-            "Clareza e coerência dos resultados"
-        ]
-        for c in criterios_ii:
-            notas_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{c.replace(' ', '_')}")
+        for i, c in enumerate(criterios_avaliacao):
+            notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{i}")
 
-        media_ii = sum(notas_ii.values()) / len(notas_ii)
-
+        media_ii = sum(notas_ii.values()) / len(notas_ii) if notas_ii else 0
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
-        nota_final = (media_i + media_ii) / 2
+        nota_final = (media_i + media_ii) / 2 if media_i or media_ii else 0
 
         html_reprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -524,7 +510,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_i[c]:.1f}</td></tr>' for c in criterios_i)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p class="parecer">{parecer_i}</p>
     </div>
@@ -536,7 +522,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_ii[c]:.1f}</td></tr>' for c in criterios_ii)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
       <p class="parecer">{parecer_ii}</p>
     </div>
@@ -576,8 +562,7 @@ def main():
     elif aba == "Resultado final":
         st.header("Resultado Final")
 
-        st.subheader("Notas Avaliador(a) I - Apresentação")
-        notas_final_i = {}
+        # Critérios de avaliação para o resultado final (inclui apresentação)
         criterios_final = [
             "Correspondência ao tema e seção temática",
             "Originalidade e contribuição",
@@ -587,17 +572,20 @@ def main():
             "Domínio do conteúdo apresentado",
             "Adequação ao tempo de apresentação"
         ]
-        for c in criterios_final:
-            notas_final_i[c] = st.number_input(f"{c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{c.replace(' ', '_')}")
 
-        media_final_i = sum(notas_final_i.values()) / len(notas_final_i)
+        st.subheader("Notas Avaliador(a) I - Apresentação")
+        notas_final_i = {}
+        for i, c in enumerate(criterios_final):
+            notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
+
+        media_final_i = sum(notas_final_i.values()) / len(notas_final_i) if notas_final_i else 0
 
         st.subheader("Notas Avaliador(a) II - Apresentação")
         notas_final_ii = {}
-        for c in criterios_final:
-            notas_final_ii[c] = st.number_input(f"{c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{c.replace(' ', '_')}")
+        for i, c in enumerate(criterios_final):
+            notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
 
-        media_final_ii = sum(notas_final_ii.values()) / len(notas_final_ii)
+        media_final_ii = sum(notas_final_ii.values()) / len(notas_final_ii) if notas_final_ii else 0
 
         nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
@@ -676,7 +664,7 @@ def main():
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_final_i[c]:.1f}</td></tr>' for c in criterios_final)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_final_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) I: {media_final_i:.1f}</strong></p>
     </div>
@@ -685,7 +673,7 @@ def main():
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{c}</td><td>{notas_final_ii[c]:.1f}</td></tr>' for c in criterios_final)}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_final_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
       <p><strong>Média ponderada do(a) Avaliador(a) II: {media_final_ii:.1f}</strong></p>
     </div>
