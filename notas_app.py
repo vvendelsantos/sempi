@@ -28,7 +28,7 @@ LEMBRETE_ENVIO_HTML = """
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     a {{
       color: #0645ad;
@@ -44,7 +44,7 @@ LEMBRETE_ENVIO_HTML = """
       border-radius: 4px;
       margin: 16px 0;
       font-size: 0.95em;
-      text-align: justify; /* Adicionado para justificar o texto no highlight */
+      text-align: justify;
     }}
   </style>
 </head>
@@ -72,7 +72,7 @@ LEMBRETE_ENVIO_HTML = """
 
     <p>
       O modelo editável está disponível no site do evento: <br />
-      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
+      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
         https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
       </a>.
       Embora não haja limite de quantidade de slides, é obrigatório manter integralmente a formatação original (estilo, tamanho da fonte e cores).
@@ -106,7 +106,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     a {{
       color: #0645ad;
@@ -122,7 +122,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       border-radius: 4px;
       margin: 16px 0;
       font-size: 0.95em;
-      text-align: justify; /* Adicionado para justificar o texto no highlight */
+      text-align: justify;
     }}
   </style>
 </head>
@@ -135,13 +135,14 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <p>
-      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
+      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
         https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
       </a>
     </p>
 
     <div class="highlight">
-      <p style="text-align: left;"><strong>⚠️ Orientações importantes:</strong></p> <ul style="margin-top: 0; padding-left: 20px;">
+      <p style="text-align: left;"><strong>⚠️ Orientações importantes:</strong></p>
+      <ul style="margin-top: 0; padding-left: 20px;">
         <li style="text-align: left;">Autores que apresentarão seus trabalhos presencialmente devem comparecer ao local da sessão com, no mínimo, <strong>20 minutos de antecedência</strong>.</li>
         <li style="text-align: left;">Essa orientação também se aplica aos participantes com apresentação on-line autorizada, mediante justificativa formal.</li>
         <li style="text-align: left;"><strong>Não serão permitidas correções ou substituições</strong> do arquivo de apresentação durante o evento.</li>
@@ -156,8 +157,9 @@ LEMBRETE_APRESENTACAO_HTML = """
       Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguem os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
     </p>
 
-    <ul style="padding-left: 20px; text-align: justify;"> <li>Domínio do conteúdo apresentado;</li>
-      <li>Adequação ao tempo de apresentação.</li>
+    <ul style="padding-left: 20px; text-align: justify;">
+      <li>🧠 Domínio do conteúdo apresentado;</li>
+      <li>⏳ Adequação ao tempo de apresentação.</li>
     </ul>
 
     <p>
@@ -213,7 +215,7 @@ def main():
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     .box {{
       background-color: #f0f0f0;
@@ -221,12 +223,12 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-      text-align: justify; /* Adicionado para justificar o texto no box */
+      text-align: justify;
     }}
     ol {{
       padding-left: 20px;
       margin: 0;
-      text-align: justify; /* Adicionado para justificar a lista ordenada */
+      text-align: justify;
     }}
   </style>
 </head>
@@ -318,7 +320,7 @@ def main():
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     .box {{
       background-color: #f0f0f0;
@@ -326,7 +328,7 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-      text-align: justify; /* Adicionado para justificar o texto no box */
+      text-align: justify;
     }}
     table {{
       width: 100%;
@@ -348,13 +350,13 @@ def main():
       margin-top: 20px;
       border-radius: 4px;
       font-weight: bold;
-      text-align: justify; /* Adicionado para justificar o texto na nota final */
+      text-align: justify;
     }}
     .parecer {{
       margin-top: 10px;
       font-style: italic;
       color: #444;
-      text-align: justify; /* Adicionado para justificar o texto no parecer */
+      text-align: justify;
     }}
     a {{
       color: #0645ad;
@@ -412,7 +414,7 @@ def main():
 
     <p>
       As orientações para a elaboração e o envio do arquivo da apresentação estão disponíveis no site do evento:<br />
-      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">
+      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">
         https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
       </a>
     </p>
@@ -482,7 +484,7 @@ def main():
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     .box {{
       background-color: #f0f0f0;
@@ -491,7 +493,7 @@ def main():
       margin: 20px 0;
       border-radius: 4px;
       color: #333333;
-      text-align: justify; /* Adicionado para justificar o texto no box */
+      text-align: justify;
     }}
     table {{
       width: 100%;
@@ -514,13 +516,13 @@ def main():
       border-radius: 4px;
       font-weight: bold;
       color: #721c24;
-      text-align: justify; /* Adicionado para justificar o texto na nota final */
+      text-align: justify;
     }}
     .parecer {{
       margin-top: 10px;
       font-style: italic;
       color: #444;
-      text-align: justify; /* Adicionado para justificar o texto no parecer */
+      text-align: justify;
     }}
     a {{
       color: #0645ad;
@@ -614,8 +616,8 @@ def main():
             "Clareza do problema, objetivos e justificativa",
             "Adequação metodológica",
             "Clareza e coerência dos resultados",
-            "Domínio do conteúdo apresentado",
-            "Adequação ao tempo de apresentação"
+            "🧠 Domínio do conteúdo apresentado", # Emoji adicionado aqui
+            "⏳ Adequação ao tempo de apresentação" # Emoji adicionado aqui
         ]
 
         st.subheader("Avaliador(a) I - Apresentação")
@@ -634,7 +636,7 @@ def main():
 
         nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=8.85)
+        nota_geral_ponderada = st.number_input("Nota geral (média ponderada):", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -660,7 +662,7 @@ def main():
     }}
     p {{
       margin-bottom: 16px;
-      text-align: justify; /* Adicionado para justificar o texto */
+      text-align: justify;
     }}
     .box {{
       background-color: #f0f0f0;
@@ -668,7 +670,7 @@ def main():
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-      text-align: justify; /* Adicionado para justificar o texto no box */
+      text-align: justify;
     }}
     table {{
       width: 100%;
