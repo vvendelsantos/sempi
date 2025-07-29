@@ -283,7 +283,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
+        media_ponderada_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
@@ -293,7 +293,7 @@ def main():
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{i}")
 
         # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
+        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -391,7 +391,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -404,7 +404,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
@@ -447,7 +447,7 @@ def main():
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
         # Campo para inserir a média ponderada do avaliador I
-        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
+        media_ponderada_i = st.number_input("Média ponderada", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
@@ -457,7 +457,7 @@ def main():
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{i}")
 
         # Campo para inserir a média ponderada do avaliador II
-        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
+        media_ponderada_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
         # Campo para inserir a Nota Final do trabalho
@@ -557,7 +557,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_i)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i)}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -570,7 +570,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_ii)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
@@ -625,14 +625,14 @@ def main():
         for i, c in enumerate(criterios_final):
             notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
 
-        media_ponderada_final_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
+        media_ponderada_final_i = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
 
         st.subheader("Avaliador(a) II - Apresentação")
         notas_final_ii = {}
         for i, c in enumerate(criterios_final):
             notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
 
-        media_ponderada_final_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
+        media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
@@ -743,7 +743,7 @@ def main():
         <tr><th>Critério</th><th>Nota</th></tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i)}</strong></p>
     </div>
 
     <div class="box">
@@ -752,7 +752,7 @@ def main():
         <tr><th>Critério</th><th>Nota</th></tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(criterios_final))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
     <div class="nota-button-container">
