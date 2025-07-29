@@ -1,5 +1,7 @@
 import streamlit as st
 
+# --- FUNÇÕES AUXILIARES ---
+
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota):
     if nota == int(nota):
@@ -7,8 +9,9 @@ def formatar_nota_br(nota):
     else:
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
-# HTML base para os lembretes (com placeholders para minutos e textos)
+# --- TEMPLATES HTML ---
 # ATENÇÃO: Estes são os TEMPLATES. Eles serão formatados APENAS QUANDO USADOS.
+
 LEMBRETE_ENVIO_HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -179,17 +182,21 @@ LEMBRETE_APRESENTACAO_HTML_TEMPLATE = """
 </html>
 """
 
-# Função Principal do Aplicativo Streamlit
-def main():
-    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
-
-    st.title("Gerador de HTML SEMPI - 5 abas")
-
-    # --- INICIALIZAÇÃO DE VARIÁVEIS NO st.session_state (MAIS ROBUSTA) ---
-    # Garante que todas as chaves existam antes de serem acessadas.
-    # É importante que isso aconteça ANTES de qualquer widget ou formatação que dependa delas.
+# --- FUNÇÃO DE INICIALIZAÇÃO DO SESSION_STATE ---
+def inicializar_session_state():
+    """
+    Inicializa todas as variáveis do st.session_state com valores padrão
+    se elas ainda não existirem. Isso previne KeyErrors.
+    """
     if 'texto_envio_arquivo' not in st.session_state:
-        st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
+        st.session_state.texto_envio_arquivo = (
+            "Para tanto, solicitamos que o arquivo de apresentação seja enviado "
+            "até o dia **29 de agosto de 2025**, em formato PDF, por meio da "
+            "Área do Participante. Para realizar o envio, acesse a plataforma "
+            "com seu login e senha, clique no menu “Submissões”, selecione "
+            "o trabalho correspondente, clique em “Editar” e anexe o arquivo "
+            "no campo indicado. Após o envio, certifique-se de salvar as alterações."
+        )
     if 'tempo_apresentacao' not in st.session_state:
         st.session_state.tempo_apresentacao = 10
     if 'tempo_arguicao' not in st.session_state:
@@ -198,7 +205,15 @@ def main():
         st.session_state.hora_encerramento = "XXh"
     if 'nota_geral_ponderada' not in st.session_state:
         st.session_state.nota_geral_ponderada = 8.85 # Valor padrão para a nota geral
-    # --- FIM DA INICIALIZAÇÃO ROBUSTA ---
+
+# --- FUNÇÃO PRINCIPAL DO APLICATIVO ---
+def main():
+    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
+
+    st.title("Gerador de HTML SEMPI - 5 abas")
+
+    # Garante que todas as variáveis de sessão estão inicializadas
+    inicializar_session_state()
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
