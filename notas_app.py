@@ -269,11 +269,11 @@ def main():
 
         # Critérios de avaliação
         criterios_avaliacao = [
-            "Correspondência ao tema e seção temática",
-            "Originalidade e contribuição",
-            "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
-            "Clareza e coerência dos resultados"
+            "Correspondência do trabalho ao tema do evento e à seção temática escolhida",
+            "Originalidade e contribuição do trabalho na área da Propriedade Intelectual",
+            "Definição clara do problema, dos objetivos e da justificativa do trabalho",
+            "Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados",
+            "Clareza, coerência e objetividade na apresentação e discussão dos resultados"
         ]
 
         # Notas Avaliador I
@@ -433,11 +433,11 @@ def main():
 
         # Critérios de avaliação
         criterios_avaliacao = [
-            "Correspondência ao tema e seção temática",
-            "Originalidade e contribuição",
-            "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
-            "Clareza e coerência dos resultados"
+            "Correspondência do trabalho ao tema do evento e à seção temática escolhida",
+            "Originalidade e contribuição do trabalho na área da Propriedade Intelectual",
+            "Definição clara do problema, dos objetivos e da justificativa do trabalho",
+            "Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados",
+            "Clareza, coerência e objetividade na apresentação e discussão dos resultados"
         ]
 
         # Notas Avaliador I
@@ -611,11 +611,11 @@ def main():
 
         # Critérios de avaliação para o resultado final (inclui apresentação)
         criterios_final = [
-            "Correspondência ao tema e seção temática",
-            "Originalidade e contribuição",
-            "Clareza do problema, objetivos e justificativa",
-            "Adequação metodológica",
-            "Clareza e coerência dos resultados",
+            "Correspondência do trabalho ao tema do evento e à seção temática escolhidaa",
+            "Originalidade e contribuição do trabalho na área da Propriedade Intelectual",
+            "Definição clara do problema, dos objetivos e da justificativa do trabalho",
+            "Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados",
+            "Clareza, coerência e objetividade na apresentação e discussão dos resultados",
             "Domínio do conteúdo apresentado",
             "Adequação ao tempo de apresentação"
         ]
