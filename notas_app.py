@@ -672,13 +672,13 @@ def main():
       }}
     }}
     .nota-label {{
-        font-size: 0.7em; /* Reduzindo um pouco mais o tamanho do rótulo */
+        font-size: 0.85em; /* Aumentado para 0.85em */
         color: #555;
         display: block;
         margin-bottom: 3px;
     }}
     .nota-value {{
-        font-size: 1.2em; /* Reduzindo um pouco mais o tamanho do valor */
+        font-size: 1.3em; /* Aumentado para 1.3em */
         color: #000;
     }}
 
