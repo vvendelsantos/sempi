@@ -3,9 +3,9 @@ import streamlit as st
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota):
     if nota == int(nota):
-        return str(int(nota))
+        return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
     else:
-        return f"{nota:.1f}".replace('.', ',')
+        return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
 
 # HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
@@ -175,9 +175,9 @@ LEMBRETE_APRESENTACAO_HTML = """
 """
 
 def main():
-    st.set_page_config(page_title="💻 Gerador de notificação Even3 (VII SEMPI)", layout="wide")
+    st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
-    st.title("💻 Gerador de notificação Even3 (VII SEMPI)")
+    st.title("Gerador de HTML SEMPI - 5 abas")
 
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -595,7 +595,6 @@ def main():
         for i, c in enumerate(criterios_final):
             notas_final_i[c] = st.number_input(f"{i+1}. {c} (Avaliador I)", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key=f"final_i_{i}")
 
-        # NOVO CAMPO: Média ponderada do Avaliador I para Resultado Final
         media_ponderada_final_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.9, key="media_final_i")
 
         st.subheader("Avaliador(a) II - Apresentação")
@@ -603,9 +602,7 @@ def main():
         for i, c in enumerate(criterios_final):
             notas_final_ii[c] = st.number_input(f"{i+1}. {c} (Avaliador II)", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key=f"final_ii_{i}")
 
-        # NOVO CAMPO: Média ponderada do Avaliador II para Resultado Final
         media_ponderada_final_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
-
 
         nota_final_escrito = st.number_input("Nota final do trabalho escrito:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("Nota final da apresentação oral:", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
@@ -652,14 +649,45 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    .nota-final {{
-      background-color: #dff0d8;
-      border-left: 4px solid #5cb85c;
-      padding: 16px;
+    /* Estilo para os "botões" de nota */
+    .nota-button-container {{
+      display: flex;
+      justify-content: space-between;
+      gap: 10px; /* Espaço entre os botões */
       margin-top: 20px;
-      border-radius: 4px;
-      font-weight: bold;
     }}
+    .nota-button {{
+      background-color: #e6f7ff; /* Cor azul clara */
+      border: 1px solid #91d5ff; /* Borda azul */
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      flex-grow: 1; /* Faz os botões crescerem para preencher o espaço */
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    }}
+    .nota-button-large {{
+      background-color: #dff0d8; /* Cor verde clara */
+      border: 1px solid #5cb85c; /* Borda verde */
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+      width: 100%; /* Ocupa a largura total */
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    }}
+    .nota-label {{
+        font-size: 0.85em;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }}
+    .nota-value {{
+        font-size: 1.6em;
+        color: #000;
+    }}
+
     a {{
       color: #0645ad;
       text-decoration: none;
@@ -698,10 +726,19 @@ def main():
       <p><strong>Média ponderada do(a) Avaliador(a) II: {formatar_nota_br(media_ponderada_final_ii)}</strong></p>
     </div>
 
-    <div class="nota-final">
-      Nota final do trabalho escrito: <strong>{formatar_nota_br(nota_final_escrito)}</strong><br />
-      Nota final da apresentação oral: <strong>{formatar_nota_br(nota_final_apresentacao)}</strong><br />
-      Nota geral (média ponderada): <strong>{formatar_nota_br(nota_geral_ponderada)}</strong>
+    <div class="nota-button-container">
+      <div class="nota-button">
+        <span class="nota-label">Nota final do trabalho escrito:</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_final_escrito)}</strong></span>
+      </div>
+      <div class="nota-button">
+        <span class="nota-label">Nota final da apresentação oral:</span>
+        <span class="nota-value"><strong>{formatar_nota_br(nota_final_apresentacao)}</strong></span>
+      </div>
+    </div>
+    <div class="nota-button-large">
+      <span class="nota-label">Nota geral (média ponderada):</span>
+      <span class="nota-value"><strong>{formatar_nota_br(nota_geral_ponderada)}</strong></span>
     </div>
 
     <p>
