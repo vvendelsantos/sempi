@@ -488,7 +488,7 @@ def main():
     }}
     .box {{
       background-color: #f0f0f0;
-      border-left: 4_px solid #999999;
+      border-left: 4px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
@@ -691,38 +691,38 @@ def main():
     /* Estilos para o contêiner das notas */
     .notas-container {{
         width: 100%;
-        border-collapse: collapse; /* Para garantir que as células não tenham espaçamento */
+        border-collapse: collapse;
         margin-top: 20px;
-        table-layout: fixed; /* Ajuda a distribuir larguras igualmente */
+        table-layout: fixed;
     }}
     .nota-cell {{
-        width: 33.33%; /* Divide o espaço igualmente entre as 3 células */
-        padding: 0 5px; /* Espaçamento horizontal entre as "caixas" */
-        vertical-align: top; /* Alinha o conteúdo ao topo da célula */
+        width: 33.33%;
+        padding: 0 5px;
+        vertical-align: top;
     }}
     .nota-card {{
       background-color: #e6f7ff;
       border: 1px solid #91d5ff;
-      padding: 12px 15px;
+      padding: 10px 12px; /* Reduzido o padding para diminuir a altura do bloco */
       border-radius: 8px;
       font-weight: bold;
       text-align: center;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      /* box-shadow removido para maior compatibilidade com e-mail */
     }}
     .nota-card.general-note {{
       background-color: #dff0d8;
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
-        font-size: 0.9em;
+        font-size: 0.8em; /* Reduzido o tamanho da fonte do rótulo */
         color: #555;
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 3px; /* Reduzido o espaçamento entre rótulo e valor */
     }}
     .nota-value {{
-        font-size: 1.5em;
+        font-size: 1.2em; /* Reduzido o tamanho da fonte do valor */
         color: #000;
-        line-height: 1; /* Para evitar espaçamento extra */
+        line-height: 1;
     }}
 
     a {{
@@ -798,12 +798,3 @@ def main():
     <p>
       Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
     </p>
-  </div>
-</body>
-</html>
-"""
-        st.code(html_resultado_final, language="html")
-
-
-if __name__ == "__main__":
-    main()
