@@ -178,6 +178,10 @@ LEMBRETE_APRESENTACAO_HTML = """
 </html>
 """
 
+# Constantes para links e dados do evento
+SITE_EVENTO_SEMPI = "https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/"
+
+
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
@@ -645,13 +649,30 @@ def main():
         tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
         html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
+        # Botão para o modelo de envio
+        st.markdown("#### Acesso ao site do evento para modelo de arquivo:")
+        st.link_button("Acessar Página do Evento", SITE_EVENTO_SEMPI)
+
 
         st.subheader("Lembrete para apresentação")
+        # Removendo a parte do link direto no HTML LEMBRETE_APRESENTACAO_HTML
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.replace(
+            """<p>
+      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
+        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
+      </a>
+    </p>""",
+            "" # Substitui por vazio para remover o link do HTML
+        ).format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
+
         st.code(html_lembrete_apresentacao, language="html")
+        # Botão para o modelo de apresentação
+        st.markdown("#### Acessar cronograma de apresentações:")
+        st.link_button("Acessar Cronograma de Apresentações", SITE_EVENTO_SEMPI, key="cronograma_btn")
+
 
     elif aba == "Resultado final":
         st.header("Resultado Final")
