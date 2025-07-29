@@ -1,5 +1,5 @@
 import streamlit as st
-import base64
+# Removido 'import base64' pois os botões de download não serão usados.
 
 # --- Funções Auxiliares ---
 
@@ -9,12 +9,6 @@ def formatar_nota_br(nota):
         return str(int(nota)).replace('.', ',') # Garante que 10.0 vira "10", 3.0 vira "3"
     else:
         return f"{nota:.1f}".replace('.', ',') # Formata para uma casa decimal e troca ponto por vírgula
-
-# Função para criar o link de download de HTML
-def get_download_link(html_content, filename="index.html"):
-    b64 = base64.b64encode(html_content.encode()).decode()
-    href = f'<a href="data:text/html;base64,{b64}" download="{filename}">Baixar HTML</a>'
-    return href
 
 # --- HTML Bases para Lembretes ---
 
@@ -198,9 +192,9 @@ def main():
     abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
-    # --- Inicialização de variáveis no st.session_state ---
-    # Isso garante que os valores persistam e estejam sempre disponíveis,
-    # evitando o KeyError.
+    # --- Inicialização de variáveis no st.session_state (se ainda precisar delas na aba lembretes) ---
+    # Removi a inicialização condicional para os botões que você não quer mais.
+    # As variáveis de texto e tempo nos Lembretes continuam usando st.session_state para persistência.
     if 'texto_envio_arquivo' not in st.session_state:
         st.session_state.texto_envio_arquivo = "Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia **29 de agosto de 2025**, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
     if 'tempo_apresentacao' not in st.session_state:
@@ -598,7 +592,8 @@ def main():
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
+      Nota final do trabalho:
+      <strong>{formatar_nota_br(nota_final_reprovacao)}</strong>
     </div>
 
     <p>
@@ -642,25 +637,9 @@ def main():
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.button("Copiar Código", on_click=lambda: st.write(f"<script>navigator.clipboard.writeText(`{html_lembrete_envio}`)</script>", unsafe_allow_html=True), key="copy_envio")
-        with col2:
-            st.markdown(get_download_link(html_lembrete_envio, "lembrete_envio.html"), unsafe_allow_html=True)
-        with col3:
-            if st.button("Visualizar HTML", key="view_envio"):
-                st.components.v1.html(html_lembrete_envio, height=500, scrolling=True)
 
         st.subheader("Lembrete para apresentação")
         st.code(html_lembrete_apresentacao, language="html")
-        col1_apres, col2_apres, col3_apres = st.columns(3)
-        with col1_apres:
-            st.button("Copiar Código", on_click=lambda: st.write(f"<script>navigator.clipboard.writeText(`{html_lembrete_apresentacao}`)</script>", unsafe_allow_html=True), key="copy_apresentacao")
-        with col2_apres:
-            st.markdown(get_download_link(html_lembrete_apresentacao, "lembrete_apresentacao.html"), unsafe_allow_html=True)
-        with col3_apres:
-            if st.button("Visualizar HTML", key="view_apresentacao"):
-                st.components.v1.html(html_lembrete_apresentacao, height=500, scrolling=True)
 
     elif aba == "Resultado final":
         st.header("Resultado Final")
@@ -691,11 +670,11 @@ def main():
         media_ponderada_final_ii = st.number_input("Média ponderada:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_final_ii")
 
         # Entradas de notas com rótulos mais diretos
-        nota_final_escrito = st.number_input("Nota do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        nota_final_apresentacao = st.number_input("Nota da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
+        nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
         
         # O campo da Nota Geral agora é um input manual
-        nota_geral_ponderada = st.number_input("Nota Geral", min_value=0.0, max_value=10.0, step=0.01, value=8.8, key="nota_geral_manual")
+        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, key="nota_geral_manual")
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
@@ -757,7 +736,7 @@ def main():
         vertical-align: top; /* Alinha o conteúdo ao topo da célula */
     }}
     .nota-card {{
-      background-color: #e6f7ff;
+      background-color: #e6f7ff; /* Cor para Trabalho Escrito e Apresentação Oral */
       border: 1px solid #91d5ff;
       padding: 12px 15px;
       border-radius: 8px;
@@ -766,7 +745,7 @@ def main():
       box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     }}
     .nota-card.general-note {{
-      background-color: #dff0d8;
+      background-color: #dff0d8; /* Cor diferenciada para Nota Geral (verde claro) */
       border: 1px solid #5cb85c;
     }}
     .nota-label {{
