@@ -636,7 +636,9 @@ def main():
 
         nota_final_escrito = st.number_input("TRABALHO ESCRITO", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         nota_final_apresentacao = st.number_input("APRESENTAÇÃO ORAL", min_value=0.0, max_value=10.0, step=0.1, value=9.0)
-        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85, disabled=True) # Desabilitado para ser calculado
+        
+        # REMOVIDO: disabled=True para permitir inserção manual
+        nota_geral_ponderada = st.number_input("NOTA GERAL", min_value=0.0, max_value=10.0, step=0.01, value=8.85) 
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
 
