@@ -1,39 +1,39 @@
 import streamlit as st
 
-st.set_page_config(page_title="Gerador de Avaliação SEMPI", layout="centered")
+st.set_page_config(page_title="Gerador de Email SEMPI", layout="centered")
 
-st.title("📩 Gerador de Avaliação - VII SEMPI")
+st.title("📩 Gerador de Email Avaliação VII SEMPI")
 
-st.markdown("Preencha as notas abaixo para gerar o email em HTML com o resultado da avaliação.")
-
-# Dados do participante
+# Entradas das notas
 nome = st.text_input("Nome do(a) participante")
 
-# Notas do Avaliador 1
-st.subheader("👤 Avaliador(a) I")
-notas_a1 = []
-for i in range(1, 8):
-    nota = st.number_input(f"Critério {i} - Avaliador(a) I", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key=f"a1_c{i}")
-    notas_a1.append(nota)
-media_a1 = round(sum(notas_a1) / len(notas_a1), 2)
-st.markdown(f"**Média Avaliador(a) I:** {media_a1}")
+st.markdown("### Notas Avaliador(a) I")
+C1_A1 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A1")
+C2_A1 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A1")
+C3_A1 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A1")
+C4_A1 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A1")
+C5_A1 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A1")
+C6_A1 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A1")
+C7_A1 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A1")
+media_A1 = round((C1_A1 + C2_A1 + C3_A1 + C4_A1 + C5_A1 + C6_A1 + C7_A1) / 7, 2)
 
-# Notas do Avaliador 2
-st.subheader("👤 Avaliador(a) II")
-notas_a2 = []
-for i in range(1, 8):
-    nota = st.number_input(f"Critério {i} - Avaliador(a) II", min_value=0.0, max_value=10.0, step=0.1, format="%.1f", key=f"a2_c{i}")
-    notas_a2.append(nota)
-media_a2 = round(sum(notas_a2) / len(notas_a2), 2)
-st.markdown(f"**Média Avaliador(a) II:** {media_a2}")
+st.markdown("### Notas Avaliador(a) II")
+C1_A2 = st.number_input("1. Correspondência ao tema e seção temática", 0.0, 10.0, step=0.1, format="%.1f", key="C1_A2")
+C2_A2 = st.number_input("2. Originalidade e contribuição", 0.0, 10.0, step=0.1, format="%.1f", key="C2_A2")
+C3_A2 = st.number_input("3. Clareza do problema, objetivos e justificativa", 0.0, 10.0, step=0.1, format="%.1f", key="C3_A2")
+C4_A2 = st.number_input("4. Adequação metodológica", 0.0, 10.0, step=0.1, format="%.1f", key="C4_A2")
+C5_A2 = st.number_input("5. Clareza e coerência dos resultados", 0.0, 10.0, step=0.1, format="%.1f", key="C5_A2")
+C6_A2 = st.number_input("6. Domínio do conteúdo apresentado", 0.0, 10.0, step=0.1, format="%.1f", key="C6_A2")
+C7_A2 = st.number_input("7. Adequação ao tempo de apresentação", 0.0, 10.0, step=0.1, format="%.1f", key="C7_A2")
+media_A2 = round((C1_A2 + C2_A2 + C3_A2 + C4_A2 + C5_A2 + C6_A2 + C7_A2) / 7, 2)
 
-# Outras notas
-nota_escrito = st.number_input("Nota Final do Trabalho Escrito", min_value=0.0, max_value=10.0, step=0.1, format="%.1f")
-nota_oral = st.number_input("Nota Final da Apresentação Oral", min_value=0.0, max_value=10.0, step=0.1, format="%.1f")
-nota_geral = round((nota_escrito + nota_oral) / 2, 2)
+st.markdown("### Notas finais")
+Nota_Final_Escrito = st.number_input("Nota final do trabalho escrito", 0.0, 10.0, step=0.1, format="%.1f")
+Nota_Final_Oral = st.number_input("Nota final da apresentação oral", 0.0, 10.0, step=0.1, format="%.1f")
+Nota_Geral = round((Nota_Final_Escrito + Nota_Final_Oral) / 2, 2)
 
-# Geração do HTML
-if st.button("📤 Gerar HTML"):
+if st.button("📤 Gerar HTML personalizado"):
+
     html = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -78,6 +78,13 @@ if st.button("📤 Gerar HTML"):
       border-radius: 4px;
       font-weight: bold;
     }}
+    a {{
+      color: #0645ad;
+      text-decoration: none;
+    }}
+    a:hover {{
+      text-decoration: underline;
+    }}
   </style>
 </head>
 <body>
@@ -94,27 +101,37 @@ if st.button("📤 Gerar HTML"):
     <div class="box">
       <p><strong>👤 Avaliador(a) I</strong></p>
       <table>
-        <tr><th>Critério</th><th>Nota</th></tr>""" + "".join(
-        f"<tr><td>{i+1}. Critério</td><td>{nota:.1f}</td></tr>" for i, nota in enumerate(notas_a1)
-    ) + f"""
+        <tr><th>Critério</th><th>Nota</th></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{C1_A1:.1f}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{C2_A1:.1f}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{C3_A1:.1f}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{C4_A1:.1f}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{C5_A1:.1f}</td></tr>
+        <tr><td>6. Domínio do conteúdo apresentado</td><td>{C6_A1:.1f}</td></tr>
+        <tr><td>7. Adequação ao tempo de apresentação</td><td>{C7_A1:.1f}</td></tr>
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_a1}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_A1:.2f}</strong></p>
     </div>
 
     <div class="box">
       <p><strong>👤 Avaliador(a) II</strong></p>
       <table>
-        <tr><th>Critério</th><th>Nota</th></tr>""" + "".join(
-        f"<tr><td>{i+1}. Critério</td><td>{nota:.1f}</td></tr>" for i, nota in enumerate(notas_a2)
-    ) + f"""
+        <tr><th>Critério</th><th>Nota</th></tr>
+        <tr><td>1. Correspondência ao tema e seção temática</td><td>{C1_A2:.1f}</td></tr>
+        <tr><td>2. Originalidade e contribuição</td><td>{C2_A2:.1f}</td></tr>
+        <tr><td>3. Clareza do problema, objetivos e justificativa</td><td>{C3_A2:.1f}</td></tr>
+        <tr><td>4. Adequação metodológica</td><td>{C4_A2:.1f}</td></tr>
+        <tr><td>5. Clareza e coerência dos resultados</td><td>{C5_A2:.1f}</td></tr>
+        <tr><td>6. Domínio do conteúdo apresentado</td><td>{C6_A2:.1f}</td></tr>
+        <tr><td>7. Adequação ao tempo de apresentação</td><td>{C7_A2:.1f}</td></tr>
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_a2}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_A2:.2f}</strong></p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho escrito: <strong>{nota_escrito:.1f}</strong><br />
-      Nota final da apresentação oral: <strong>{nota_oral:.1f}</strong><br />
-      Nota geral (média ponderada): <strong>{nota_geral:.2f}</strong>
+      Nota final do trabalho escrito: <strong>{Nota_Final_Escrito:.1f}</strong><br />
+      Nota final da apresentação oral: <strong>{Nota_Final_Oral:.1f}</strong><br />
+      Nota geral (média ponderada): <strong>{Nota_Geral:.2f}</strong>
     </div>
 
     <p>
@@ -129,12 +146,9 @@ if st.button("📤 Gerar HTML"):
     <p>
       Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
     </p>
-
-    <p>Atenciosamente,</p>
-    <p><strong>Comissão Organizadora da VII SEMPI</strong></p>
   </div>
 </body>
-</html>
-"""
+</html>"""
+
     st.success("✅ HTML gerado com sucesso!")
     st.code(html, language="html")
