@@ -591,12 +591,19 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
+        # Garante que texto_envio_arquivo sempre terá um valor
+        texto_envio_arquivo = st.text_area(
+            "Digite o texto para o lembrete de envio do arquivo:",
+            value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações."
+        )
 
         st.markdown("### Tempos para apresentação")
+        # Garante que tempo_apresentacao e tempo_arguicao sempre terão um valor
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
         tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
+        # Apenas formata e exibe os HTMLs se as variáveis estiverem definidas
+        # (Embora com os 'value' padrão dos inputs, elas SEMPRE estarão definidas)
         html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
         html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
 
