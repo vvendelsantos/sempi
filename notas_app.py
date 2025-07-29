@@ -5,7 +5,7 @@ LEMBRETE_ENVIO_HTML = """
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-M" />
   <style>
     body {{
       font-family: Arial, sans-serif;
@@ -258,24 +258,28 @@ def main():
         ]
 
         # Notas Avaliador I
-        st.subheader("Notas Avaliador(a) I")
+        st.subheader("Avaliador(a) I")
         notas_i = {}
         for i, c in enumerate(criterios_avaliacao):
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_i_{i}")
 
-        media_i = sum(notas_i.values()) / len(notas_i) if notas_i else 0
+        # Campo para inserir a média ponderada do avaliador I
+        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=8.7, key="media_aprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
 
         # Notas Avaliador II
-        st.subheader("Notas Avaliador(a) II")
+        st.subheader("Avaliador(a) II")
         notas_ii = {}
         for i, c in enumerate(criterios_avaliacao):
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=8.5, key=f"aprov_ii_{i}")
 
-        media_ii = sum(notas_ii.values()) / len(notas_ii) if notas_ii else 0
+        # Campo para inserir a média ponderada do avaliador II
+        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=8.8, key="media_aprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
 
-        nota_final = (media_i + media_ii) / 2 if media_i or media_ii else 0
+        # Campo para inserir a Nota Final do trabalho
+        nota_final_aprovacao = st.number_input("Nota final do trabalho:", min_value=0.0, max_value=10.0, step=0.01, value=8.75, key="nota_final_aprovacao")
+
 
         html_aprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -359,7 +363,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_i:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_ponderada_i:.1f}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -372,12 +376,12 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
-      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ii:.1f}</strong></p>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ponderada_ii:.1f}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final:.2f}</strong>
+      Nota final do trabalho: <strong>{nota_final_aprovacao:.2f}</strong>
     </div>
 
     <p>
@@ -409,24 +413,28 @@ def main():
         ]
 
         # Notas Avaliador I
-        st.subheader("Notas Avaliador(a) I")
+        st.subheader("Avaliador(a) I")
         notas_i = {}
         for i, c in enumerate(criterios_avaliacao):
             notas_i[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_i_{i}")
 
-        media_i = sum(notas_i.values()) / len(notas_i) if notas_i else 0
+        # Campo para inserir a média ponderada do avaliador I
+        media_ponderada_i = st.number_input("Média ponderada do(a) Avaliador(a) I:", min_value=0.0, max_value=10.0, step=0.1, value=6.7, key="media_reprov_i")
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
 
         # Notas Avaliador II
-        st.subheader("Notas Avaliador(a) II")
+        st.subheader("Avaliador(a) II")
         notas_ii = {}
         for i, c in enumerate(criterios_avaliacao):
             notas_ii[c] = st.number_input(f"{i+1}. {c}", min_value=0.0, max_value=10.0, step=0.1, value=6.5, key=f"reprov_ii_{i}")
 
-        media_ii = sum(notas_ii.values()) / len(notas_ii) if notas_ii else 0
+        # Campo para inserir a média ponderada do avaliador II
+        media_ponderada_ii = st.number_input("Média ponderada do(a) Avaliador(a) II:", min_value=0.0, max_value=10.0, step=0.1, value=6.8, key="media_reprov_ii")
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
 
-        nota_final = (media_i + media_ii) / 2 if media_i or media_ii else 0
+        # Campo para inserir a Nota Final do trabalho
+        nota_final_reprovacao = st.number_input("Nota final do trabalho:", min_value=0.0, max_value=10.0, step=0.01, value=6.75, key="nota_final_reprovacao")
+
 
         html_reprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -512,6 +520,7 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_i[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
+      <p><strong>Média ponderada do(a) Avaliador(a) I: {media_ponderada_i:.1f}</strong></p>
       <p class="parecer">{parecer_i}</p>
     </div>
 
@@ -524,11 +533,12 @@ def main():
         </tr>
         {''.join(f'<tr><td>{i+1}. {c}</td><td>{notas_ii[c]:.1f}</td></tr>' for i, c in enumerate(criterios_avaliacao))}
       </table>
+      <p><strong>Média ponderada do(a) Avaliador(a) II: {media_ponderada_ii:.1f}</strong></p>
       <p class="parecer">{parecer_ii}</p>
     </div>
 
     <div class="nota-final">
-      Nota final do trabalho: <strong>{nota_final:.2f}</strong>
+      Nota final do trabalho: <strong>{nota_final_reprovacao:.2f}</strong>
     </div>
 
     <p>
