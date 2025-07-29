@@ -459,13 +459,14 @@ def main():
     .container {{
       padding: 20px;
     }}
+    /* Removido o estilo de cor vermelha geral para .box aqui */
     .box {{
-      background-color: #f8d7da;
-      border-left: 4px solid #d9534f;
+      background-color: #f0f0f0; /* Cor de fundo neutra */
+      border-left: 4px solid #999999; /* Borda cinza neutra */
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
-      color: #721c24;
+      color: #333333; /* Cor do texto neutra */
     }}
     table {{
       width: 100%;
@@ -478,24 +479,25 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #f5c6cb;
+      background-color: #e0e0e0; /* Cor de fundo do cabeçalho neutra */
     }}
     .nota-final {{
-      background-color: #f8d7da;
-      border-left: 4px solid #d9534f;
+      background-color: #f8d7da; /* Cor de fundo vermelha clara */
+      border-left: 4px solid #d9534f; /* Borda vermelha escura */
       padding: 16px;
       margin-top: 20px;
       border-radius: 4px;
       font-weight: bold;
-      color: #721c24;
+      color: #721c24; /* Cor do texto vermelha escura */
     }}
     .parecer {{
       margin-top: 10px;
       font-style: italic;
-      color: #721c24;
+      /* Removido a cor vermelha aqui, será herdada do body ou box */
+      color: #444; /* Cor do texto neutra para o parecer */
     }}
     a {{
-      color: #721c24;
+      color: #0645ad; /* Cor padrão de link para neutro */
       text-decoration: none;
     }}
     a:hover {{
