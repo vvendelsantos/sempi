@@ -2,11 +2,27 @@ import streamlit as st
 
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota, casas_decimais=1):
-    # Formata o número como uma string com o número de casas decimais especificado
-    # e depois substitui o ponto decimal por vírgula para o padrão brasileiro.
-    return f"{nota:.{casas_decimais}f}".replace('.', ',')
+    # Converte a nota para string com o número de casas decimais desejado
+    # e depois substitui o ponto pela vírgula.
+    nota_str = f"{nota:.{casas_decimais}f}".replace('.', ',')
+    
+    # Remove o zero extra se a nota for, por exemplo, '8,0' -> '8,' -> '8' (se for o caso)
+    # ou '8,10' -> '8,1'
+    if ',' in nota_str:
+        # Divide a string em parte inteira e parte decimal
+        partes = nota_str.split(',')
+        if len(partes) > 1:
+            decimal_parte = partes[1]
+            # Se a parte decimal for '0' (ex: 8,0), remove ',0' para exibir '8'
+            if decimal_parte == '0':
+                return partes[0]
+            # Se a parte decimal terminar em '0' (ex: 8,10), remove o zero extra para exibir '8,1'
+            elif decimal_parte.endswith('0') and len(decimal_parte) > 1:
+                return partes[0] + ',' + decimal_parte[:-1]
+    
+    return nota_str
 
-# As outras funções (calcular_media_ponderada, main, etc.) permanecem inalteradas
+
 # Função para calcular média ponderada
 def calcular_media_ponderada(notas, pesos):
     """
@@ -30,30 +46,30 @@ LEMBRETE_ENVIO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -61,7 +77,7 @@ LEMBRETE_ENVIO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -108,30 +124,30 @@ LEMBRETE_APRESENTACAO_HTML = """
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333333;
       background-color: #ffffff;
       margin: 0;
       padding: 0 20px 20px 20px;
-    }}
-    .container {{
+    }
+    .container {
       max-width: 700px;
       margin: auto;
-    }}
-    p {{
+    }
+    p {
       margin-bottom: 16px;
       text-align: justify;
-    }}
-    a {{
+    }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
-    .highlight {{
+    }
+    .highlight {
       background-color: #f0f0f0;
       border-left: 4px solid #999999;
       padding: 12px 16px;
@@ -139,7 +155,7 @@ LEMBRETE_APRESENTACAO_HTML = """
       margin: 16px 0;
       font-size: 0.95em;
       text-align: justify;
-    }}
+    }
   </style>
 </head>
 <body>
@@ -683,258 +699,4 @@ def main():
     </div>
 
     <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
-  </div>
-</body>
-</html>"""
-
-        st.code(html_reprovacao, language="html")
-
-    elif aba == "Lembretes":
-        st.header("Lembretes")
-
-        st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
-
-        st.markdown("### Tempos para apresentação")
-        tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
-        tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
-
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
-
-        st.subheader("Lembrete para envio do arquivo")
-        st.code(html_lembrete_envio, language="html")
-
-        st.subheader("Lembrete para apresentação")
-        st.code(html_lembrete_apresentacao, language="html")
-
-    elif aba == "Resultado final":
-        st.header("Resultado Final")
-
-        # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
-        criterios_avaliacao_final = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 1),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 1),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 2),
-            ("Domínio do conteúdo apresentado", 2),
-            ("Adequação ao tempo de apresentação", 1)
-        ]
-
-        # Separar nomes dos critérios e pesos
-        nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
-        pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
-
-        st.subheader("Avaliador(a) I - Apresentação")
-        default_notas_final_i_str = "\n".join([str(8.9) for _ in nomes_criterios_final])
-        notas_final_i_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_final_i_str,
-            key="notas_final_i_input"
-        )
-        notas_digitadas_final_i = []
-        try:
-            notas_digitadas_final_i = [float(n.strip().replace(',', '.')) for n in notas_final_i_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_digitadas_final_i = [0.0] * len(nomes_criterios_final)
-
-        notas_final_i = {}
-        media_ponderada_final_i = 0.0
-        if len(notas_digitadas_final_i) == len(nomes_criterios_final):
-            for i, c in enumerate(nomes_criterios_final):
-                notas_final_i[c] = notas_digitadas_final_i[i]
-            media_ponderada_final_i = calcular_media_ponderada(list(notas_final_i.values()), pesos_criterios_final)
-            st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_final_i, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador I.")
-            notas_final_i = {c: 0.0 for c in nomes_criterios_final}
-        
-
-        st.subheader("Avaliador(a) II - Apresentação")
-        default_notas_final_ii_str = "\n".join([str(8.8) for _ in nomes_criterios_final])
-        notas_final_ii_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_final_ii_str,
-            key="notas_final_ii_input"
-        )
-        notas_digitadas_final_ii = []
-        try:
-            notas_digitadas_final_ii = [float(n.strip().replace(',', '.')) for n in notas_final_ii_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_digitadas_final_ii = [0.0] * len(nomes_criterios_final)
-
-        notas_final_ii = {}
-        media_ponderada_final_ii = 0.0
-        if len(notas_digitadas_final_ii) == len(nomes_criterios_final):
-            for i, c in enumerate(nomes_criterios_final):
-                notas_final_ii[c] = notas_digitadas_final_ii[i]
-            media_ponderada_final_ii = calcular_media_ponderada(list(notas_final_ii.values()), pesos_criterios_final)
-            st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_final_ii, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador II.")
-            notas_final_ii = {c: 0.0 for c in nomes_criterios_final}
-
-        # Cálculo da Nota Final da Apresentação Oral (média aritmética)
-        if media_ponderada_final_i > 0 and media_ponderada_final_ii > 0:
-            nota_final_apresentacao = (media_ponderada_final_i + media_ponderada_final_ii) / 2
-        else:
-            nota_final_apresentacao = 0.0
-        st.metric("Nota final da APRESENTAÇÃO ORAL (Média Aritmética):", formatar_nota_br(nota_final_apresentacao, 2))
-
-        # Campo para inserir a Nota do Trabalho Escrito manualmente
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO (Nota já finalizada):", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
-        
-        # Cálculo da Nota Geral Ponderada (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3)
-        nota_geral_ponderada = calcular_media_ponderada(
-            [nota_final_escrito, nota_final_apresentacao],
-            [7, 3]
-        )
-        st.metric("NOTA GERAL (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3):", formatar_nota_br(nota_geral_ponderada, 2))
-
-
-        hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
-
-
-        html_resultado_final = f"""
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <style>
-    body {{
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333333;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 0 20px 20px 20px;
-    }}
-    .container {{
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }}
-    h2 {{
-      color: #0645ad;
-      text-align: center;
-      margin-bottom: 20px;
-    }}
-    p {{
-      margin-bottom: 16px;
-      text-align: justify;
-    }}
-    .score-box {{
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      text-align: center;
-    }}
-    .score-box p {{
-      margin: 5px 0;
-      font-size: 1.1em;
-    }}
-    .score-box .label {{
-      font-weight: bold;
-      color: #555;
-    }}
-    .score-box .value {{
-      font-size: 1.3em;
-      color: #0645ad;
-    }}
-    .highlight-final {{
-      background-color: #e6f7ff;
-      border-left: 4px solid #3399ff;
-      padding: 15px;
-      border-radius: 4px;
-      margin-top: 20px;
-      font-size: 1.05em;
-      text-align: justify;
-    }}
-    .call-to-action {{
-      text-align: center;
-      margin-top: 30px;
-    }}
-    .call-to-action a {{
-      display: inline-block;
-      background-color: #0645ad;
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-    }}
-    .call-to-action a:hover {{
-      background-color: #053a8f;
-    }}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <p>Prezados(as) autores(as),</p>
-
-    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
-
-    <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> tem a satisfação de divulgar os resultados finais da avaliação dos trabalhos.
-    </p>
-
-    <h2>Resultados da Avaliação</h2>
-
-    <div class="score-box">
-      <p><span class="label">Nota Final da Apresentação Oral (Média Aritmética):</span> <span class="value">{formatar_nota_br(nota_final_apresentacao, 2)}</span></p>
-      <p><span class="label">Nota Final do Trabalho Escrito:</span> <span class="value">{formatar_nota_br(nota_final_escrito, 2)}</span></p>
-      <hr>
-      <p><span class="label">NOTA GERAL PONDERADA (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3):</span> <span class="value">{formatar_nota_br(nota_geral_ponderada, 2)}</span></p>
-    </div>
-
-    <div class="highlight-final">
-      <p>
-        Para fins de premiação, a classificação final dos trabalhos é determinada pela Nota Geral Ponderada. Os três melhores trabalhos de cada categoria (apresentação oral e pôster) serão premiados. A divulgação dos trabalhos premiados ocorrerá durante a cerimônia de encerramento da VII SEMPI, que acontecerá no dia <strong>30 de agosto de 2025, às {hora_encerramento}</strong>.
-      </p>
-    </div>
-
-    <p>
-      Agradecemos a todos(as) pela participação e contribuições. O sucesso da VII SEMPI é construído pela qualidade dos trabalhos e pelo engajamento de nossa comunidade acadêmica.
-    </p>
-
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos.
-    </p>
-
-    <div class="call-to-action">
-      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">Acesse o site do evento para mais informações</a>
-    </div>
-  </div>
-</body>
-</html>
-"""
-        st.code(html_resultado_final, language="html")
-
-
-# Documentação da Função formatar_nota_br
-```python
-def formatar_nota_br(nota, casas_decimais=1):
-    """
-    Formata um número de ponto flutuante (float) para o padrão brasileiro,
-    utilizando vírgula como separador decimal e garantindo um número específico
-    de casas decimais, mesmo que sejam zeros.
-
-    Args:
-        nota (float or int): O número (nota) a ser formatado.
-        casas_decimais (int, optional): O número de casas decimais a serem
-                                       exibidas. Padrão é 1.
-
-    Returns:
-        str: A nota formatada como string no padrão brasileiro (ex: "8,0", "7,5", "9,00").
-    """
-    # Usa uma f-string para formatar o número com o número de casas decimais desejado.
-    # O especificador 'f' garante que o número será tratado como ponto flutuante.
-    # Em seguida, substitui o ponto decimal (padrão em Python para floats) pela vírgula.
-    return f"{nota:.{casas_decimais}f}".replace('.', ',')
+      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizer
