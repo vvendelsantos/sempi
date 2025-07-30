@@ -358,7 +358,7 @@ def main():
             nota_final_aprovacao = (media_ponderada_i + media_ponderada_ii) / 2
         else:
             nota_final_aprovacao = 0.0
-        st.metric("Nota final do trabalho (Média Aritmética):", formatar_nota_br(nota_final_aprovacao, 2))
+        st.metric("Nota final do trabalho:", formatar_nota_br(nota_final_aprovacao, 2))
 
         html_aprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -565,7 +565,7 @@ def main():
             nota_final_reprovacao = (media_ponderada_i + media_ponderada_ii) / 2
         else:
             nota_final_reprovacao = 0.0
-        st.metric("Nota final do trabalho (Média Aritmética):", formatar_nota_br(nota_final_reprovacao, 2))
+        st.metric("Nota final do trabalho:", formatar_nota_br(nota_final_reprovacao, 2))
 
 
         html_reprovacao = f"""<!DOCTYPE html>
@@ -784,17 +784,17 @@ def main():
             nota_final_apresentacao = (media_ponderada_final_i + media_ponderada_final_ii) / 2
         else:
             nota_final_apresentacao = 0.0
-        st.metric("Nota final da APRESENTAÇÃO ORAL (Média Aritmética):", formatar_nota_br(nota_final_apresentacao, 2))
+        st.metric("APRESENTAÇÃO ORAL:", formatar_nota_br(nota_final_apresentacao, 2))
 
         # Campo para inserir a Nota do Trabalho Escrito manualmente
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO (Nota já finalizada):", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
+        nota_final_escrito = st.number_input("TRABALHO ESCRITO:", min_value=0.0, max_value=10.0, step=0.1, value=8.7)
         
         # Cálculo da Nota Geral Ponderada (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3)
         nota_geral_ponderada = calcular_media_ponderada(
             [nota_final_escrito, nota_final_apresentacao],
             [7, 3]
         )
-        st.metric("NOTA GERAL (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3):", formatar_nota_br(nota_geral_ponderada, 2))
+        st.metric("NOTA GERAL:", formatar_nota_br(nota_geral_ponderada, 2))
 
 
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
