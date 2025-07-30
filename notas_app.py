@@ -299,7 +299,7 @@ def main():
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
         # Criando um valor padrão para o text_area com as notas separadas por linha
-        default_notas_i_str = "\n".join([str(8.5) for _ in nomes_criterios_aprov_reprov])
+        default_notas_i_str = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_i_str,
@@ -327,7 +327,7 @@ def main():
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        default_notas_ii_str = "\n".join([str(8.5) for _ in nomes_criterios_aprov_reprov])
+        default_notas_ii_str = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_ii_str,
@@ -506,7 +506,7 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
-        default_notas_i_str_reprov = "\n".join([str(6.5) for _ in nomes_criterios_aprov_reprov])
+        default_notas_i_str_reprov = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input_reprov = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_i_str_reprov,
@@ -534,7 +534,7 @@ def main():
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        default_notas_ii_str_reprov = "\n".join([str(6.5) for _ in nomes_criterios_aprov_reprov])
+        default_notas_ii_str_reprov = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input_reprov = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_ii_str_reprov,
@@ -729,7 +729,7 @@ def main():
         pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
 
         st.subheader("Avaliador(a) I - Apresentação")
-        default_notas_final_i_str = "\n".join([str(8.9) for _ in nomes_criterios_final])
+        default_notas_final_i_str = "\n".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_i_input = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_final_i_str,
@@ -755,7 +755,7 @@ def main():
         
 
         st.subheader("Avaliador(a) II - Apresentação")
-        default_notas_final_ii_str = "\n".join([str(8.8) for _ in nomes_criterios_final])
+        default_notas_final_ii_str = "\n".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_ii_input = st.text_area(
             "Digite as notas para cada critério (uma por linha):",
             value=default_notas_final_ii_str,
