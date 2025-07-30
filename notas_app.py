@@ -844,11 +844,11 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    /* Estilo simplificado para as notas */
+    
     .notas-container {{
       display: flex;
       justify-content: space-between;
-      align-items: center; /* Alinha os itens verticalmente ao centro */
+      align-items: center; 
       margin-top: 20px;
       background-color: #dff0d8;
       padding: 12px;
@@ -858,10 +858,10 @@ def main():
     .nota-item {{
       text-align: center;
       flex-grow: 1;
-      padding: 0 10px; /* Adiciona padding horizontal para a borda não ficar colada no texto */
+      padding: 0 10px; 
     }}
-    .nota-item:not(:last-child) {{ /* Aplica a borda em todos, exceto o último */
-      border-right: 1px solid #ccc; /* Linha vertical */
+    .nota-item:not(:last-child) {{ 
+      border-right: 1px solid #ccc; 
     }}
     .nota-label {{
       font-size: 0.85em;
