@@ -323,7 +323,7 @@ def main():
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
             notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
 
-        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta boa estrutura e metodologia consistente. A proposta é pertinente e contribui para o debate sobre Propriedade Intelectual e Sustentabilidade."', key="aprov_parecer_i")
+        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="aprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
@@ -351,7 +351,7 @@ def main():
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
             notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
 
-        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Texto claro, bem estruturado e alinhado com os objetivos do evento. Recomenda-se apenas uma revisão final para uniformização da escrita."''', key="aprov_parecer_ii")
+        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Parecer."''', key="aprov_parecer_ii")
 
         # Cálculo da Nota Final do trabalho (média aritmética das médias ponderadas dos avaliadores)
         if media_ponderada_i > 0 and media_ponderada_ii > 0:
@@ -530,7 +530,7 @@ def main():
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
             notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
 
-        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"O trabalho apresenta pontos que precisam ser aprimorados para melhor atender aos critérios do evento."', key="reprov_parecer_i")
+        parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="reprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
@@ -558,7 +558,7 @@ def main():
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
             notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
 
-        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Recomenda-se revisão e aprimoramento do conteúdo para futuras submissões."', key="reprov_parecer_ii")
+        parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Parecer."', key="reprov_parecer_ii")
 
         # Cálculo da Nota Final do trabalho (média aritmética das médias ponderadas dos avaliadores)
         if media_ponderada_i > 0 and media_ponderada_ii > 0:
