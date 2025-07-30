@@ -2,11 +2,11 @@ import streamlit as st
 
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota, casas_decimais=1):
-    if nota == int(nota):
-        return str(int(nota)).replace('.', ',')
-    else:
-        return f"{nota:.{casas_decimais}f}".replace('.', ',')
+    # Formata o número como uma string com o número de casas decimais especificado
+    # e depois substitui o ponto decimal por vírgula para o padrão brasileiro.
+    return f"{nota:.{casas_decimais}f}".replace('.', ',')
 
+# As outras funções (calcular_media_ponderada, main, etc.) permanecem inalteradas
 # Função para calcular média ponderada
 def calcular_media_ponderada(notas, pesos):
     """
@@ -819,130 +819,98 @@ def main():
       margin: auto;
       padding: 20px;
     }}
+    h2 {{
+      color: #0645ad;
+      text-align: center;
+      margin-bottom: 20px;
+    }}
     p {{
       margin-bottom: 16px;
       text-align: justify;
     }}
-    .box {{
-      background-color: #f0f0f0;
-      border-left: 4px solid #999999;
-      padding: 16px;
-      margin: 20px 0;
+    .score-box {{
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }}
+    .score-box p {{
+      margin: 5px 0;
+      font-size: 1.1em;
+    }}
+    .score-box .label {{
+      font-weight: bold;
+      color: #555;
+    }}
+    .score-box .value {{
+      font-size: 1.3em;
+      color: #0645ad;
+    }}
+    .highlight-final {{
+      background-color: #e6f7ff;
+      border-left: 4px solid #3399ff;
+      padding: 15px;
       border-radius: 4px;
+      margin-top: 20px;
+      font-size: 1.05em;
       text-align: justify;
     }}
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }}
-    th, td {{
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }}
-    th {{
-      background-color: #e0e0e0;
-    }}
-    /* Estilo simplificado para as notas */
-    .notas-container {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center; /* Alinha os itens verticalmente ao centro */
-      margin-top: 20px;
-      background-color: #dff0d8;
-      padding: 12px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }}
-    .nota-item {{
+    .call-to-action {{
       text-align: center;
-      flex-grow: 1;
-      padding: 0 10px; /* Adiciona padding horizontal para a borda não ficar colada no texto */
+      margin-top: 30px;
     }}
-    .nota-item:not(:last-child) {{ /* Aplica a borda em todos, exceto o último */
-      border-right: 1px solid #ccc; /* Linha vertical */
-    }}
-    .nota-label {{
-      font-size: 0.85em;
-      color: #555;
-      display: block;
-      margin-bottom: 3px;
-    }}
-    .nota-value {{
-      font-size: 1.3em;
-      color: #000;
+    .call-to-action a {{
+      display: inline-block;
+      background-color: #0645ad;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
       font-weight: bold;
     }}
-    .nota-geral {{
-      color: #000000;
-    }}
-
-    a {{
-      color: #0645ad;
-      text-decoration: none;
-    }}
-    a:hover {{
-      text-decoration: underline;
+    .call-to-action a:hover {{
+      background-color: #053a8f;
     }}
   </style>
 </head>
 <body>
   <div class="container">
-    <p>Prezados(as),</p>
+    <p>Prezados(as) autores(as),</p>
 
-    <p>Espero que esta mensagem os(as) encontre bem.</p>
+    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
+      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> tem a satisfação de divulgar os resultados finais da avaliação dos trabalhos.
     </p>
 
-    <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
+    <h2>Resultados da Avaliação</h2>
+
+    <div class="score-box">
+      <p><span class="label">Nota Final da Apresentação Oral (Média Aritmética):</span> <span class="value">{formatar_nota_br(nota_final_apresentacao, 2)}</span></p>
+      <p><span class="label">Nota Final do Trabalho Escrito:</span> <span class="value">{formatar_nota_br(nota_final_escrito, 2)}</span></p>
+      <hr>
+      <p><span class="label">NOTA GERAL PONDERADA (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3):</span> <span class="value">{formatar_nota_br(nota_geral_ponderada, 2)}</span></p>
     </div>
 
-    <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
-    </div>
-
-    <div class="notas-container">
-      <div class="nota-item">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_escrito, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
-      </div>
+    <div class="highlight-final">
+      <p>
+        Para fins de premiação, a classificação final dos trabalhos é determinada pela Nota Geral Ponderada. Os três melhores trabalhos de cada categoria (apresentação oral e pôster) serão premiados. A divulgação dos trabalhos premiados ocorrerá durante a cerimônia de encerramento da VII SEMPI, que acontecerá no dia <strong>30 de agosto de 2025, às {hora_encerramento}</strong>.
+      </p>
     </div>
 
     <p>
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
-      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
+      Agradecemos a todos(as) pela participação e contribuições. O sucesso da VII SEMPI é construído pela qualidade dos trabalhos e pelo engajamento de nossa comunidade acadêmica.
     </p>
 
     <p>
-      📣 Sua presença será muito importante e tornará o encerramento ainda mais especial!
+      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos.
     </p>
 
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
+    <div class="call-to-action">
+      <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">Acesse o site do evento para mais informações</a>
+    </div>
   </div>
 </body>
 </html>
@@ -950,5 +918,23 @@ def main():
         st.code(html_resultado_final, language="html")
 
 
-if __name__ == "__main__":
-    main()
+# Documentação da Função formatar_nota_br
+```python
+def formatar_nota_br(nota, casas_decimais=1):
+    """
+    Formata um número de ponto flutuante (float) para o padrão brasileiro,
+    utilizando vírgula como separador decimal e garantindo um número específico
+    de casas decimais, mesmo que sejam zeros.
+
+    Args:
+        nota (float or int): O número (nota) a ser formatado.
+        casas_decimais (int, optional): O número de casas decimais a serem
+                                       exibidas. Padrão é 1.
+
+    Returns:
+        str: A nota formatada como string no padrão brasileiro (ex: "8,0", "7,5", "9,00").
+    """
+    # Usa uma f-string para formatar o número com o número de casas decimais desejado.
+    # O especificador 'f' garante que o número será tratado como ponto flutuante.
+    # Em seguida, substitui o ponto decimal (padrão em Python para floats) pela vírgula.
+    return f"{nota:.{casas_decimais}f}".replace('.', ',')
