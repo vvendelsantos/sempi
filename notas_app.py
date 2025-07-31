@@ -268,7 +268,7 @@ def main():
 
     <p>
       Solicitamos, gentilmente, que as correções sejam realizadas e o trabalho corrigido seja ressubmetido no sistema até o dia
-      <strong>31 de julho de 2025</strong>.
+      <strong>19 de agosto de 2025</strong>.
     </p>
 
     <p>
