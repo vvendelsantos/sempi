@@ -207,7 +207,7 @@ def main():
 
         motivos = st.text_area(
             "Liste os motivos da desclassificação, separados por vírgula:",
-            value="X, Y, Z"
+            value="X/ Y/ Z"
         )
         motivos_lista = [m.strip() for m in motivos.split("/") if m.strip()]
 
