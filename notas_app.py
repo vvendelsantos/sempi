@@ -209,7 +209,7 @@ def main():
             "Liste os motivos da desclassificação, separados por vírgula:",
             value="X, Y, Z"
         )
-        motivos_lista = [m.strip() for m in motivos.split(",") if m.strip()]
+        motivos_lista = [m.strip() for m in motivos.split("/") if m.strip()]
 
         html_desclassificacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
