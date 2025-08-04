@@ -199,14 +199,14 @@ def main():
 
     st.title("💻 Notificação interna Even3 (VII SEMPI)")
 
-    abas = ["Desclassificação", "Aprovação", "Reprovação", "Lembretes", "Resultado final"]
+    abas = ["🚫 Desclassificação", "✅ Aprovação", "❌ Reprovação", "🔔 Lembretes", "🏆 Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
     if aba == "Desclassificação":
         st.header("Desclassificação")
 
         motivos = st.text_area(
-            "Liste os motivos da desclassificação, separados por vírgula:",
+            "Liste os motivos da desclassificação, separados por /:",
             value="X/ Y/ Z"
         )
         motivos_lista = [m.strip() for m in motivos.split("/") if m.strip()]
