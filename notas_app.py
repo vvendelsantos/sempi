@@ -206,7 +206,7 @@ def main():
         st.header("Desclassificação")
 
         motivos = st.text_area(
-            "Liste os motivos da desclassificação, separados por /:",
+            "Liste os motivos da desclassificação:",
             value="X/ Y/ Z"
         )
         motivos_lista = [m.strip() for m in motivos.split("/") if m.strip()]
