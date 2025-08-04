@@ -202,7 +202,7 @@ def main():
     abas = ["🚫 Desclassificação", "✅ Aprovação", "❌ Reprovação", "🔔 Lembretes", "🏆 Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
 
-    if aba == "Desclassificação":
+    if aba == "🚫 Desclassificação":
         st.header("Desclassificação")
 
         motivos = st.text_area(
@@ -280,7 +280,7 @@ def main():
 
         st.code(html_desclassificacao, language="html")
 
-    elif aba == "Aprovação":
+    elif aba == "✅ Aprovação":
         st.header("Aprovação")
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação
@@ -488,7 +488,7 @@ def main():
 
         st.code(html_aprovacao, language="html")
 
-    elif aba == "Reprovação":
+    elif aba == "❌ Reprovação":
         st.header("Reprovação")
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação (os mesmos da aba Aprovação)
@@ -691,7 +691,7 @@ def main():
 
         st.code(html_reprovacao, language="html")
 
-    elif aba == "Lembretes":
+    elif aba == "🔔 Lembretes":
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
@@ -710,7 +710,7 @@ def main():
         st.subheader("Lembrete para apresentação")
         st.code(html_lembrete_apresentacao, language="html")
 
-    elif aba == "Resultado final":
+    elif aba == "🏆 Resultado final":
         st.header("Resultado Final")
 
         # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
