@@ -283,7 +283,6 @@ def main():
     elif aba == "✅ Aprovação":
         st.header("Aprovação")
 
-        # Critérios de avaliação e seus pesos para Aprovação/Reprovação
         criterios_avaliacao_aprov_reprov = [
             ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
@@ -292,69 +291,45 @@ def main():
             ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
         ]
         
-        # Separar nomes dos critérios e pesos
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
         pesos_criterios_aprov_reprov = [c[1] for c in criterios_avaliacao_aprov_reprov]
 
-        # Notas Avaliador I
-        st.subheader("Avaliador(a) I")
-        # Criando um valor padrão para o text_area com as notas separadas por linha
-        default_notas_i_str = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
-        notas_i_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_i_str,
-            key="notas_aprov_i_input"
-        )
-        notas_i_digitadas = []
-        try:
-            notas_i_digitadas = [float(n.strip().replace(',', '.')) for n in notas_i_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_i_digitadas = [0.0] * len(nomes_criterios_aprov_reprov) # Garante que a lista tenha o tamanho correto
+        # Função para processar a entrada de notas
+        def processar_notas(input_key, subheader_text, num_criterios):
+            st.subheader(subheader_text)
+            notas_input = st.text_input(
+                f"Digite as {num_criterios} notas para cada critério, separadas por espaço:",
+                value=" ".join(["0.0"] * num_criterios),
+                key=input_key
+            )
+            
+            notas_digitadas = []
+            try:
+                notas_digitadas = [float(n.strip().replace(',', '.')) for n in notas_input.split() if n.strip()]
+            except ValueError:
+                st.warning("Por favor, insira notas válidas (números).")
+                return {}, 0.0, False
 
-        notas_i = {}
-        media_ponderada_i = 0.0
-        if len(notas_i_digitadas) == len(nomes_criterios_aprov_reprov):
-            for i, c in enumerate(nomes_criterios_aprov_reprov):
-                notas_i[c] = notas_i_digitadas[i]
-            media_ponderada_i = calcular_media_ponderada(list(notas_i.values()), pesos_criterios_aprov_reprov)
-            st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_i, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
-            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
+            if len(notas_digitadas) != num_criterios:
+                st.warning(f"Por favor, insira exatamente {num_criterios} notas.")
+                return {}, 0.0, False
+            
+            notas = {c: notas_digitadas[i] for i, c in enumerate(nomes_criterios_aprov_reprov)}
+            media_ponderada = calcular_media_ponderada(list(notas.values()), pesos_criterios_aprov_reprov)
+            st.info(f"Média ponderada: **{formatar_nota_br(media_ponderada, 2)}**")
+            
+            return notas, media_ponderada, True
 
+        # Avaliador I
+        notas_i, media_ponderada_i, valido_i = processar_notas("notas_aprov_i_input", "Avaliador(a) I", len(nomes_criterios_aprov_reprov))
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="aprov_parecer_i")
 
-        # Notas Avaliador II
-        st.subheader("Avaliador(a) II")
-        default_notas_ii_str = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
-        notas_ii_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_ii_str,
-            key="notas_aprov_ii_input"
-        )
-        notas_ii_digitadas = []
-        try:
-            notas_ii_digitadas = [float(n.strip().replace(',', '.')) for n in notas_ii_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_ii_digitadas = [0.0] * len(nomes_criterios_aprov_reprov)
-
-        notas_ii = {}
-        media_ponderada_ii = 0.0
-        if len(notas_ii_digitadas) == len(nomes_criterios_aprov_reprov):
-            for i, c in enumerate(nomes_criterios_aprov_reprov):
-                notas_ii[c] = notas_ii_digitadas[i]
-            media_ponderada_ii = calcular_media_ponderada(list(notas_ii.values()), pesos_criterios_aprov_reprov)
-            st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_ii, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
-            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
-
+        # Avaliador II
+        notas_ii, media_ponderada_ii, valido_ii = processar_notas("notas_aprov_ii_input", "Avaliador(a) II", len(nomes_criterios_aprov_reprov))
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Parecer."''', key="aprov_parecer_ii")
 
-        # Cálculo da Nota Final do trabalho (média aritmética das médias ponderadas dos avaliadores)
-        if media_ponderada_i > 0 and media_ponderada_ii > 0:
+        # Cálculo da Nota Final
+        if valido_i and valido_ii:
             nota_final_aprovacao = (media_ponderada_i + media_ponderada_ii) / 2
         else:
             nota_final_aprovacao = 0.0
@@ -449,7 +424,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i.get(c, 0.0))}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i, 2)}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -462,7 +437,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii.get(c, 0.0))}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii, 2)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -491,7 +466,6 @@ def main():
     elif aba == "❌ Reprovação":
         st.header("Reprovação")
 
-        # Critérios de avaliação e seus pesos para Aprovação/Reprovação (os mesmos da aba Aprovação)
         criterios_avaliacao_aprov_reprov = [
             ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
@@ -500,73 +474,48 @@ def main():
             ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
         ]
         
-        # Separar nomes dos critérios e pesos
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
         pesos_criterios_aprov_reprov = [c[1] for c in criterios_avaliacao_aprov_reprov]
 
-        # Notas Avaliador I
-        st.subheader("Avaliador(a) I")
-        default_notas_i_str_reprov = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
-        notas_i_input_reprov = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_i_str_reprov,
-            key="notas_reprov_i_input"
-        )
-        notas_i_digitadas_reprov = []
-        try:
-            notas_i_digitadas_reprov = [float(n.strip().replace(',', '.')) for n in notas_i_input_reprov.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_i_digitadas_reprov = [0.0] * len(nomes_criterios_aprov_reprov)
+        def processar_notas(input_key, subheader_text, num_criterios):
+            st.subheader(subheader_text)
+            notas_input = st.text_input(
+                f"Digite as {num_criterios} notas para cada critério, separadas por espaço:",
+                value=" ".join(["0.0"] * num_criterios),
+                key=input_key
+            )
+            
+            notas_digitadas = []
+            try:
+                notas_digitadas = [float(n.strip().replace(',', '.')) for n in notas_input.split() if n.strip()]
+            except ValueError:
+                st.warning("Por favor, insira notas válidas (números).")
+                return {}, 0.0, False
 
-        notas_i = {}
-        media_ponderada_i = 0.0
-        if len(notas_i_digitadas_reprov) == len(nomes_criterios_aprov_reprov):
-            for i, c in enumerate(nomes_criterios_aprov_reprov):
-                notas_i[c] = notas_i_digitadas_reprov[i]
-            media_ponderada_i = calcular_media_ponderada(list(notas_i.values()), pesos_criterios_aprov_reprov)
-            st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_i, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
-            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
-
+            if len(notas_digitadas) != num_criterios:
+                st.warning(f"Por favor, insira exatamente {num_criterios} notas.")
+                return {}, 0.0, False
+            
+            notas = {c: notas_digitadas[i] for i, c in enumerate(nomes_criterios_aprov_reprov)}
+            media_ponderada = calcular_media_ponderada(list(notas.values()), pesos_criterios_aprov_reprov)
+            st.info(f"Média ponderada: **{formatar_nota_br(media_ponderada, 2)}**")
+            
+            return notas, media_ponderada, True
+            
+        # Avaliador I
+        notas_i, media_ponderada_i, valido_i = processar_notas("notas_reprov_i_input", "Avaliador(a) I", len(nomes_criterios_aprov_reprov))
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="reprov_parecer_i")
 
-        # Notas Avaliador II
-        st.subheader("Avaliador(a) II")
-        default_notas_ii_str_reprov = "\n".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
-        notas_ii_input_reprov = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_ii_str_reprov,
-            key="notas_reprov_ii_input"
-        )
-        notas_ii_digitadas_reprov = []
-        try:
-            notas_ii_digitadas_reprov = [float(n.strip().replace(',', '.')) for n in notas_ii_input_reprov.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_ii_digitadas_reprov = [0.0] * len(nomes_criterios_aprov_reprov)
-
-        notas_ii = {}
-        media_ponderada_ii = 0.0
-        if len(notas_ii_digitadas_reprov) == len(nomes_criterios_aprov_reprov):
-            for i, c in enumerate(nomes_criterios_aprov_reprov):
-                notas_ii[c] = notas_ii_digitadas_reprov[i]
-            media_ponderada_ii = calcular_media_ponderada(list(notas_ii.values()), pesos_criterios_aprov_reprov)
-            st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_ii, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
-            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
-
+        # Avaliador II
+        notas_ii, media_ponderada_ii, valido_ii = processar_notas("notas_reprov_ii_input", "Avaliador(a) II", len(nomes_criterios_aprov_reprov))
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Parecer."', key="reprov_parecer_ii")
 
-        # Cálculo da Nota Final do trabalho (média aritmética das médias ponderadas dos avaliadores)
-        if media_ponderada_i > 0 and media_ponderada_ii > 0:
+        # Cálculo da Nota Final
+        if valido_i and valido_ii:
             nota_final_reprovacao = (media_ponderada_i + media_ponderada_ii) / 2
         else:
             nota_final_reprovacao = 0.0
         st.metric("Nota final do trabalho:", formatar_nota_br(nota_final_reprovacao, 2))
-
 
         html_reprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -659,7 +608,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i.get(c, 0.0))}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i, 2)}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -672,7 +621,7 @@ def main():
           <th>Critério</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii.get(c, 0.0))}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii, 2)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -713,7 +662,6 @@ def main():
     elif aba == "🏆 Resultado final":
         st.header("Resultado Final")
 
-        # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
         criterios_avaliacao_final = [
             ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 1),
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
@@ -724,81 +672,55 @@ def main():
             ("Adequação ao tempo de apresentação", 1)
         ]
 
-        # Separar nomes dos critérios e pesos
         nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
         pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
-
-        st.subheader("Avaliador(a) I - Apresentação")
-        default_notas_final_i_str = "\n".join([str(0.0) for _ in nomes_criterios_final])
-        notas_final_i_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_final_i_str,
-            key="notas_final_i_input"
-        )
-        notas_digitadas_final_i = []
-        try:
-            notas_digitadas_final_i = [float(n.strip().replace(',', '.')) for n in notas_final_i_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_digitadas_final_i = [0.0] * len(nomes_criterios_final)
-
-        notas_final_i = {}
-        media_ponderada_final_i = 0.0
-        if len(notas_digitadas_final_i) == len(nomes_criterios_final):
-            for i, c in enumerate(nomes_criterios_final):
-                notas_final_i[c] = notas_digitadas_final_i[i]
-            media_ponderada_final_i = calcular_media_ponderada(list(notas_final_i.values()), pesos_criterios_final)
-            st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_final_i, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador I.")
-            notas_final_i = {c: 0.0 for c in nomes_criterios_final}
         
+        def processar_notas(input_key, subheader_text, num_criterios):
+            st.subheader(subheader_text)
+            notas_input = st.text_input(
+                f"Digite as {num_criterios} notas para cada critério, separadas por espaço:",
+                value=" ".join(["0.0"] * num_criterios),
+                key=input_key
+            )
+            
+            notas_digitadas = []
+            try:
+                notas_digitadas = [float(n.strip().replace(',', '.')) for n in notas_input.split() if n.strip()]
+            except ValueError:
+                st.warning("Por favor, insira notas válidas (números).")
+                return {}, 0.0, False
 
-        st.subheader("Avaliador(a) II - Apresentação")
-        default_notas_final_ii_str = "\n".join([str(0.0) for _ in nomes_criterios_final])
-        notas_final_ii_input = st.text_area(
-            "Digite as notas para cada critério (uma por linha):",
-            value=default_notas_final_ii_str,
-            key="notas_final_ii_input"
-        )
-        notas_digitadas_final_ii = []
-        try:
-            notas_digitadas_final_ii = [float(n.strip().replace(',', '.')) for n in notas_final_ii_input.split('\n') if n.strip()]
-        except ValueError:
-            st.warning("Por favor, insira notas válidas (números).")
-            notas_digitadas_final_ii = [0.0] * len(nomes_criterios_final)
+            if len(notas_digitadas) != num_criterios:
+                st.warning(f"Por favor, insira exatamente {num_criterios} notas.")
+                return {}, 0.0, False
+            
+            notas = {c: notas_digitadas[i] for i, c in enumerate(nomes_criterios_final)}
+            media_ponderada = calcular_media_ponderada(list(notas.values()), pesos_criterios_final)
+            st.info(f"Média ponderada: **{formatar_nota_br(media_ponderada, 2)}**")
+            
+            return notas, media_ponderada, True
+            
+        # Avaliador I
+        notas_final_i, media_ponderada_final_i, valido_i = processar_notas("notas_final_i_input", "Avaliador(a) I - Apresentação", len(nomes_criterios_final))
+        
+        # Avaliador II
+        notas_final_ii, media_ponderada_final_ii, valido_ii = processar_notas("notas_final_ii_input", "Avaliador(a) II - Apresentação", len(nomes_criterios_final))
 
-        notas_final_ii = {}
-        media_ponderada_final_ii = 0.0
-        if len(notas_digitadas_final_ii) == len(nomes_criterios_final):
-            for i, c in enumerate(nomes_criterios_final):
-                notas_final_ii[c] = notas_digitadas_final_ii[i]
-            media_ponderada_final_ii = calcular_media_ponderada(list(notas_final_ii.values()), pesos_criterios_final)
-            st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_final_ii, 2)}**")
-        else:
-            st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador II.")
-            notas_final_ii = {c: 0.0 for c in nomes_criterios_final}
-
-        # Cálculo da Nota Final da Apresentação Oral (média aritmética)
-        if media_ponderada_final_i > 0 and media_ponderada_final_ii > 0:
+        if valido_i and valido_ii:
             nota_final_apresentacao = (media_ponderada_final_i + media_ponderada_final_ii) / 2
         else:
             nota_final_apresentacao = 0.0
         st.metric("APRESENTAÇÃO ORAL:", formatar_nota_br(nota_final_apresentacao, 2))
-
-        # Campo para inserir a Nota do Trabalho Escrito manualmente
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO:", min_value=0.0, max_value=10.0, step=0.1, value=0.0)
         
-        # Cálculo da Nota Geral Ponderada (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3)
+        nota_final_escrito = st.number_input("TRABALHO ESCRITO:", min_value=0.0, max_value=10.0, step=0.1, value=0.0, key="nota_final_escrito_input")
+        
         nota_geral_ponderada = calcular_media_ponderada(
             [nota_final_escrito, nota_final_apresentacao],
             [7, 3]
         )
         st.metric("NOTA GERAL:", formatar_nota_br(nota_geral_ponderada, 2))
 
-
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
-
 
         html_resultado_final = f"""
 <!DOCTYPE html>
@@ -831,124 +753,3 @@ def main():
       border-radius: 4px;
       text-align: justify;
     }}
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }}
-    th, td {{
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }}
-    th {{
-      background-color: #e0e0e0;
-    }}
-    
-    .notas-container {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center; 
-      margin-top: 20px;
-      background-color: #dff0d8;
-      padding: 12px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }}
-    .nota-item {{
-      text-align: center;
-      flex-grow: 1;
-      padding: 0 10px; 
-    }}
-    .nota-item:not(:last-child) {{ 
-      border-right: 1px solid #ccc; 
-    }}
-    .nota-label {{
-      font-size: 0.85em;
-      color: #555;
-      display: block;
-      margin-bottom: 3px;
-    }}
-    .nota-value {{
-      font-size: 1.3em;
-      color: #000;
-      font-weight: bold;
-    }}
-    .nota-geral {{
-      color: #000000;
-    }}
-
-    a {{
-      color: #0645ad;
-      text-decoration: none;
-    }}
-    a:hover {{
-      text-decoration: underline;
-    }}
-  </style>
-</head>
-<body>
-  <div class="container">
-    <p>Prezados(as),</p>
-
-    <p>Espero que esta mensagem os(as) encontre bem.</p>
-
-    <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
-    </p>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
-    </div>
-
-    <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
-    </div>
-
-    <div class="notas-container">
-      <div class="nota-item">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_escrito, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
-      </div>
-    </div>
-
-    <p>
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
-      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
-    </p>
-
-    <p>
-      📣 Sua presença será muito importante e tornará o encerramento ainda mais especial!
-    </p>
-
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
-  </div>
-</body>
-</html>
-"""
-        st.code(html_resultado_final, language="html")
-
-
-if __name__ == "__main__":
-    main()
