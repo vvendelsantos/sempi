@@ -668,14 +668,9 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Informamos que o seu resumo expandido foi <strong>reprovado</strong> para apresentação na
-      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
+      Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mas também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
     </p>
-
-    <p>
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico:
-    </p>
-
+    
     <div class="box">
       <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_avaliador_i}</span></p>
       <table>
