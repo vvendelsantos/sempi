@@ -732,6 +732,9 @@ def main():
     elif aba == "🏆 Resultado final":
         st.header("Resultado Final")
 
+        # Campo para inserir o título do trabalho
+        titulo_trabalho = st.text_input("Título do trabalho", value="Título do seu trabalho aqui...")
+        
         # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
         criterios_avaliacao_final = [
             ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 1),
@@ -746,6 +749,9 @@ def main():
         # Separar nomes dos critérios e pesos
         nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
         pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
+        
+        # Inserir aqui a nota do trabalho escrito do Avaliador I
+        nota_trabalho_escrito_i = st.number_input("Nota Trabalho Escrito (Avaliador I)", min_value=0.0, max_value=10.0, value=0.0, key="nota_trab_i_final", format="%.2f")
 
         st.subheader("Avaliador(a) I - Apresentação")
         # Novo campo: data do avaliador I (Resultado Final)
@@ -774,6 +780,8 @@ def main():
             st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador I.")
             notas_final_i = {c: 0.0 for c in nomes_criterios_final}
         
+        # Inserir aqui a nota do trabalho escrito do Avaliador II
+        nota_trabalho_escrito_ii = st.number_input("Nota Trabalho Escrito (Avaliador II)", min_value=0.0, max_value=10.0, value=0.0, key="nota_trab_ii_final", format="%.2f")
 
         st.subheader("Avaliador(a) II - Apresentação")
         # Novo campo: data do avaliador II (Resultado Final)
@@ -801,30 +809,23 @@ def main():
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador II.")
             notas_final_ii = {c: 0.0 for c in nomes_criterios_final}
-
-        # Cálculo da Nota Final da Apresentação Oral (média aritmética)
-        if media_ponderada_final_i > 0 and media_ponderada_final_ii > 0:
-            nota_final_apresentacao = (media_ponderada_final_i + media_ponderada_final_ii) / 2
-        else:
-            nota_final_apresentacao = 0.0
-        st.metric("APRESENTAÇÃO ORAL:", formatar_nota_br(nota_final_apresentacao, 2))
-
-        # Campo para inserir a Nota do Trabalho Escrito manualmente
-        nota_final_escrito = st.number_input("TRABALHO ESCRITO:", min_value=0.0, max_value=10.0, step=0.1, value=0.0)
         
-        # Cálculo da Nota Geral Ponderada (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3)
-        nota_geral_ponderada = calcular_media_ponderada(
-            [nota_final_escrito, nota_final_apresentacao],
-            [7, 3]
-        )
-        st.metric("NOTA GERAL:", formatar_nota_br(nota_geral_ponderada, 2))
+        # Cálculo da Nota final da Apresentação (média aritmética das médias ponderadas dos avaliadores de apresentação)
+        nota_apresentacao_final = (media_ponderada_final_i + media_ponderada_final_ii) / 2
+        st.metric("Nota final da apresentação:", formatar_nota_br(nota_apresentacao_final, 2))
 
+        # Cálculo da Nota final geral (média ponderada da nota do trabalho escrito e da apresentação)
+        # Nota do trabalho escrito: (nota_trab_i_final + nota_trab_ii_final) / 2
+        media_trabalho_escrito = (nota_trabalho_escrito_i + nota_trabalho_escrito_ii) / 2
+        # Pesos: Trabalho escrito (60%) e Apresentação (40%)
+        # Note que a média do trabalho escrito e a nota da apresentação já são calculadas, então usamos elas.
+        pesos_gerais = [0.6, 0.4]
+        notas_gerais = [media_trabalho_escrito, nota_apresentacao_final]
+        nota_geral_final = calcular_media_ponderada(notas_gerais, pesos_gerais)
+        
+        st.metric("Nota geral final:", formatar_nota_br(nota_geral_final, 2))
 
-        hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
-
-
-        html_resultado_final = f"""
-<!DOCTYPE html>
+        html_resultado_final = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -867,101 +868,51 @@ def main():
     th {{
       background-color: #e0e0e0;
     }}
-    
-    .notas-container {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center; 
+    .nota-final {{
+      background-color: #f0f8ff;
+      border-left: 4px solid #007bff;
+      padding: 16px;
       margin-top: 20px;
-      background-color: #dff0d8;
-      padding: 12px;
       border-radius: 4px;
-      border: 1px solid #ddd;
-    }}
-    .nota-item {{
-      text-align: center;
-      flex-grow: 1;
-      padding: 0 10px; 
-    }}
-    .nota-item:not(:last-child) {{ 
-      border-right: 1px solid #ccc; 
-    }}
-    .nota-label {{
-      font-size: 0.85em;
-      color: #555;
-      display: block;
-      margin-bottom: 3px;
-    }}
-    .nota-value {{
-      font-size: 1.3em;
-      color: #000;
       font-weight: bold;
+      text-align: justify;
     }}
-    .nota-geral {{
-      color: #000000;
-    }}
-
-    a {{
-      color: #0645ad;
-      text-decoration: none;
-    }}
-    a:hover {{
-      text-decoration: underline;
+    .parecer {{
+      margin-top: 10px;
+      font-style: italic;
+      color: #444;
+      text-align: justify;
     }}
   </style>
 </head>
 <body>
   <div class="container">
-    <p>Prezados(as),</p>
+    <p>Prezados(as) autores(as),</p>
 
-    <p>Espero que esta mensagem os(as) encontre bem.</p>
+    <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
+      Parabenizamos pelo empenho e dedicação demonstrados ao longo do processo. Abaixo, informamos a nota geral da avaliação referente ao trabalho intitulado "<strong>{titulo_trabalho}</strong>", considerando tanto a nota do trabalho escrito quanto a apresentação oral.
+    </p>
+
+    <p>
+      As notas e pareceres detalhados, juntamente com o resultado final, podem ser acessados na Área do Participante, dentro da plataforma Even3.
     </p>
 
     <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_avaliador_final_i}</span></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
+      <p>
+        <strong>Trabalho Escrito:</strong>
+        Média das avaliações dos pareceristas: <strong>{formatar_nota_br(media_trabalho_escrito, 2)}</strong>
+      </p>
+      <p>
+        <strong>Apresentação Oral:</strong>
+        Média das avaliações dos pareceristas: <strong>{formatar_nota_br(nota_apresentacao_final, 2)}</strong>
+      </p>
     </div>
 
-    <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_avaliador_final_ii}</span></p>
-      <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
-      </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
+    <div class="nota-final">
+      Nota geral final: <strong>{formatar_nota_br(nota_geral_final, 2)}</strong>
     </div>
-
-    <div class="notas-container">
-      <div class="nota-item">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_escrito, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao, 2)}</span>
-      </div>
-      <div class="nota-item">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
-      </div>
-    </div>
-
-    <p>
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
-      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
-    </p>
-
-    <p>
-      📣 Sua presença será muito importante e tornará o encerramento ainda mais especial!
-    </p>
 
     <p>
       Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
@@ -970,8 +921,8 @@ def main():
 </body>
 </html>
 """
-        st.code(html_resultado_final, language="html")
 
+        st.code(html_resultado_final, language="html")
 
 if __name__ == "__main__":
     main()
