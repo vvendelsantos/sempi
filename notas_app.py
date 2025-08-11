@@ -825,6 +825,7 @@ def main():
         
         st.metric("Nota geral final:", formatar_nota_br(nota_geral_final, 2))
 
+
         html_resultado_final = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
