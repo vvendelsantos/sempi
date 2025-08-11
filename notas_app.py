@@ -917,7 +917,7 @@ def main():
     <p>Espero que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> apresenta os detalhes das avaliações referentes à apresentação oral, realizadas pelos membros do Comitê Científico com base nos critérios previamente estabelecidos.
+      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> apresenta os detalhes das avaliações referentes à apresentação oral, realizadas pelos membros do Comitê Científico durante o evento.
     </p>
 
     <div class="box">
