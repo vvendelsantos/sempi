@@ -459,12 +459,7 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Temos o prazer de informar que o seu resumo expandido foi <strong>aprovado</strong> para apresentação oral na
-      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>.
-    </p>
-
-    <p>
-      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
+     Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico, de acordo com os critérios previamente estabelecidos no regulamento do evento. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mas também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
     </p>
 
     <div class="box">
