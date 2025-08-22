@@ -1,5 +1,14 @@
 import streamlit as st
 
+# ===== Cabeçalho único (autoajustado ao container) =====
+HTML_HEADER = """
+<img src="https://i.postimg.cc/4xQ1nW8D/Cabe-alho-resumo.png"
+     alt="Cabeçalho da VII SEMPI"
+     style="max-width:100%; height:auto; display:block; margin-bottom:20px;" />
+"""
+
+# ===== Funções utilitárias =====
+
 # Função auxiliar para formatar notas no padrão brasileiro
 def formatar_nota_br(nota, casas_decimais=1):
     if nota == int(nota):
@@ -18,7 +27,7 @@ def calcular_media_ponderada(notas, pesos):
         float: Média ponderada. Retorna 0.0 se não houver notas ou pesos.
     """
     if not notas or not pesos or len(notas) != len(pesos):
-        return 0.0 # Retorna 0.0 ou levanta um erro, dependendo da necessidade
+        return 0.0  # Retorna 0.0 ou levanta um erro, dependendo da necessidade
     soma_produtos = sum(nota * peso for nota, peso in zip(notas, pesos))
     soma_pesos = sum(pesos)
     return soma_produtos / soma_pesos if soma_pesos > 0 else 0.0
@@ -43,6 +52,8 @@ def processar_notas_melhor(entrada):
             # lança erro para o chamador tratar (mostramos warning)
             raise ValueError(f"Token inválido: {t}") from e
     return notas
+
+# ===== Templates: Lembretes (com placeholder {html_header}) =====
 
 # HTML base para os lembretes (com placeholders para minutos e textos)
 LEMBRETE_ENVIO_HTML = """
@@ -87,6 +98,8 @@ LEMBRETE_ENVIO_HTML = """
 </head>
 <body>
   <div class="container">
+    {html_header}
+
     <p>Prezados(as) autores(as),</p>
 
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
@@ -165,6 +178,8 @@ LEMBRETE_APRESENTACAO_HTML = """
 </head>
 <body>
   <div class="container">
+    {html_header}
+
     <p>Prezados(as),</p>
 
     <p>
@@ -214,6 +229,8 @@ LEMBRETE_APRESENTACAO_HTML = """
 </body>
 </html>
 """
+
+# ===== App =====
 
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
@@ -271,6 +288,7 @@ def main():
 </head>
 <body>
   <div class="container">
+    {HTML_HEADER}
     <p>Prezado(a) autor(a),</p>
 
     <p>Esperamos que esta mensagem o(a) encontre bem.</p>
@@ -319,9 +337,7 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
-        # Novo campo: data do avaliador I
         data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de ago de 2025", key="data_aprov_i")
-        # Criando um valor padrão para o text_area com as notas em mesma linha
         default_notas_i_str = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -333,7 +349,7 @@ def main():
             notas_i_digitadas = processar_notas_melhor(notas_i_input)
         except ValueError:
             st.warning("Por favor, insira notas válidas (números).")
-            notas_i_digitadas = [0.0] * len(nomes_criterios_aprov_reprov) # Garante que a lista tenha o tamanho correto
+            notas_i_digitadas = [0.0] * len(nomes_criterios_aprov_reprov)
 
         notas_i = {}
         media_ponderada_i = 0.0
@@ -344,13 +360,12 @@ def main():
             st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_i, 2)}**")
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
-            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
+            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov}
 
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="aprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        # Novo campo: data do avaliador II
         data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de ago de 2025", key="data_aprov_ii")
         default_notas_ii_str = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input = st.text_area(
@@ -374,7 +389,7 @@ def main():
             st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_ii, 2)}**")
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
-            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
+            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov}
 
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='''"Parecer."''', key="aprov_parecer_ii")
 
@@ -454,6 +469,7 @@ def main():
 </head>
 <body>
   <div class="container">
+    {HTML_HEADER}
     <p>Prezados(as),</p>
 
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
@@ -520,13 +536,11 @@ def main():
             ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
         ]
         
-        # Separar nomes dos critérios e pesos
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
         pesos_criterios_aprov_reprov = [c[1] for c in criterios_avaliacao_aprov_reprov]
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
-        # Novo campo: data do avaliador I
         data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de ago de 2025", key="data_reprov_i")
         default_notas_i_str_reprov = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input_reprov = st.text_area(
@@ -550,13 +564,12 @@ def main():
             st.info(f"Média ponderada Avaliador I: **{formatar_nota_br(media_ponderada_i, 2)}**")
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador I.")
-            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
+            notas_i = {c: 0.0 for c in nomes_criterios_aprov_reprov}
 
         parecer_i = st.text_area("Parecer Avaliador(a) I", value='"Parecer."', key="reprov_parecer_i")
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        # Novo campo: data do avaliador II
         data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de ago de 2025", key="data_reprov_ii")
         default_notas_ii_str_reprov = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input_reprov = st.text_area(
@@ -580,17 +593,16 @@ def main():
             st.info(f"Média ponderada Avaliador II: **{formatar_nota_br(media_ponderada_ii, 2)}**")
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_aprov_reprov)} notas para o Avaliador II.")
-            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov} # Define notas como 0.0 para evitar erro no HTML
+            notas_ii = {c: 0.0 for c in nomes_criterios_aprov_reprov}
 
         parecer_ii = st.text_area("Parecer Avaliador(a) II", value='"Parecer."', key="reprov_parecer_ii")
 
-        # Cálculo da Nota Final do trabalho (média aritmética das médias ponderadas dos avaliadores)
+        # Cálculo da Nota Final do trabalho
         if media_ponderada_i > 0 and media_ponderada_ii > 0:
             nota_final_reprovacao = (media_ponderada_i + media_ponderada_ii) / 2
         else:
             nota_final_reprovacao = 0.0
         st.metric("Nota final do trabalho:", formatar_nota_br(nota_final_reprovacao, 2))
-
 
         html_reprovacao = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -663,6 +675,7 @@ def main():
 </head>
 <body>
   <div class="container">
+    {HTML_HEADER}
     <p>Prezados(as),</p>
 
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
@@ -714,14 +727,29 @@ def main():
         st.header("Lembretes")
 
         st.markdown("### Texto para envio do arquivo da apresentação")
-        texto_envio_arquivo = st.text_area("Digite o texto para o lembrete de envio do arquivo:", value="Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia <strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. Após o envio, certifique-se de salvar as alterações.")
+        texto_envio_arquivo = st.text_area(
+            "Digite o texto para o lembrete de envio do arquivo:",
+            value=("Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia "
+                   "<strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. "
+                   "Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, "
+                   "selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. "
+                   "Após o envio, certifique-se de salvar as alterações.")
+        )
 
         st.markdown("### Tempos para apresentação")
         tempo_apresentacao = st.number_input("Tempo para apresentação (minutos)", min_value=1, max_value=60, value=10)
         tempo_arguicao = st.number_input("Tempo para arguição (minutos)", min_value=1, max_value=30, value=5)
 
-        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(texto_envio_arquivo=texto_envio_arquivo)
-        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(tempo_apresentacao=tempo_apresentacao, tempo_arguicao=tempo_arguicao)
+        # Preenche os placeholders e inclui o cabeçalho
+        html_lembrete_envio = LEMBRETE_ENVIO_HTML.format(
+            html_header=HTML_HEADER,
+            texto_envio_arquivo=texto_envio_arquivo
+        )
+        html_lembrete_apresentacao = LEMBRETE_APRESENTACAO_HTML.format(
+            html_header=HTML_HEADER,
+            tempo_apresentacao=tempo_apresentacao,
+            tempo_arguicao=tempo_arguicao
+        )
 
         st.subheader("Lembrete para envio do arquivo")
         st.code(html_lembrete_envio, language="html")
@@ -743,12 +771,10 @@ def main():
             ("Adequação ao tempo de apresentação", 1)
         ]
 
-        # Separar nomes dos critérios e pesos
         nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
         pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
 
         st.subheader("Avaliador(a) I - Apresentação")
-        # Novo campo: data do avaliador I (Resultado Final)
         data_avaliador_final_i = st.text_input("Data Avaliador(a) I - Apresentação", value="4 de ago de 2025", key="data_final_i")
         default_notas_final_i_str = " ".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_i_input = st.text_area(
@@ -776,7 +802,6 @@ def main():
         
 
         st.subheader("Avaliador(a) II - Apresentação")
-        # Novo campo: data do avaliador II (Resultado Final)
         data_avaliador_final_ii = st.text_input("Data Avaliador(a) II - Apresentação", value="4 de ago de 2025", key="data_final_ii")
         default_notas_final_ii_str = " ".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_ii_input = st.text_area(
@@ -809,19 +834,17 @@ def main():
             nota_final_apresentacao = 0.0
         st.metric("APRESENTAÇÃO ORAL:", formatar_nota_br(nota_final_apresentacao, 2))
 
-        # Campo para inserir a Nota do Trabalho Escrito manualmente
+        # Nota do Trabalho Escrito (manual)
         nota_final_escrito = st.number_input("TRABALHO ESCRITO:", min_value=0.0, max_value=10.0, step=0.1, value=0.0)
         
-        # Cálculo da Nota Geral Ponderada (Trabalho Escrito: Peso 7, Apresentação Oral: Peso 3)
+        # Nota Geral Ponderada (Escrito: 7, Apresentação: 3)
         nota_geral_ponderada = calcular_media_ponderada(
             [nota_final_escrito, nota_final_apresentacao],
             [7, 3]
         )
         st.metric("NOTA GERAL:", formatar_nota_br(nota_geral_ponderada, 2))
 
-
         hora_encerramento = st.text_input("Hora da cerimônia de encerramento:", value="XXh")
-
 
         html_resultado_final = f"""
 <!DOCTYPE html>
@@ -829,156 +852,149 @@ def main():
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {
+    body {{
       font-family: Arial, sans-serif;
       line-height: 1.6;
-      color: #333;
-      background-color: #fff;
+      color: #333333;
+      background-color: #ffffff;
       margin: 0;
-      padding: 0 20px 20px;
-    }
-    .container {
+      padding: 0 20px 20px 20px;
+    }}
+    .container {{
       max-width: 700px;
       margin: auto;
       padding: 20px;
-    }
-    p { margin-bottom: 16px; text-align: justify; }
-    .box {
+    }}
+    p {{
+      margin-bottom: 16px;
+      text-align: justify;
+    }}
+    .box {{
       background-color: #f0f0f0;
-      border-left: 4px solid #999;
+      border-left: 4px solid #999999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
       text-align: justify;
-    }
-    table {
+    }}
+    table {{
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-    }
-    th, td {
+    }}
+    th, td {{
       text-align: left;
       padding: 8px;
       border-bottom: 1px solid #ccc;
-    }
-    th { background-color: #e0e0e0; }
-    .notas-container {
+    }}
+    th {{
+      background-color: #e0e0e0;
+    }}
+    
+    .notas-container {{
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: center; 
       margin-top: 20px;
       background-color: #dff0d8;
       padding: 12px;
       border-radius: 4px;
       border: 1px solid #ddd;
-    }
-    .nota-item {
+    }}
+    .nota-item {{
       text-align: center;
       flex-grow: 1;
-      padding: 0 10px;
-    }
-    .nota-item:not(:last-child) {
-      border-right: 1px solid #ccc;
-    }
-    .nota-label {
+      padding: 0 10px; 
+    }}
+    .nota-item:not(:last-child) {{ 
+      border-right: 1px solid #ccc; 
+    }}
+    .nota-label {{
       font-size: 0.85em;
       color: #555;
       display: block;
       margin-bottom: 3px;
-    }
-    .nota-value {
+    }}
+    .nota-value {{
       font-size: 1.3em;
       color: #000;
       font-weight: bold;
-    }
-    .nota-geral { color: #000; }
-    a {
+    }}
+    .nota-geral {{
+      color: #000000;
+    }}
+
+    a {{
       color: #0645ad;
       text-decoration: none;
-    }
-    a:hover {
+    }}
+    a:hover {{
       text-decoration: underline;
-    }
-    /* Ajuste otimizado da imagem */
-    .header-img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 20px;
-    }
+    }}
   </style>
 </head>
 <body>
   <div class="container">
-
-    <!-- Cabeçalho ajustado ao container -->
-    <img src="https://i.postimg.cc/4xQ1nW8D/Cabe-alho-resumo.png" 
-         alt="Cabeçalho da VII SEMPI" class="header-img">
-
+    {HTML_HEADER}
     <p>Prezados(as),</p>
+
     <p>Espero que esta mensagem os(as) encontre bem.</p>
+
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> apresenta os detalhes das avaliações referentes à apresentação oral, realizadas pelos membros do Comitê Científico durante o evento.
+      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
+      Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
     </p>
 
     <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">4 de ago de 2025</span></p>
+      <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_avaliador_final_i}</span></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>Clareza e objetividade na apresentação</td><td>0</td></tr>
-        <tr><td>Domínio do conteúdo e segurança na exposição</td><td>0</td></tr>
-        <tr><td>Capacidade de síntese e de comunicação científica</td><td>0</td></tr>
-        <tr><td>Interação com a banca e público</td><td>0</td></tr>
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
       </table>
-      <p><strong>Média ponderada: 0</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
     </div>
 
     <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">5 de ago de 2025</span></p>
+      <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_avaliador_final_ii}</span></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        <tr><td>Clareza e objetividade na apresentação</td><td>0</td></tr>
-        <tr><td>Domínio do conteúdo e segurança na exposição</td><td>0</td></tr>
-        <tr><td>Capacidade de síntese e de comunicação científica</td><td>0</td></tr>
-        <tr><td>Interação com a banca e público</td><td>0</td></tr>
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
       </table>
-      <p><strong>Média ponderada: 0</strong></p>
+      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
     </div>
 
     <div class="notas-container">
       <div class="nota-item">
-        <span class="nota-label">Média Avaliador I</span>
-        <span class="nota-value">0</span>
+        <span class="nota-label">TRABALHO ESCRITO</span>
+        <span class="nota-value">{formatar_nota_br(nota_final_escrito, 2)}</span>
       </div>
       <div class="nota-item">
-        <span class="nota-label">Média Avaliador II</span>
-        <span class="nota-value">0</span>
+        <span class="nota-label">APRESENTAÇÃO ORAL</span>
+        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao, 2)}</span>
       </div>
       <div class="nota-item">
-        <span class="nota-label">Nota Final</span>
-        <span class="nota-value nota-geral">0</span>
+        <span class="nota-label">NOTA GERAL</span>
+        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
       </div>
     </div>
 
     <p>
-      Gostaríamos de parabenizar pelo empenho e pela qualidade do trabalho apresentado. 
-      Sua contribuição é de grande importância para o fortalecimento das discussões acadêmicas no campo da Propriedade Intelectual.
+      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
+      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
     </p>
 
     <p>
-      Agradecemos mais uma vez a sua participação na VII SEMPI e reforçamos nosso convite para os próximos encontros.
+      📣 Sua presença será muito importante e tornará o encerramento ainda mais especial!
     </p>
 
-    <p>Atenciosamente,<br><br>
-    Comissão Organizadora<br>
-    VII Semana Acadêmica de Propriedade Intelectual</p>
-
+    <p>
+      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
+    </p>
   </div>
 </body>
 </html>
 """
-        st.code(html_resultado_final, language="html")
-
+        st.code(html_resultado_final, language="html"))
 
 if __name__ == "__main__":
     main()
