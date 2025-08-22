@@ -829,146 +829,150 @@ def main():
 <head>
   <meta charset="UTF-8" />
   <style>
-    body {{
+    body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
-      color: #333333;
-      background-color: #ffffff;
+      color: #333;
+      background-color: #fff;
       margin: 0;
-      padding: 0 20px 20px 20px;
-    }}
-    .container {{
+      padding: 0 20px 20px;
+    }
+    .container {
       max-width: 700px;
       margin: auto;
       padding: 20px;
-    }}
-    p {{
-      margin-bottom: 16px;
-      text-align: justify;
-    }}
-    .box {{
+    }
+    p { margin-bottom: 16px; text-align: justify; }
+    .box {
       background-color: #f0f0f0;
-      border-left: 4px solid #999999;
+      border-left: 4px solid #999;
       padding: 16px;
       margin: 20px 0;
       border-radius: 4px;
       text-align: justify;
-    }}
-    table {{
+    }
+    table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-    }}
-    th, td {{
+    }
+    th, td {
       text-align: left;
       padding: 8px;
       border-bottom: 1px solid #ccc;
-    }}
-    th {{
-      background-color: #e0e0e0;
-    }}
-    
-    .notas-container {{
+    }
+    th { background-color: #e0e0e0; }
+    .notas-container {
       display: flex;
       justify-content: space-between;
-      align-items: center; 
+      align-items: center;
       margin-top: 20px;
       background-color: #dff0d8;
       padding: 12px;
       border-radius: 4px;
       border: 1px solid #ddd;
-    }}
-    .nota-item {{
+    }
+    .nota-item {
       text-align: center;
       flex-grow: 1;
-      padding: 0 10px; 
-    }}
-    .nota-item:not(:last-child) {{ 
-      border-right: 1px solid #ccc; 
-    }}
-    .nota-label {{
+      padding: 0 10px;
+    }
+    .nota-item:not(:last-child) {
+      border-right: 1px solid #ccc;
+    }
+    .nota-label {
       font-size: 0.85em;
       color: #555;
       display: block;
       margin-bottom: 3px;
-    }}
-    .nota-value {{
+    }
+    .nota-value {
       font-size: 1.3em;
       color: #000;
       font-weight: bold;
-    }}
-    .nota-geral {{
-      color: #000000;
-    }}
-
-    a {{
+    }
+    .nota-geral { color: #000; }
+    a {
       color: #0645ad;
       text-decoration: none;
-    }}
-    a:hover {{
+    }
+    a:hover {
       text-decoration: underline;
-    }}
+    }
+    /* Ajuste otimizado da imagem */
+    .header-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- Cabeçalho ajustado ao container -->
+    <img src="https://i.postimg.cc/4xQ1nW8D/Cabe-alho-resumo.png" 
+         alt="Cabeçalho da VII SEMPI" class="header-img">
+
     <p>Prezados(as),</p>
-
     <p>Espero que esta mensagem os(as) encontre bem.</p>
-
     <p>
       A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> apresenta os detalhes das avaliações referentes à apresentação oral, realizadas pelos membros do Comitê Científico durante o evento.
     </p>
 
     <div class="box">
-      <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_avaliador_final_i}</span></p>
+      <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">4 de ago de 2025</span></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
+        <tr><td>Clareza e objetividade na apresentação</td><td>0</td></tr>
+        <tr><td>Domínio do conteúdo e segurança na exposição</td><td>0</td></tr>
+        <tr><td>Capacidade de síntese e de comunicação científica</td><td>0</td></tr>
+        <tr><td>Interação com a banca e público</td><td>0</td></tr>
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
+      <p><strong>Média ponderada: 0</strong></p>
     </div>
 
     <div class="box">
-      <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_avaliador_final_ii}</span></p>
+      <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">5 de ago de 2025</span></p>
       <table>
         <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
+        <tr><td>Clareza e objetividade na apresentação</td><td>0</td></tr>
+        <tr><td>Domínio do conteúdo e segurança na exposição</td><td>0</td></tr>
+        <tr><td>Capacidade de síntese e de comunicação científica</td><td>0</td></tr>
+        <tr><td>Interação com a banca e público</td><td>0</td></tr>
       </table>
-      <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
+      <p><strong>Média ponderada: 0</strong></p>
     </div>
 
-     <p>
-      <strong>Parabenizamos pelo empenho e dedicação demonstrados ao longo do processo. Abaixo, apresentamos a nota geral da avaliação, que considera tanto o trabalho escrito quanto a apresentação oral.</strong>
-    </p>
-    
     <div class="notas-container">
       <div class="nota-item">
-        <span class="nota-label">TRABALHO ESCRITO</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_escrito, 2)}</span>
+        <span class="nota-label">Média Avaliador I</span>
+        <span class="nota-value">0</span>
       </div>
       <div class="nota-item">
-        <span class="nota-label">APRESENTAÇÃO ORAL</span>
-        <span class="nota-value">{formatar_nota_br(nota_final_apresentacao, 2)}</span>
+        <span class="nota-label">Média Avaliador II</span>
+        <span class="nota-value">0</span>
       </div>
       <div class="nota-item">
-        <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
+        <span class="nota-label">Nota Final</span>
+        <span class="nota-value nota-geral">0</span>
       </div>
     </div>
 
     <p>
-      Aproveitamos para convidá-los(as) a participar da <strong>cerimônia de encerramento</strong>, que será realizada amanhã, <strong>5 de setembro de 2025, às {hora_encerramento}</strong>, no auditório do SergipeTec.
-      Durante a solenidade, serão entregues os <strong>Certificados de Menção Honrosa</strong> aos três trabalhos com as maiores notas gerais em cada seção temática. Também será concedido o <strong>Certificado de Reconhecimento de "Melhor Trabalho"</strong> ao(à) autor(a) do trabalho que obteve a maior nota geral do evento.
+      Gostaríamos de parabenizar pelo empenho e pela qualidade do trabalho apresentado. 
+      Sua contribuição é de grande importância para o fortalecimento das discussões acadêmicas no campo da Propriedade Intelectual.
     </p>
 
     <p>
-      📣 Sua presença será muito importante e tornará o encerramento ainda mais especial!
+      Agradecemos mais uma vez a sua participação na VII SEMPI e reforçamos nosso convite para os próximos encontros.
     </p>
 
-    <p>
-      Permanecemos à disposição para quaisquer dúvidas ou esclarecimentos que se fizerem necessários.
-    </p>
+    <p>Atenciosamente,<br><br>
+    Comissão Organizadora<br>
+    VII Semana Acadêmica de Propriedade Intelectual</p>
+
   </div>
 </body>
 </html>
