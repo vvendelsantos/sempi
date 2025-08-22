@@ -994,7 +994,7 @@ def main():
 </body>
 </html>
 """
-        st.code(html_resultado_final, language="html"))
+        st.code(html_resultado_final, language="html")
 
 if __name__ == "__main__":
     main()
