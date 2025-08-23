@@ -7,6 +7,20 @@ HTML_HEADER = """
      style="max-width:100%; height:auto; display:block; margin-bottom:20px;" />
 """
 
+# ===== CSS para tabelas bonitas =====
+CSS_TABLES = """
+<style>
+.container { font-family: Arial, sans-serif; margin: 20px; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+th { background-color: #4CAF50; color: white; }
+tr:nth-child(even) { background-color: #f2f2f2; }
+.box { border: 1px solid #ccc; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+.nota-final { font-size: 1.2em; font-weight: bold; margin-top: 10px; }
+.parecer { font-style: italic; margin-top: 5px; }
+</style>
+"""
+
 # ===== Funções utilitárias =====
 def formatar_nota_br(nota, casas_decimais=1):
     if nota == int(nota):
@@ -70,6 +84,7 @@ def main():
 <head>
 <meta charset="UTF-8">
 <title>Desclassificação</title>
+{CSS_TABLES}
 </head>
 <body>
 <div class="container">
@@ -100,7 +115,6 @@ def main():
         nomes_criterios = [c[0] for c in criterios_avaliacao]
         pesos_criterios = [c[1] for c in criterios_avaliacao]
 
-        # Função auxiliar para processar avaliador
         def avaliar(avaliador_label, key_prefix):
             st.subheader(f"Avaliador(a) {avaliador_label}")
             data = st.text_input(f"Data Avaliador(a) {avaliador_label}", value="4 de ago de 2025", key=f"{key_prefix}_data")
@@ -123,13 +137,13 @@ def main():
         nota_final = (media_i + media_ii)/2 if media_i>0 and media_ii>0 else 0.0
         st.metric("Nota final do trabalho:", formatar_nota_br(nota_final,2))
 
-        # Gerar HTML completo
         html_template = f"""
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>{aba}</title>
+{CSS_TABLES}
 </head>
 <body>
 <div class="container">
@@ -137,7 +151,7 @@ def main():
 
 <div class="box">
 <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_i}</span></p>
-<table border="1" cellspacing="0" cellpadding="4">
+<table>
 <tr><th>Critério</th><th>Nota</th></tr>
 {''.join(f'<tr><td>{i+1}. {c} (Peso: {pesos_criterios[i]})</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i,c in enumerate(nomes_criterios))}
 </table>
@@ -147,7 +161,7 @@ def main():
 
 <div class="box">
 <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_ii}</span></p>
-<table border="1" cellspacing="0" cellpadding="4">
+<table>
 <tr><th>Critério</th><th>Nota</th></tr>
 {''.join(f'<tr><td>{i+1}. {c} (Peso: {pesos_criterios[i]})</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i,c in enumerate(nomes_criterios))}
 </table>
@@ -199,13 +213,13 @@ Nota final do trabalho: <strong>{formatar_nota_br(nota_final,2)}</strong>
         nota_final = (media_i + media_ii)/2 if media_i>0 and media_ii>0 else 0.0
         st.metric("Nota final do trabalho:", formatar_nota_br(nota_final,2))
 
-        # HTML completo Resultado Final
         html_template = f"""
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Resultado Final</title>
+{CSS_TABLES}
 </head>
 <body>
 <div class="container">
@@ -213,7 +227,7 @@ Nota final do trabalho: <strong>{formatar_nota_br(nota_final,2)}</strong>
 
 <div class="box">
 <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_i}</span></p>
-<table border="1" cellspacing="0" cellpadding="4">
+<table>
 <tr><th>Critério</th><th>Nota</th></tr>
 {''.join(f'<tr><td>{i+1}. {c} (Peso: {pesos_criterios_final[i]})</td><td>{formatar_nota_br(notas_i.get(c,0))}</td></tr>' for i,c in enumerate(nomes_criterios_final))}
 </table>
@@ -223,7 +237,7 @@ Nota final do trabalho: <strong>{formatar_nota_br(nota_final,2)}</strong>
 
 <div class="box">
 <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_ii}</span></p>
-<table border="1" cellspacing="0" cellpadding="4">
+<table>
 <tr><th>Critério</th><th>Nota</th></tr>
 {''.join(f'<tr><td>{i+1}. {c} (Peso: {pesos_criterios_final[i]})</td><td>{formatar_nota_br(notas_ii.get(c,0))}</td></tr>' for i,c in enumerate(nomes_criterios_final))}
 </table>
