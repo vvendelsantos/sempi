@@ -202,11 +202,11 @@ LEMBRETE_APRESENTACAO_HTML = """
     </div>
 
     <p>
-      Cada apresentador(a) disporá de até <strong>{tempo_apresentacao} minutos</strong> para a exposição do trabalho, seguidos de até <strong>{tempo_arguicao} minutos</strong> para arguição e/ou comentários dos(as) avaliadores(as).
+      Cada apresentador(a) disporá de até <strong>{tempo_apresentacao} minutos</strong> para a exposição do trabalho, seguidos de até <strong>{tempo_arguicao} minutos</strong> untuk arguição e/ou comentários dos(as) avaliadores(as).
     </p>
 
     <p>
-      Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguem os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
+      Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguirm os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
@@ -324,11 +324,11 @@ def main():
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação
         criterios_avaliacao_aprov_reprov = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida (Peso = 2)", 2),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual (Peso = 1)", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho (Peso = 2)", 2),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados (Peso = 2)", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados (Peso = 3)", 3)
+            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
+            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
+            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
+            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
+            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 3)
         ]
         
         # Separar nomes dos critérios e pesos
@@ -483,9 +483,10 @@ def main():
       <table>
         <tr>
           <th>Critério</th>
+          <th>Peso</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_aprov_reprov[i]}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i, 2)}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -496,9 +497,10 @@ def main():
       <table>
         <tr>
           <th>Critério</th>
+          <th>Peso</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_aprov_reprov[i]}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii, 2)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -529,11 +531,11 @@ def main():
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação (os mesmos da aba Aprovação)
         criterios_avaliacao_aprov_reprov = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida (Peso = 2)", 2),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual (Peso = 1)", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho (Peso = 2)", 2),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados (Peso = 2)", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados (Peso = 3)", 3)
+            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
+            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
+            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
+            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
+            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 3)
         ]
         
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
@@ -681,7 +683,7 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mas também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
+      Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mais também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
     </p>
     
     <div class="box">
@@ -689,9 +691,10 @@ def main():
       <table>
         <tr>
           <th>Critério</th>
+          <th>Peso</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_aprov_reprov[i]}</td><td>{formatar_nota_br(notas_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_i, 2)}</strong></p>
       <p class="parecer">{parecer_i}</p>
@@ -702,9 +705,10 @@ def main():
       <table>
         <tr>
           <th>Critério</th>
+          <th>Peso</th>
           <th>Nota</th>
         </tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_aprov_reprov[i]}</td><td>{formatar_nota_br(notas_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_aprov_reprov))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_ii, 2)}</strong></p>
       <p class="parecer">{parecer_ii}</p>
@@ -731,8 +735,8 @@ def main():
             "Digite o texto para o lembrete de envio do arquivo:",
             value=("Para tanto, solicitamos que o arquivo de apresentação seja enviado até o dia "
                    "<strong>29 de agosto de 2025</strong>, em formato PDF, por meio da Área do Participante. "
-                   "Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu “Submissões”, "
-                   "selecione o trabalho correspondente, clique em “Editar” e anexe o arquivo no campo indicado. "
+                   "Para realizar o envio, acesse a plataforma com seu login and senha, clique no menu \"Submissões\", "
+                   "selecione o trabalho correspondente, clique em \"Editar\" e anexe o arquivo no campo indicado. "
                    "Após o envio, certifique-se de salvar as alterações.")
         )
 
@@ -762,13 +766,13 @@ def main():
 
         # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
         criterios_avaliacao_final = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida (Peso = 1)", 1),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual (Peso = 1)", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho (Peso = 1)", 1),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados (Peso = 2)", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados (Peso = 2)", 2),
-            ("Domínio do conteúdo apresentado (Peso = 2)", 2),
-            ("Adequação ao tempo de apresentação (Peso = 1)", 1)
+            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 1),
+            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
+            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 1),
+            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
+            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 2),
+            ("Domínio do conteúdo apresentado", 2),
+            ("Adequação ao tempo de apresentação", 1)
         ]
 
         nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
@@ -948,8 +952,8 @@ def main():
     <div class="box">
       <p><strong>👤 Avaliador(a) I</strong> <span style="float: right;">{data_avaliador_final_i}</span></p>
       <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
+        <tr><th>Critério</th><th>Peso</th><th>Nota</th></tr>
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_final[i]}</td><td>{formatar_nota_br(notas_final_i[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_i, 2)}</strong></p>
     </div>
@@ -957,8 +961,8 @@ def main():
     <div class="box">
       <p><strong>👤 Avaliador(a) II</strong> <span style="float: right;">{data_avaliador_final_ii}</span></p>
       <table>
-        <tr><th>Critério</th><th>Nota</th></tr>
-        {''.join(f'<tr><td>{i+1}. {c}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
+        <tr><th>Critério</th><th>Peso</th><th>Nota</th></tr>
+        {''.join(f'<tr><td>{i+1}. {c}</td><td>{pesos_criterios_final[i]}</td><td>{formatar_nota_br(notas_final_ii[c])}</td></tr>' for i, c in enumerate(nomes_criterios_final))}
       </table>
       <p><strong>Média ponderada: {formatar_nota_br(media_ponderada_final_ii, 2)}</strong></p>
     </div>
@@ -974,7 +978,7 @@ def main():
       </div>
       <div class="nota-item">
         <span class="nota-label">NOTA GERAL</span>
-        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, casas_decimais=2)}</span>
+        <span class="nota-value nota-geral">{formatar_nota_br(nota_geral_ponderada, 2)}</span>
       </div>
     </div>
 
