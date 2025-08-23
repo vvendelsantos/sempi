@@ -206,7 +206,7 @@ LEMBRETE_APRESENTACAO_HTML = """
     </p>
 
     <p>
-      Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguirm os mesmos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
+      Cada trabalho será avaliado por, no mínimo, dois pareceristas. Os critérios de avaliação da apresentação oral seguirm os sameos adotados para o trabalho escrito, com o acréscimo dos seguintes itens:
     </p>
 
     <ul style="padding-left: 20px; text-align: justify;">
@@ -441,7 +441,8 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #e0e0e0;
+      background-color: #2e7d32;
+      color: white;
     }}
     .nota-final {{
       background-color: #dff0d8;
@@ -648,7 +649,8 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #e0e0e0;
+      background-color: #2e7d32;
+      color: white;
     }}
     .nota-final {{
       background-color: #f8d7da;
@@ -892,7 +894,8 @@ def main():
       border-bottom: 1px solid #ccc;
     }}
     th {{
-      background-color: #e0e0e0;
+      background-color: #2e7d32;
+      color: white;
     }}
     
     .notas-container {{
