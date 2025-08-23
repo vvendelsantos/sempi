@@ -328,7 +328,7 @@ def main():
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
             ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
             ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 3)
+            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
         ]
         
         # Separar nomes dos critérios e pesos
@@ -535,7 +535,7 @@ def main():
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
             ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
             ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 3)
+            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
         ]
         
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
@@ -770,7 +770,7 @@ def main():
             ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
             ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 1),
             ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussion dos resultados", 2),
+            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 2),
             ("Domínio do conteúdo apresentado", 2),
             ("Adequação ao tempo de apresentação", 1)
         ]
