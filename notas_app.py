@@ -2,7 +2,7 @@ import streamlit as st
 
 # ===== Cabeçalho único (autoajustado ao container) =====
 HTML_HEADER = """
-<img src="https://i.postimg.cc/tT1XwMm8/Cabe-alho-X.png"
+<img src="https://i.postimg.cc/rF4SSp0b/Cabe-alho-Y.png"
      alt="Cabeçalho da VII SEMPI"
      style="max-width:100%; height:auto; display:block; margin-bottom:20px;" />
 """
