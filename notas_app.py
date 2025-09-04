@@ -337,7 +337,7 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
-        data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de ago de 2025", key="data_aprov_i")
+        data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de set de 2025", key="data_aprov_i")
         default_notas_i_str = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -366,7 +366,7 @@ def main():
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de ago de 2025", key="data_aprov_ii")
+        data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de set de 2025", key="data_aprov_ii")
         default_notas_ii_str = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -543,7 +543,7 @@ def main():
 
         # Notas Avaliador I
         st.subheader("Avaliador(a) I")
-        data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de ago de 2025", key="data_reprov_i")
+        data_avaliador_i = st.text_input("Data Avaliador(a) I", value="4 de set de 2025", key="data_reprov_i")
         default_notas_i_str_reprov = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_i_input_reprov = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -572,7 +572,7 @@ def main():
 
         # Notas Avaliador II
         st.subheader("Avaliador(a) II")
-        data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de ago de 2025", key="data_reprov_ii")
+        data_avaliador_ii = st.text_input("Data Avaliador(a) II", value="4 de set de 2025", key="data_reprov_ii")
         default_notas_ii_str_reprov = " ".join([str(0.0) for _ in nomes_criterios_aprov_reprov])
         notas_ii_input_reprov = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -779,7 +779,7 @@ def main():
         pesos_criterios_final = [c[1] for c in criterios_avaliacao_final]
 
         st.subheader("Avaliador(a) I - Apresentação")
-        data_avaliador_final_i = st.text_input("Data Avaliador(a) I - Apresentação", value="4 de ago de 2025", key="data_final_i")
+        data_avaliador_final_i = st.text_input("Data Avaliador(a) I - Apresentação", value="4 de set de 2025", key="data_final_i")
         default_notas_final_i_str = " ".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_i_input = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
@@ -806,7 +806,7 @@ def main():
         
 
         st.subheader("Avaliador(a) II - Apresentação")
-        data_avaliador_final_ii = st.text_input("Data Avaliador(a) II - Apresentação", value="4 de ago de 2025", key="data_final_ii")
+        data_avaliador_final_ii = st.text_input("Data Avaliador(a) II - Apresentação", value="4 de set de 2025", key="data_final_ii")
         default_notas_final_ii_str = " ".join([str(0.0) for _ in nomes_criterios_final])
         notas_final_ii_input = st.text_area(
             "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
