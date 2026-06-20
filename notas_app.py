@@ -229,8 +229,8 @@ li {
 
 def formatar_nota_br(nota, casas_decimais=1):
     if nota == int(nota):
-        return str(int(nota)).replace('.', ',')
-    return f"{nota:.{casas_decimais}f}".replace('.', ',')
+        return str(int(nota)).replace(".", ",")
+    return f"{nota:.{casas_decimais}f}".replace(".", ",")
 
 
 def calcular_media_ponderada(notas, pesos):
@@ -258,15 +258,33 @@ def processar_notas_melhor(entrada):
     """
     if entrada is None:
         return []
-    s = entrada.replace('\n', ' ').replace(';', ' ')
+    s = entrada.replace("\n", " ").replace(";", " ")
     tokens = [t for t in s.split() if t.strip()]
     notas = []
     for t in tokens:
         try:
-            notas.append(float(t.replace(',', '.')))
+            notas.append(float(t.replace(",", ".")))
         except Exception as e:
             raise ValueError(f"Token inválido: {t}") from e
     return notas
+
+
+def criterios_trabalho_escrito():
+    return [
+        ("Clareza na definição do problema, dos objetivos e da justificativa do trabalho", 1),
+        ("Adequação dos métodos ao objetivo do trabalho e confiabilidade dos procedimentos apresentados", 3),
+        ("Qualidade da apresentação dos resultados e consistência das evidências apresentadas", 3),
+        ("Qualidade da discussão dos resultados, considerando a interpretação dos achados e o diálogo com a literatura", 2),
+        ("Coerência das considerações finais em relação aos objetivos e aos resultados apresentados", 1),
+    ]
+
+
+def criterios_apresentacao():
+    return [
+        ("Coerência entre problema, objetivos, métodos, resultados e considerações finais", 4),
+        ("Domínio do conteúdo e organização da apresentação", 3),
+        ("Clareza e fundamentação nas respostas à arguição dos avaliadores", 3),
+    ]
 
 
 def pagina_email(titulo, subtitulo, conteudo_html):
@@ -337,7 +355,7 @@ def coletar_notas_avaliador(prefixo, nomes_criterios, pesos_criterios, titulo_av
     notas_input = st.text_area(
         "Digite as notas para cada critério (na mesma linha, separadas por espaço ou ';'):",
         value=default_notas,
-        key=f"notas_{prefixo}_input"
+        key=f"notas_{prefixo}_input",
     )
 
     try:
@@ -358,22 +376,6 @@ def coletar_notas_avaliador(prefixo, nomes_criterios, pesos_criterios, titulo_av
         notas = {criterio: 0.0 for criterio in nomes_criterios}
 
     return data, notas, media
-    def criterios_trabalho_escrito():
-    return [
-        ("Clareza na definição do problema, dos objetivos e da justificativa do trabalho", 1),
-        ("Adequação dos métodos ao objetivo do trabalho e confiabilidade dos procedimentos apresentados", 3),
-        ("Qualidade da apresentação dos resultados e consistência das evidências apresentadas", 3),
-        ("Qualidade da discussão dos resultados, considerando a interpretação dos achados e o diálogo com a literatura", 2),
-        ("Coerência das considerações finais em relação aos objetivos e aos resultados apresentados", 1),
-    ]
-
-
-def criterios_apresentacao():
-    return [
-        ("Coerência entre problema, objetivos, métodos, resultados e considerações finais", 4),
-        ("Domínio do conteúdo e organização da apresentação", 3),
-        ("Clareza e fundamentação nas respostas à arguição dos avaliadores", 3),
-    ]
 
 
 def gerar_lembrete_envio_html(texto_envio_arquivo):
@@ -393,7 +395,7 @@ def gerar_lembrete_envio_html(texto_envio_arquivo):
 </div>
 
 <p>
-  A ordem das apresentações, tanto presenciais quanto on-line, seguirá a programação previamente divulgada em nossos canais oficiais, salvo em casos excepcionais devidamente justificados. Autores que submeteram mais de um resumo expandido, especialmente em sessões temáticas diferentes, terão suas apresentações organizadas de forma a evitar conflitos de horário.
+  A ordem das apresentações, tanto presenciais quanto on-line, seguirá a programação previamente divulgada em nossos canais oficiais, salvo em casos excepcionais devidamente justificados. Autores que submeteram mais de um trabalho, especialmente em sessões temáticas diferentes, terão suas apresentações organizadas de forma a evitar conflitos de horário.
 </p>
 
 <p>
@@ -468,7 +470,7 @@ def main():
 
         motivos = st.text_area(
             "Liste os motivos da desclassificação:",
-            value="X/ Y/ Z"
+            value="X/ Y/ Z",
         )
         motivos_lista = [m.strip() for m in motivos.split("/") if m.strip()]
         lista_motivos = "".join(f"<li>{m}</li>" for m in motivos_lista)
@@ -496,7 +498,7 @@ def main():
         html_desclassificacao = pagina_email(
             "Resultado da revisão editorial preliminar",
             "Trabalho desclassificado antes do encaminhamento aos avaliadores",
-            conteudo
+            conteudo,
         )
         st.code(html_desclassificacao, language="html")
 
@@ -550,7 +552,8 @@ def main():
 """
         html_aprovacao = pagina_email("Resultado da avaliação", "Espelho de notas e pareceres", conteudo)
         st.code(html_aprovacao, language="html")
-            elif aba == "❌ Reprovação":
+
+    elif aba == "❌ Reprovação":
         st.header("Reprovação")
 
         criterios_avaliacao_aprov_reprov = criterios_trabalho_escrito()
@@ -608,7 +611,7 @@ def main():
                 "Para realizar o envio, acesse a plataforma com seu login e senha, clique no menu \"Submissões\", "
                 "selecione o trabalho correspondente, clique em \"Editar\" e anexe o arquivo no campo indicado. "
                 "Após o envio, certifique-se de salvar as alterações."
-            )
+            ),
         )
 
         st.markdown("### Tempos para apresentação")
@@ -649,7 +652,7 @@ def main():
 
         nota_geral_ponderada = calcular_media_ponderada(
             [nota_final_escrito, nota_final_apresentacao],
-            [7, 3]
+            [7, 3],
         )
         st.metric("NOTA GERAL:", formatar_nota_br(nota_geral_ponderada, 2))
 
