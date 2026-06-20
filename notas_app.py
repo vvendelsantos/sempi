@@ -2,8 +2,8 @@ import streamlit as st
 
 # ===== Cabeçalho único (autoajustado ao container) =====
 HTML_HEADER = """
-<img src="https://mcusercontent.com/2c391bf17d26a076dacd48918/images/5b0ec1af-a5e2-97f5-c683-61d55fab42bc.png"
-     alt="Cabeçalho da VII SEMPI"
+<img src="https://i.postimg.cc/qqq7N090/Z.png"
+     alt="Cabeçalho da VIII SEMPI"
      style="max-width:100%; height:auto; display:block; margin-bottom:20px;" />
 """
 
@@ -27,7 +27,7 @@ def calcular_media_ponderada(notas, pesos):
         float: Média ponderada. Retorna 0.0 se não houver notas ou pesos.
     """
     if not notas or not pesos or len(notas) != len(pesos):
-        return 0.0  # Retorna 0.0 ou levanta um erro, dependendo da necessidade
+        return 0.0
     soma_produtos = sum(nota * peso for nota, peso in zip(notas, pesos))
     soma_pesos = sum(pesos)
     return soma_produtos / soma_pesos if soma_pesos > 0 else 0.0
@@ -49,7 +49,6 @@ def processar_notas_melhor(entrada):
         try:
             notas.append(float(t.replace(',', '.')))
         except Exception as e:
-            # lança erro para o chamador tratar (mostramos warning)
             raise ValueError(f"Token inválido: {t}") from e
     return notas
 
@@ -105,7 +104,7 @@ LEMBRETE_ENVIO_HTML = """
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> relembra que todos os trabalhos aprovados deverão ser apresentados em sessão pública e avaliados por membros do Comitê Científico.
+      A Comissão Organizadora da <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong> relembra que todos os trabalhos aprovados deverão ser apresentados em sessão pública e avaliados por membros do Comitê Científico.
     </p>
 
     <p>
@@ -122,8 +121,8 @@ LEMBRETE_ENVIO_HTML = """
 
     <p>
       O modelo editável está disponível no site do evento: <br />
-      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
-        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
+      🔗 <a href="https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/" target="_blank" rel="noopener noreferrer">
+        https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/
       </a>.
       Embora não haja limite de quantidade de slides, é obrigatório manter integralmente a formatação original (estilo, tamanho da fonte e cores).
     </p>
@@ -183,12 +182,12 @@ LEMBRETE_APRESENTACAO_HTML = """
     <p>Prezados(as),</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> relembra que as apresentações dos resumos aprovados acontecerão <strong>amanhã</strong>. A programação completa, contendo datas, horários, locais e a ordem das apresentações, já se encontra disponível no site oficial do evento:
+      A Comissão Organizadora da <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong> relembra que as apresentações dos resumos aprovados acontecerão <strong>amanhã</strong>. A programação completa, contendo datas, horários, locais e a ordem das apresentações, já se encontra disponível no site oficial do evento:
     </p>
 
     <p>
-      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank" rel="noopener noreferrer">
-        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
+      🔗 <a href="https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/" target="_blank" rel="noopener noreferrer">
+        https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/
       </a>
     </p>
 
@@ -235,7 +234,7 @@ LEMBRETE_APRESENTACAO_HTML = """
 def main():
     st.set_page_config(page_title="Gerador de HTML SEMPI", layout="wide")
 
-    st.title("💻 Notificação interna Even3 (VII SEMPI)")
+    st.title("💻 Notificação interna Even3 (VIII SEMPI)")
 
     abas = ["🚫 Desclassificação", "✅ Aprovação", "❌ Reprovação", "🔔 Lembretes", "🏆 Resultado final"]
     aba = st.sidebar.radio("Selecione a aba:", abas)
@@ -295,7 +294,7 @@ def main():
 
     <p>
       Agradecemos o envio do seu resumo expandido à
-      <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. Após análise preliminar (<em>desk review</em>), informamos que seu trabalho <strong>não atendeu</strong> integralmente às diretrizes estabelecidas pela Comissão Organizadora para avançar à próxima etapa de avaliação por pares.
+      <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong>. Após análise preliminar (<em>desk review</em>), informamos que seu trabalho <strong>não atendeu</strong> integralmente às diretrizes estabelecidas pela Comissão Organizadora para avançar à próxima etapa de avaliação por pares.
     </p>
 
     <div class="box">
@@ -475,7 +474,7 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-     Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mas também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
+     Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mas também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
     </p>
 
     <div class="box">
@@ -512,8 +511,8 @@ def main():
 
     <p>
       As orientações para a elaboração e o envio do arquivo da apresentação estão disponíveis no site do evento:<br />
-      🔗 <a href="https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/" target="_blank">
-        https://www.even3.com.br/vii-semana-academica-da-propriedade-intelectual-594540/
+      🔗 <a href="https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/" target="_blank">
+        https://www.even3.com.br/viii-semana-academica-da-propriedade-intelectual-753406/
       </a>
     </p>
 
@@ -683,7 +682,7 @@ def main():
     <p>Esperamos que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mais também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
+      Conforme comunicado anterior, esta mensagem tem como objetivo apresentar os detalhes das avaliações realizadas pelos membros do Comitê Científico da <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong>. A divulgação dessas notas e pareceres visa não apenas dar transparência ao processo avaliativo, mais também contribuir para o aprimoramento do trabalho apresentado e para futuras submissões.
     </p>
     
     <div class="box">
@@ -799,7 +798,6 @@ def main():
         else:
             st.warning(f"Por favor, insira {len(nomes_criterios_final)} notas para o Avaliador I.")
             notas_final_i = {c: 0.0 for c in nomes_criterios_final}
-        
 
         st.subheader("Avaliador(a) II - Apresentação")
         data_avaliador_final_ii = st.text_input("Data Avaliador(a) II - Apresentação", value="4 de set de 2025", key="data_final_ii")
@@ -941,7 +939,7 @@ def main():
     <p>Espero que esta mensagem os(as) encontre bem.</p>
 
     <p>
-      A Comissão Organizadora da <strong>VII Semana Acadêmica da Propriedade Intelectual (VII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
+      A Comissão Organizadora da <strong>VIII Semana Acadêmica da Propriedade Intelectual (VIII SEMPI)</strong> os(as) parabeniza pela apresentação do trabalho.
       Abaixo, apresentamos as avaliações realizadas pelos membros do Comitê Científico, com base nos critérios previamente definidos:
     </p>
 
