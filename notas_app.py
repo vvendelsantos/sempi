@@ -324,11 +324,11 @@ def main():
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação
         criterios_avaliacao_aprov_reprov = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
+            ("Clareza na definição do problema, dos objetivos e da justificativa do trabalho", 1),
+            ("Adequação dos métodos ao objetivo do trabalho e confiabilidade dos procedimentos apresentados", 3),
+            ("Qualidade da apresentação dos resultados e consistência das evidências apresentadas", 3),
+            ("Qualidade da discussão dos resultados, considerando a interpretação dos achados e o diálogo com a literatura", 2),
+            ("Coerência das considerações finais em relação aos objetivos e aos resultados apresentados", 1)
         ]
         
         # Separar nomes dos critérios e pesos
@@ -531,11 +531,11 @@ def main():
 
         # Critérios de avaliação e seus pesos para Aprovação/Reprovação (os mesmos da aba Aprovação)
         criterios_avaliacao_aprov_reprov = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 2),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 2),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 3)
+            ("Clareza na definição do problema, dos objetivos e da justificativa do trabalho", 1),
+            ("Adequação dos métodos ao objetivo do trabalho e confiabilidade dos procedimentos apresentados", 3),
+            ("Qualidade da apresentação dos resultados e consistência das evidências apresentadas", 3),
+            ("Qualidade da discussão dos resultados, considerando a interpretação dos achados e o diálogo com a literatura", 2),
+            ("Coerência das considerações finais em relação aos objetivos e aos resultados apresentados", 1)
         ]
         
         nomes_criterios_aprov_reprov = [c[0] for c in criterios_avaliacao_aprov_reprov]
@@ -766,13 +766,9 @@ def main():
 
         # Critérios de avaliação e seus pesos para o Resultado Final (Apresentação Oral)
         criterios_avaliacao_final = [
-            ("Correspondência do trabalho ao tema do evento e à seção temática escolhida", 1),
-            ("Originalidade e contribuição do trabalho na área da Propriedade Intelectual", 1),
-            ("Definição clara do problema, dos objetivos e da justificativa do trabalho", 1),
-            ("Adequação dos métodos à pesquisa e confiabilidade dos procedimentos apresentados", 2),
-            ("Clareza, coerência e objetividade na apresentação e discussão dos resultados", 2),
-            ("Domínio do conteúdo apresentado", 2),
-            ("Adequação ao tempo de apresentação", 1)
+            ("Coerência entre problema, objetivos, métodos, resultados e considerações finais", 4),
+            ("Domínio do conteúdo e organização da apresentação", 3),
+            ("Clareza e fundamentação nas respostas à arguição dos avaliadores", 3)
         ]
 
         nomes_criterios_final = [c[0] for c in criterios_avaliacao_final]
