@@ -281,9 +281,9 @@ def criterios_trabalho_escrito():
 
 def criterios_apresentacao():
     return [
-        ("Coerência entre problema, objetivos, métodos, resultados e considerações finais", 4),
+        ("Qualidade, relevância e consistência do trabalho apresentado", 4),
         ("Domínio do conteúdo e organização da apresentação", 3),
-        ("Clareza e fundamentação nas respostas à arguição dos avaliadores", 3),
+        ("Adequação da apresentação ao tempo estabelecido", 3),
     ]
 
 
@@ -437,9 +437,9 @@ def gerar_lembrete_apresentacao_html(tempo_apresentacao, tempo_arguicao):
 </p>
 
 <ul>
-  <li>Coerência entre problema, objetivos, métodos, resultados e considerações finais;</li>
+  <li>Qualidade, relevância e consistência do trabalho apresentado;</li>
   <li>Domínio do conteúdo e organização da apresentação;</li>
-  <li>Clareza e fundamentação nas respostas à arguição dos avaliadores.</li>
+  <li>Adequação da apresentação ao tempo estabelecido.</li>
 </ul>
 
 <p>
